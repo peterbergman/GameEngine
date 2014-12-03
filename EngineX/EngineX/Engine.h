@@ -5,14 +5,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
+#include "Window.h"
 
 class Engine {
 public:
+    Engine();
     ~Engine();
 private:
     bool is_running;
-    void run();
-    void init();
-    void tear_down();
+    Window* window;
+    void Run();
 };
 #endif

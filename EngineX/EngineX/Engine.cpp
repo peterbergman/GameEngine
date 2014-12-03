@@ -1,6 +1,12 @@
 #include "Engine.h"
 
-void Engine::run() {
+Engine::Engine() {
+    window = new Window(600, 800);
+    Run();
+}
+
+void Engine::Run() {
+    is_running = true;
     while (is_running) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
@@ -8,6 +14,10 @@ void Engine::run() {
                 case SDL_QUIT:
                     is_running = false;
                     break;
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == SDLK_ESCAPE) {
+                        is_running = false;
+                    }
                 default:
                     break;
             }
@@ -15,15 +25,7 @@ void Engine::run() {
     }
 }
 
-void Engine::init() {
-    // Create a new window
-}
-
-void Engine::tear_down() {
-    // shut down SDL and everything related to it
-}
-
 Engine::~Engine() {
-    // delete all references on the heap
+    delete window;
 }
 
