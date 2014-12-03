@@ -4,13 +4,15 @@
 #include <stdio.h>
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <string>
 
 class Window {
 public:
-    Window(int, int);
+    Window(std::string, int, int);
     ~Window();
 private:
     int height, width;
+    std::string title;
     SDL_Window* window;
     SDL_Renderer* renderer;
     void InitSDL();

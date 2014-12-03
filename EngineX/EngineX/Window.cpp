@@ -1,8 +1,9 @@
 #include "Window.h"
 
-Window::Window(int height, int width):height(height), width(width){
+Window::Window(std::string title, int height, int width):title(title), height(height), width(width){
     InitSDL();
     SetUpWindow();
+    SetUpRenderer();
     SDL_RenderPresent(renderer);
 }
 
@@ -22,7 +23,7 @@ void Window::SetUpRenderer() {
 }
 
 void Window::SetUpWindow() { // TODO: throw error to application
-    window = SDL_CreateWindow("Title", 0, 0, width, height, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(const_cast<char*>(title.c_str()), 0, 0, width, height, SDL_WINDOW_SHOWN);
     if (window == nullptr){
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
