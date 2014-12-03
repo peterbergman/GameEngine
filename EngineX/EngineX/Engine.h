@@ -8,10 +8,10 @@
 
 class Engine {
 public:
-    void run();
     ~Engine();
 private:
     bool is_running;
+    void run();
     void init();
     void tear_down();
 };

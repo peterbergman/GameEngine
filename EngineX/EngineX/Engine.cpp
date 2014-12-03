@@ -16,7 +16,7 @@ void Engine::run() {
 }
 
 void Engine::init() {
-    // init SDL, respond to errors
+    // Create a new window
 }
 
 void Engine::tear_down() {
