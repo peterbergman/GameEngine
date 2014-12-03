@@ -9,7 +9,10 @@
 class Engine {
 public:
     void run();
+    ~Engine();
 private:
     bool is_running;
+    void init();
+    void tear_down();
 };
 #endif

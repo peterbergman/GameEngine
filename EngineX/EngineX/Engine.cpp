@@ -14,3 +14,16 @@ void Engine::run() {
         }
     }
 }
+
+void Engine::init() {
+    // init SDL, respond to errors
+}
+
+void Engine::tear_down() {
+    // shut down SDL and everything related to it
+}
+
+Engine::~Engine() {
+    // delete all references on the heap
+}
+
