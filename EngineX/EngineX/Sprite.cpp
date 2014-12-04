@@ -16,6 +16,10 @@ void Sprite::SetWindow(Window* window) {
     this->window = window;
 }
 
+void Sprite::Draw() {
+    SDL_RenderCopy(window->GetRenderer(), texture, NULL, NULL);
+}
+
 Sprite::~Sprite() {
     SDL_DestroyTexture(texture);
 }

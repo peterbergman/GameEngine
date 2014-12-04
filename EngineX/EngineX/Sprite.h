@@ -12,6 +12,7 @@ class Sprite {
 public:
     Sprite(std::string, int, int);
     void SetWindow(Window*);
+    void Draw();
     ~Sprite();
 private:
     Window* window;
