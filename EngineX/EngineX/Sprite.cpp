@@ -1,5 +1,10 @@
 #include "Sprite.h"
-Sprite::Sprite(std::string file_name, int x_pos, int y_pos) {
+Sprite::Sprite(std::string file_name, int x_pos, int y_pos, int height, int width) {
+    boundary = new SDL_Rect();
+    boundary->x = x_pos;
+    boundary->y = y_pos;
+    boundary->h = height;
+    boundary->w = width;
     SDL_Surface* surface = IMG_Load(file_name.c_str());
     if (surface == nullptr) { // TODO: throw exception to application
         std::cout << "Could not load image... :(" << std::endl;
@@ -21,5 +26,6 @@ void Sprite::Draw() {
 }
 
 Sprite::~Sprite() {
+    delete boundary;
     SDL_DestroyTexture(texture);
 }

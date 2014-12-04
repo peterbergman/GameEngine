@@ -10,13 +10,14 @@
 class Window;
 class Sprite {
 public:
-    Sprite(std::string, int, int);
+    Sprite(std::string, int, int, int, int);
     void SetWindow(Window*);
     void Draw();
     ~Sprite();
 private:
     Window* window;
     SDL_Texture* texture;
+    SDL_Rect* boundary;
 };
 
 #endif
