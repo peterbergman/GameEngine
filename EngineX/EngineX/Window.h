@@ -5,13 +5,14 @@
 #include <vector>
 #include <string>
 #include <SDL2/SDL.h>
+#include "Sprite.h"
 
-class Sprite;
 class Window {
 public:
     Window(std::string, int, int);
     SDL_Renderer* GetRenderer();
     void AddSprite(Sprite*);
+    void DrawSprites();
     ~Window();
 private:
     int height, width;

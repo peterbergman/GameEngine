@@ -5,11 +5,16 @@ Sprite::Sprite(std::string file_name, int x_pos, int y_pos, int height, int widt
     boundary->y = y_pos;
     boundary->h = height;
     boundary->w = width;
+    this->file_name = file_name;
+}
+
+void Sprite::SetRenderer(SDL_Renderer* renderer) {
+    this->renderer = renderer;
     SDL_Surface* surface = IMG_Load(file_name.c_str());
     if (surface == nullptr) { // TODO: throw exception to application
         std::cout << "Could not load image... :(" << std::endl;
     } else {
-        texture = SDL_CreateTextureFromSurface(window->GetRenderer(), surface);
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);
         if (texture == nullptr) { // TODO: throw exception to application
             std::cout << "Could not create texture... :(" << std::endl;
@@ -17,12 +22,8 @@ Sprite::Sprite(std::string file_name, int x_pos, int y_pos, int height, int widt
     }
 }
 
-void Sprite::SetWindow(Window* window) {
-    this->window = window;
-}
-
 void Sprite::Draw() {
-    SDL_RenderCopy(window->GetRenderer(), texture, NULL, NULL);
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
 }
 
 Sprite::~Sprite() {

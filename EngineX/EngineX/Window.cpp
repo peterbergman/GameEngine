@@ -14,8 +14,14 @@ SDL_Renderer* Window::GetRenderer() {
 }
 
 void Window::AddSprite(Sprite* sprite) {
-    sprite->SetWindow(this);
+    sprite->SetRenderer(renderer);
     sprites.push_back(sprite);
+}
+
+void Window::DrawSprites() {
+    for (Sprite* sprite : sprites) {
+        sprite->Draw();
+    }
 }
 
 void Window::InitSDL() { // TODO: throw error to application
@@ -50,6 +56,9 @@ void Window::SetUpWindow() { // TODO: throw error to application
 }
 
 Window::~Window() {
+    for (Sprite* sprite : sprites) {
+        delete sprite;
+    }
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();

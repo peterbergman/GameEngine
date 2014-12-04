@@ -2,7 +2,6 @@
 
 Engine::Engine(std::string game_name) {
     window = new Window(game_name, 600, 800);
-    Run();
 }
 
 void Engine::AddSprite(Sprite* sprite) {
@@ -30,6 +29,10 @@ void Engine::Run() {
                     break;
             }
         }
+        SDL_RenderClear(window->GetRenderer());
+        window->DrawSprites();
+        SDL_RenderPresent(window->GetRenderer());
+        SDL_Delay(50);
     }
 }
 

@@ -12,12 +12,12 @@
 class Engine {
 public:
     Engine(std::string);
+    void Run();
     void AddSprite(Sprite*);
     ~Engine();
 private:
     bool is_running;
     Window* window;
-    void Run();
     void Quit();
 };
 #endif
