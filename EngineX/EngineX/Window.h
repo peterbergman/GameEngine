@@ -1,23 +1,13 @@
-#ifndef __EngineX__Window__
-#define __EngineX__Window__
+//
+//  Window.h
+//  EngineX
+//
+//  Created by Peter Bergman on 03/12/14.
+//  Copyright (c) 2014 Peter Bergman. All rights reserved.
+//
 
-#include "Engine.h"
+#ifndef EngineX_Window_h
+#define EngineX_Window_h
 
-namespace enginex {
-    class Window {
-    public:
-        Window(std::string, int, int);
-        SDL_Renderer* GetRenderer();
-        ~Window();
-    private:
-        int height, width;
-        std::string title;
-        SDL_Window* window;
-        SDL_Renderer* renderer;
-        void InitSDL();
-        void SetUpRenderer();
-        void SetUpWindow();
-    };
-}
 
 #endif
