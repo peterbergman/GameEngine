@@ -11,6 +11,7 @@ class Sprite {
 public:
     Sprite(std::string, int, int, int, int);
     void SetRenderer(SDL_Renderer*);
+    void SetUpTexture();
     void Draw();
     ~Sprite();
 private:

@@ -10,6 +10,13 @@ Sprite::Sprite(std::string file_name, int x_pos, int y_pos, int height, int widt
 
 void Sprite::SetRenderer(SDL_Renderer* renderer) {
     this->renderer = renderer;
+}
+
+void Sprite::Draw() {
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+}
+
+void Sprite::SetUpTexture() {
     SDL_Surface* surface = IMG_Load(file_name.c_str());
     if (surface == nullptr) { // TODO: throw exception to application
         std::cout << "Could not load image... :(" << std::endl;
@@ -20,10 +27,6 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
             std::cout << "Could not create texture... :(" << std::endl;
         }
     }
-}
-
-void Sprite::Draw() {
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
 }
 
 Sprite::~Sprite() {

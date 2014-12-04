@@ -15,6 +15,7 @@ SDL_Renderer* Window::GetRenderer() {
 
 void Window::AddSprite(Sprite* sprite) {
     sprite->SetRenderer(renderer);
+    sprite->SetUpTexture();
     sprites.push_back(sprite);
 }
 
