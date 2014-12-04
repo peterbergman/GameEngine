@@ -2,18 +2,20 @@
 #ifndef __EngineX__Sprite__
 #define __EngineX__Sprite__
 
+#include <iostream>
+#include <string>
+#include <SDL2/SDL.h>
+#include <SDL2_image/SDL_image.h>
 #include "Window.h"
-
-namespace enginex {
-    class Sprite {
-    public:
-        Sprite(std::string, int, int);
-        void SetWindow(Window*);
-        ~Sprite();
-    private:
-        Window* enginex_window;
-        SDL_Texture* texture;
-    };
-}
+class Window;
+class Sprite {
+public:
+    Sprite(std::string, int, int);
+    void SetWindow(Window*);
+    ~Sprite();
+private:
+    Window* window;
+    SDL_Texture* texture;
+};
 
 #endif
