@@ -3,6 +3,7 @@
 
 Window::Window(std::string title, int height, int width):title(title), height(height), width(width){
     InitSDL();
+    InitSDLImage();
     SetUpWindow();
     SetUpRenderer();
     SDL_RenderPresent(renderer);
@@ -20,6 +21,14 @@ void Window::AddSprite(Sprite* sprite) {
 void Window::InitSDL() { // TODO: throw error to application
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+    }
+}
+
+void Window::InitSDLImage() { // TODO: throw error to application
+    int img_flags = IMG_INIT_PNG;
+    if (!(IMG_Init( img_flags ) & img_flags )) {
+        std::cout << "IMG_Init Error: " << IMG_GetError() << std::endl;
+        SDL_Quit();
     }
 }
 

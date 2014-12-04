@@ -20,6 +20,7 @@ private:
     SDL_Renderer* renderer;
     std::vector<Sprite*> sprites;
     void InitSDL();
+    void InitSDLImage();
     void SetUpRenderer();
     void SetUpWindow();
 };
