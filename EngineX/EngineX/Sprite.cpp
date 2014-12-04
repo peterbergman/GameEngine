@@ -13,7 +13,7 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
 }
 
 void Sprite::Draw() {
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderCopy(renderer, texture, NULL, boundary);
 }
 
 void Sprite::SetUpTexture() {
