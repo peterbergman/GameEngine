@@ -20,9 +20,11 @@ void Window::AddSprite(Sprite* sprite) {
 }
 
 void Window::DrawSprites() {
+    SDL_RenderClear(renderer);
     for (Sprite* sprite : sprites) {
         sprite->Draw();
     }
+    SDL_RenderPresent(renderer);
 }
 
 void Window::InitSDL() { // TODO: throw error to application

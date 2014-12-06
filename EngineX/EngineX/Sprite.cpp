@@ -12,5 +12,5 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
 }
 
 Sprite::~Sprite() {
-    
+    // Destruction of the sprite is handled in the subclasses
 }

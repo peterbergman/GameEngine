@@ -29,9 +29,7 @@ void Engine::Run() {
                     break;
             }
         }
-        SDL_RenderClear(window->GetRenderer());
         window->DrawSprites();
-        SDL_RenderPresent(window->GetRenderer());
         SDL_Delay(50);
     }
 }
