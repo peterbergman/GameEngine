@@ -9,16 +9,14 @@
 
 class Sprite {
 public:
-    Sprite(std::string, int, int, int, int);
+    Sprite(int, int, int, int);
     void SetRenderer(SDL_Renderer*);
-    void SetUpTexture();
-    void Draw();
-    ~Sprite();
-private:
+    virtual void SetUpTexture() = 0;
+    virtual void Draw() = 0;
+    virtual ~Sprite();
+protected:
     SDL_Renderer* renderer;
-    SDL_Texture* texture;
     SDL_Rect* boundary;
-    std::string file_name;
 };
 
 #endif
