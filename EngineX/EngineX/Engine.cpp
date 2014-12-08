@@ -26,13 +26,8 @@ void Engine::Run() {
                         Quit();
                     }
                     break;
-                case SDL_KEYUP:
-                    break;
-                case SDL_MOUSEBUTTONDOWN:
-                    break;
-                case SDL_MOUSEBUTTONUP:
-                    break;
                 default:
+                    window->PropagateEventToSprites(event);
                     break;
             }
         }

@@ -13,6 +13,7 @@ public:
     SDL_Renderer* GetRenderer();
     void AddSprite(Sprite*);
     void DrawSprites();
+    void PropagateEventToSprites(SDL_Event);
     ~Window();
 private:
     int height, width;

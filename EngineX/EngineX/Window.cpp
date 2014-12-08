@@ -27,6 +27,14 @@ void Window::DrawSprites() {
     SDL_RenderPresent(renderer);
 }
 
+void Window::PropagateEventToSprites(SDL_Event sdl_event) {
+    ActionEvent action_event;
+    action_event.event = sdl_event;
+    for (Sprite* sprite : sprites) {
+        sprite->HandleEvent(action_event);
+    }
+}
+
 void Window::InitSDL() { // TODO: throw error to application
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
