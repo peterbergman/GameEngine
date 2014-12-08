@@ -35,7 +35,7 @@ void SpriteTimeListener(SDL_Event event) {
 int main(int argc, const char * argv[]) {
     Engine* game_engine = new Engine("My Game", 1);
     sprite->AddActionListener(SpriteListener);
-    sprite->AddTimeEventListener(SpriteTimeListener, 100);
+    sprite->AddTimeEventListener(SpriteTimeListener, 5000);
     game_engine->AddSprite(sprite);
     game_engine->Run();
     delete game_engine;

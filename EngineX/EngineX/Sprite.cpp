@@ -61,7 +61,11 @@ void Sprite::HandleActionEvent(SDL_Event event, bool mouse_event) {
 
 void Sprite::HandleTimeEvent(SDL_Event event) {
     for (std::pair<const int, action_listener>& entry : time_event_listeners) {
-        entry.second(event);
+        int fps = *((int*)event.user.data1);
+        int frame_counter = *((int*)event.user.data2);
+        if (frame_counter % (fps * ((entry.first-1000) / 1000)) == 0) {
+            entry.second(event);
+        }
     }
 }
 
