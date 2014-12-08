@@ -11,6 +11,10 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
     this->renderer = renderer;
 }
 
+void Sprite::AddActionListener(action_listener listener) {
+    action_listeners.push_back(listener);
+}
+
 Sprite::~Sprite() {
     // Destruction of the sprite is handled in the subclasses
 }
