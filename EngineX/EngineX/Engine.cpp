@@ -4,6 +4,7 @@ Uint32 Engine::time_event_type;
 
 Engine::Engine(std::string game_name, int fps) {
     this->fps = fps;
+    this->frame_counter = 0;
     window = new Window(game_name, 600, 800);
 }
 
