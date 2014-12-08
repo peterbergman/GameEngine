@@ -15,6 +15,12 @@ void Sprite::AddActionListener(action_listener listener) {
     action_listeners.push_back(listener);
 }
 
+void Sprite::HandleEvent(ActionEvent event) {
+    for (action_listener listener : action_listeners) {
+        listener(event);
+    }
+}
+
 Sprite::~Sprite() {
     // Destruction of the sprite is handled in the subclasses
 }

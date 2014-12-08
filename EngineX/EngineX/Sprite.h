@@ -9,7 +9,7 @@
 #include <SDL2_image/SDL_image.h>
 #include "ActionEvent.h"
 
-typedef void (*action_listener)(ActionEvent*);
+typedef void (*action_listener)(ActionEvent);
 
 class Sprite {
 public:
@@ -17,6 +17,7 @@ public:
     void SetRenderer(SDL_Renderer*);
     virtual void SetUpTexture() = 0;
     void AddActionListener(action_listener);
+    void HandleEvent(ActionEvent);
     virtual void Draw() = 0;
     virtual ~Sprite();
 protected:
