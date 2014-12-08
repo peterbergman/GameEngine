@@ -14,9 +14,13 @@ class Sprite {
 public:
     Sprite(int, int, int, int);
     void SetRenderer(SDL_Renderer*);
-    virtual void SetUpTexture() = 0;
     void AddActionListener(action_listener);
     void HandleEvent(SDL_Event);
+    void SetX(int);
+    void SetY(int);
+    int GetX();
+    int GetY();
+    virtual void SetUpTexture() = 0;
     virtual void Draw() = 0;
     virtual ~Sprite();
 protected:

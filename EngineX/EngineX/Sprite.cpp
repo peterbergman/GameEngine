@@ -15,10 +15,24 @@ void Sprite::AddActionListener(action_listener listener) {
     action_listeners.push_back(listener);
 }
 
+void Sprite::SetX(int x) {
+    this->boundary->x = x;
+}
+
+void Sprite::SetY(int y) {
+    this->boundary->y = y;
+}
+
+int Sprite::GetX() {
+    return boundary->x;
+}
+
+int Sprite::GetY() {
+    return boundary->y;
+}
+
 void Sprite::HandleEvent(SDL_Event event) {
-    
     bool mouse_event = (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL);
-    
     for (action_listener listener : action_listeners) {
         if (mouse_event) {
             if (Contains(event.button.x, event.button.y)) {
