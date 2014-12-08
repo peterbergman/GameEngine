@@ -25,9 +25,13 @@ void Engine::Run() {
                     if (event.key.keysym.sym == SDLK_ESCAPE) {
                         Quit();
                     }
+                    break;
                 case SDL_KEYUP:
+                    break;
                 case SDL_MOUSEBUTTONDOWN:
+                    break;
                 case SDL_MOUSEBUTTONUP:
+                    break;
                 default:
                     break;
             }

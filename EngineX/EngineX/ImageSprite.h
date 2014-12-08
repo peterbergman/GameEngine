@@ -9,9 +9,9 @@
 class ImageSprite : public Sprite {
 public:
     ImageSprite(std::string, int, int, int, int);
-    void SetUpTexture();
-    void Draw();
-    ~ImageSprite();
+    virtual void SetUpTexture();
+    virtual void Draw();
+    virtual ~ImageSprite();
 private:
     std::string file_name;
     SDL_Texture* texture;
