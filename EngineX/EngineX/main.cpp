@@ -3,8 +3,12 @@
 
 using namespace std;
 
-void Print(ActionEvent event) {
-    cout << "clicked!\n";
+void Print(SDL_Event event) {
+    if (event.type == SDL_MOUSEBUTTONDOWN) {
+        cout << "clicked!\n";
+    } else if (event.type == SDL_KEYDOWN) {
+        cout << "key down!\n";
+    }
 }
 
 int main(int argc, const char * argv[]) {
