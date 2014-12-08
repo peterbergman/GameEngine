@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
@@ -15,6 +16,7 @@ public:
     Sprite(int, int, int, int);
     void SetRenderer(SDL_Renderer*);
     void AddActionListener(action_listener);
+    void AddTimeEventListener(action_listener, int);
     void HandleEvent(SDL_Event);
     void SetX(int);
     void SetY(int);
@@ -26,11 +28,12 @@ public:
 protected:
     SDL_Renderer* renderer;
     SDL_Rect* boundary;
-    std::vector<action_listener> action_listeners;
 private:
+    std::vector<action_listener> action_event_listeners;
+    std::map<int, action_listener> time_event_listeners;
     bool Contains(int, int);
-    void HandleMouseEvent(SDL_Event, action_listener);
-    void HandleTimeEvent(SDL_Event, action_listener);
+    void HandleActionEvent(SDL_Event, bool);
+    void HandleTimeEvent(SDL_Event);
 };
 
 #endif

@@ -14,7 +14,11 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
 }
 
 void Sprite::AddActionListener(action_listener listener) {
-    action_listeners.push_back(listener);
+    action_event_listeners.push_back(listener);
+}
+
+void Sprite::AddTimeEventListener(action_listener listener, int delay) {
+    time_event_listeners[delay] = listener;
 }
 
 void Sprite::SetX(int x) {
@@ -34,25 +38,31 @@ int Sprite::GetY() {
 }
 
 void Sprite::HandleEvent(SDL_Event event) {
-    for (action_listener listener : action_listeners) {
-        if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
-            HandleMouseEvent(event, listener);
-        } else if (event.type == Engine::time_event_type) {
-            HandleTimeEvent(event, listener);
+    if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
+        HandleActionEvent(event, true);
+    } else if (event.type == Engine::time_event_type) {
+        HandleTimeEvent(event);
+    } else {
+        HandleActionEvent(event, false);
+    }
+}
+
+void Sprite::HandleActionEvent(SDL_Event event, bool mouse_event) {
+    for (action_listener listener : action_event_listeners) {
+        if (mouse_event) {
+            if (Contains(event.button.x, event.button.y)) {
+                listener(event);
+            }
         } else {
             listener(event);
         }
     }
 }
 
-void Sprite::HandleMouseEvent(SDL_Event event, action_listener listener) {
-    if (Contains(event.button.x, event.button.y)) {
-        listener(event);
+void Sprite::HandleTimeEvent(SDL_Event event) {
+    for (std::pair<const int, action_listener>& entry : time_event_listeners) {
+        entry.second(event);
     }
-}
-
-void Sprite::HandleTimeEvent(SDL_Event event, action_listener listener) {
-    std::cout << "Handle time event\n";
 }
 
 
