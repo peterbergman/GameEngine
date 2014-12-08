@@ -15,10 +15,23 @@ void Sprite::AddActionListener(action_listener listener) {
     action_listeners.push_back(listener);
 }
 
-void Sprite::HandleEvent(ActionEvent event) {
+void Sprite::HandleEvent(SDL_Event event) {
+    
+    bool mouse_event = (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL);
+    
     for (action_listener listener : action_listeners) {
-        listener(event);
+        if (mouse_event) {
+            if (Contains(event.button.x, event.button.y)) {
+                listener(event);
+            }
+        } else {
+            listener(event);
+        }
     }
+}
+
+bool Sprite::Contains(int x, int y) {
+    return x >= boundary->x && x <= (boundary->x+boundary->w) && y >= boundary->y && y <= (boundary->y+boundary->h);
 }
 
 Sprite::~Sprite() {
