@@ -25,6 +25,7 @@ private:
     void InitSDLImage();
     void SetUpRenderer();
     void SetUpWindow();
+    bool Contains(int, int);
 };
 
 #endif

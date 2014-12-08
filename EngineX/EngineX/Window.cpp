@@ -21,8 +21,14 @@ void Window::AddSprite(Sprite* sprite) {
 
 void Window::DrawSprites() {
     SDL_RenderClear(renderer);
-    for (Sprite* sprite : sprites) {
-        sprite->Draw();
+    for (int i = 0; i < sprites.size(); i++) {
+        Sprite* current_sprite = sprites[i];
+        if (!Contains(current_sprite->GetX(), current_sprite->GetY())) {
+            delete current_sprite;
+            sprites.erase(sprites.begin()+i);
+        } else {
+            current_sprite->Draw();
+        }
     }
     SDL_RenderPresent(renderer);
 }
@@ -62,6 +68,10 @@ void Window::SetUpWindow() { // TODO: throw error to application
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
     }
+}
+
+bool Window::Contains(int x, int y) {
+    return x >= 0 && x <= width && y >= 0 && y <= height;
 }
 
 Window::~Window() {
