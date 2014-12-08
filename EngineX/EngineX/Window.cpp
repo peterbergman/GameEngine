@@ -24,7 +24,7 @@ void Window::DrawSprites() {
     for (int i = 0; i < sprites.size(); i++) {
         Sprite* current_sprite = sprites[i];
         if (!Contains(current_sprite->GetX(), current_sprite->GetY())) {
-            delete current_sprite;
+            delete current_sprite; // TODO: fix bug where the sprite goes outside up or to the left
             sprites.erase(sprites.begin()+i);
         } else {
             current_sprite->Draw();
