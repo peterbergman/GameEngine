@@ -29,7 +29,7 @@ void SpriteListener(SDL_Event event) {
 }
 
 int main(int argc, const char * argv[]) {
-    Engine* game_engine = new Engine("My Game");
+    Engine* game_engine = new Engine("My Game", 1);
     sprite->AddActionListener(SpriteListener);
     game_engine->AddSprite(sprite);
     game_engine->Run();
