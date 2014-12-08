@@ -1,4 +1,6 @@
 #include "Sprite.h"
+#include "Engine.h"
+
 Sprite::Sprite(int x_pos, int y_pos, int height, int width) {
     boundary = new SDL_Rect();
     boundary->x = x_pos;
@@ -38,6 +40,8 @@ void Sprite::HandleEvent(SDL_Event event) {
             if (Contains(event.button.x, event.button.y)) {
                 listener(event);
             }
+        } else if (event.type == Engine::time_event_type) {
+            std::cout << "Handle time event\n";
         } else {
             listener(event);
         }
