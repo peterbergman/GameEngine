@@ -27,11 +27,9 @@ void Window::DrawSprites() {
     SDL_RenderPresent(renderer);
 }
 
-void Window::PropagateEventToSprites(SDL_Event sdl_event) {
-    ActionEvent action_event;
-    action_event.event = sdl_event;
+void Window::PropagateEventToSprites(SDL_Event event) {
     for (Sprite* sprite : sprites) {
-        sprite->HandleEvent(action_event);
+        sprite->HandleEvent(event);
     }
 }
 

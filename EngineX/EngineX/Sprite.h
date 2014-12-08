@@ -7,9 +7,8 @@
 #include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
-#include "ActionEvent.h"
 
-typedef void (*action_listener)(ActionEvent);
+typedef void (*action_listener)(SDL_Event);
 
 class Sprite {
 public:
@@ -17,13 +16,15 @@ public:
     void SetRenderer(SDL_Renderer*);
     virtual void SetUpTexture() = 0;
     void AddActionListener(action_listener);
-    void HandleEvent(ActionEvent);
+    void HandleEvent(SDL_Event);
     virtual void Draw() = 0;
     virtual ~Sprite();
 protected:
     SDL_Renderer* renderer;
     SDL_Rect* boundary;
     std::vector<action_listener> action_listeners;
+private:
+    bool Contains(int, int);
 };
 
 #endif
