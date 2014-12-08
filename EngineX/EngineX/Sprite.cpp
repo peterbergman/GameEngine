@@ -34,19 +34,27 @@ int Sprite::GetY() {
 }
 
 void Sprite::HandleEvent(SDL_Event event) {
-    bool mouse_event = (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL);
     for (action_listener listener : action_listeners) {
-        if (mouse_event) {
-            if (Contains(event.button.x, event.button.y)) {
-                listener(event);
-            }
+        if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
+            HandleMouseEvent(event, listener);
         } else if (event.type == Engine::time_event_type) {
-            std::cout << "Handle time event\n";
+            HandleTimeEvent(event, listener);
         } else {
             listener(event);
         }
     }
 }
+
+void Sprite::HandleMouseEvent(SDL_Event event, action_listener listener) {
+    if (Contains(event.button.x, event.button.y)) {
+        listener(event);
+    }
+}
+
+void Sprite::HandleTimeEvent(SDL_Event event, action_listener listener) {
+    std::cout << "Handle time event\n";
+}
+
 
 bool Sprite::Contains(int x, int y) {
     return x >= boundary->x && x <= (boundary->x+boundary->w) && y >= boundary->y && y <= (boundary->y+boundary->h);

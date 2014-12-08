@@ -29,6 +29,8 @@ protected:
     std::vector<action_listener> action_listeners;
 private:
     bool Contains(int, int);
+    void HandleMouseEvent(SDL_Event, action_listener);
+    void HandleTimeEvent(SDL_Event, action_listener);
 };
 
 #endif
