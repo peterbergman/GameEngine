@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 
 struct ActionEvent {
-    SDL_Event* event;
+    SDL_Event event;
 };
 
 #endif
