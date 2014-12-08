@@ -12,13 +12,17 @@
 
 class Engine {
 public:
-    Engine(std::string);
+    Engine(std::string, int);
     void Run();
     void AddSprite(Sprite*);
+    static Uint32 time_event_type;
     ~Engine();
 private:
     bool is_running;
     Window* window;
+    int fps;
+    int frame_counter;
     void Quit();
+    void RegisterTimeEvent();
 };
 #endif
