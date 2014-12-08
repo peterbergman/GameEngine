@@ -28,9 +28,14 @@ void SpriteListener(SDL_Event event) {
     }
 }
 
+void SpriteTimeListener(SDL_Event event) {
+    std::cout << "Found time event listener!\n";
+}
+
 int main(int argc, const char * argv[]) {
     Engine* game_engine = new Engine("My Game", 1);
     sprite->AddActionListener(SpriteListener);
+    sprite->AddTimeEventListener(SpriteTimeListener, 100);
     game_engine->AddSprite(sprite);
     game_engine->Run();
     delete game_engine;
