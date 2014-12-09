@@ -12,6 +12,7 @@ public:
     Window(std::string, int, int);
     SDL_Renderer* GetRenderer();
     void AddSprite(Sprite*);
+    std::vector<Sprite*> GetSprites();
     void DrawSprites();
     void PropagateEventToSprites(SDL_Event);
     ~Window();

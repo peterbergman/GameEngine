@@ -19,6 +19,10 @@ void Window::AddSprite(Sprite* sprite) {
     sprites.push_back(sprite);
 }
 
+std::vector<Sprite*> Window::GetSprites() {
+    return sprites;
+}
+
 void Window::DrawSprites() {
     SDL_RenderClear(renderer);
     for (int i = 0; i < sprites.size(); i++) {
