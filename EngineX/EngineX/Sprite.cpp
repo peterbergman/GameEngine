@@ -64,7 +64,7 @@ void Sprite::HandleTimeEvent(SDL_Event event) {
     for (std::pair<const int, action_listener>& entry : time_event_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);
-        int rhs = (int)(round(((fps / 1000.0 ) * entry.first))); // TODO: check if round is needed here...
+        int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));
         if (rhs > 0) {
             int result = frame_counter % rhs;
             if (result == 0) {

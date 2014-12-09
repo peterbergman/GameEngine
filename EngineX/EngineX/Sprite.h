@@ -22,6 +22,7 @@ public:
     void SetY(int);
     int GetX();
     int GetY();
+    bool Contains(int, int);
     virtual void SetUpTexture() = 0;
     virtual void Draw() = 0;
     virtual ~Sprite();
@@ -31,7 +32,6 @@ protected:
 private:
     std::vector<action_listener> action_event_listeners;
     std::map<int, action_listener> time_event_listeners;
-    bool Contains(int, int);
     void HandleActionEvent(SDL_Event, bool);
     void HandleTimeEvent(SDL_Event);
 };
