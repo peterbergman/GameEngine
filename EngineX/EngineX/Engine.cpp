@@ -29,6 +29,16 @@ void Engine::RegisterTimeEvent() {
     }
 }
 
+void Engine::DetectCollision() {
+    for (Sprite* sprite : window->GetSprites()) {
+        for (Sprite* other_sprite : window->GetSprites()) {
+            if (sprite != other_sprite && sprite->Contains(other_sprite->GetX(), other_sprite->GetY())) {
+                std::cout << "Collision detected!\n";
+            }
+        }
+    }
+}
+
 void Engine::Run() {
     is_running = true;
     while (is_running) {
@@ -55,6 +65,7 @@ void Engine::Run() {
         window->DrawSprites();
         frame_counter++;
         RegisterTimeEvent();
+        DetectCollision();
         SDL_Delay(1000 / fps);
     }
 }

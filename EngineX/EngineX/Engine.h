@@ -24,5 +24,6 @@ private:
     int frame_counter;
     void Quit();
     void RegisterTimeEvent();
+    void DetectCollision();
 };
 #endif
