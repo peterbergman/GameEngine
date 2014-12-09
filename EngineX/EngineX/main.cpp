@@ -3,24 +3,26 @@
 
 using namespace std;
 
-Sprite* sprite = new ImageSprite("/Users/Peter/Desktop/include.png", 30, 30, 80, 163);
+Sprite* sprite1 = new ImageSprite("/Users/Peter/Desktop/include.png", 30, 30, 80, 163);
+Sprite* sprite2 = new ImageSprite("/Users/Peter/Desktop/include.png", 500, 30, 80, 163);
 
-void SpriteListener(SDL_Event event) {
+
+void SpriteL1istener(SDL_Event event) {
     if (event.type == SDL_MOUSEBUTTONDOWN) {
         cout << "click!\n";
     } else if (event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
             case SDLK_UP:
-                sprite->SetY(sprite->GetY() - 10);
+                sprite1->SetY(sprite1->GetY() - 10);
                 break;
             case SDLK_DOWN:
-                sprite->SetY(sprite->GetY() + 10);
+                sprite1->SetY(sprite1->GetY() + 10);
                 break;
             case SDLK_LEFT:
-                sprite->SetX(sprite->GetX() - 10);
+                sprite1->SetX(sprite1->GetX() - 10);
                 break;
             case SDLK_RIGHT:
-                sprite->SetX(sprite->GetX() + 10);
+                sprite1->SetX(sprite1->GetX() + 10);
                 break;
             default:
                 break;
@@ -28,15 +30,24 @@ void SpriteListener(SDL_Event event) {
     }
 }
 
-void SpriteTimeListener(SDL_Event event) {
-    sprite->SetX(sprite->GetX()+1);
+void Sprite1TimeListener(SDL_Event event) {
+    sprite1->SetX(sprite1->GetX()+1);
+}
+
+void Sprite2TimeListener(SDL_Event event) {
+    sprite2->SetX(sprite2->GetX()-1);
 }
 
 int main(int argc, const char * argv[]) {
     Engine* game_engine = new Engine("My Game", 20);
-    sprite->AddActionListener(SpriteListener);
-    sprite->AddTimeEventListener(SpriteTimeListener, 50);
-    game_engine->AddSprite(sprite);
+    
+    sprite1->AddActionListener(SpriteL1istener);
+    sprite1->AddTimeEventListener(Sprite1TimeListener, 50);
+    game_engine->AddSprite(sprite1);
+    
+    sprite2->AddTimeEventListener(Sprite2TimeListener, 50);
+    game_engine->AddSprite(sprite2);
+    
     game_engine->Run();
     delete game_engine;
     return 0;
