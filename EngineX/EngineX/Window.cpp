@@ -62,7 +62,7 @@ int Window::GetHeight() {
 }
 
 void Window::SetBackground(std::string background_image_path) {
-    Sprite* background_sprite = new ImageSprite(background_image_path, 0, 0, 1280, 1024);
+    Sprite* background_sprite = new ImageSprite(background_image_path, 0, 0, width , height);
     AddSprite(background_sprite);
 }
 
