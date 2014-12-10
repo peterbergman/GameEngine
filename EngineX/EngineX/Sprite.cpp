@@ -89,7 +89,7 @@ bool Sprite::Contains(int x, int y) {
     return x >= boundary->x && x <= (boundary->x+boundary->w) && y >= boundary->y && y <= (boundary->y+boundary->h);
 }
 
-bool Sprite::Contains(Sprite* other_sprite) {
+bool Sprite::Contains(Sprite* other_sprite) {    
     SDL_Point upper_left = {other_sprite->GetX(), other_sprite->GetY()};
     SDL_Point upper_right = {other_sprite->GetX() + other_sprite->GetWidth(), other_sprite->GetY()};
     SDL_Point lower_left = {other_sprite->GetX(), other_sprite->GetY() + other_sprite->GetHeight()};

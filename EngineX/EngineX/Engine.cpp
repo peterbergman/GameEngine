@@ -56,7 +56,7 @@ void Engine::RegisterTimeEvent() {
 void Engine::DetectCollision() {
     for (Sprite* sprite : window->GetSprites()) {
         for (Sprite* other_sprite : window->GetSprites()) {
-            if (sprite != other_sprite && sprite->Contains(other_sprite)) {
+            if (sprite != other_sprite && sprite->Contains(other_sprite)) { // TODO: transparent pixels
                 if (current_collision_listener != nullptr) {
                     current_collision_listener(sprite, other_sprite);
                 }
