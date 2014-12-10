@@ -52,6 +52,14 @@ void Window::PropagateEventToSprites(SDL_Event event) {
     }
 }
 
+int Window::GetWidth() {
+    return width;
+}
+
+int Window::GetHeight() {
+    return height;
+}
+
 void Window::InitSDL() { // TODO: throw error to application
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;

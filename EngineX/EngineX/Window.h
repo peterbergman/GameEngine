@@ -16,6 +16,8 @@ public:
     std::vector<Sprite*> GetSprites();
     void DrawSprites();
     void PropagateEventToSprites(SDL_Event);
+    int GetWidth();
+    int GetHeight();
     ~Window();
 private:
     int height, width;
