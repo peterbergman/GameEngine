@@ -37,7 +37,8 @@ void Window::DrawSprites() {
     SDL_RenderClear(renderer);
     for (int i = 0; i < sprites.size(); i++) {
         Sprite* current_sprite = sprites[i];
-        if (!Contains(current_sprite->GetX(), current_sprite->GetY())) {
+        if (!Contains(current_sprite->GetX(), current_sprite->GetY()) &&
+                      !Contains(current_sprite->GetX()+current_sprite->GetWidth(), current_sprite->GetY()+current_sprite->GetHeight())) {
             delete current_sprite; // TODO: fix bug where the sprite goes outside up or to the left
             sprites.erase(sprites.begin() + i);
         } else {

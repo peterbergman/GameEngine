@@ -18,7 +18,7 @@ class Engine {
 public:
     Engine(std::string, int, int, int);
     void Run();
-    void AddSprite(Sprite*);
+    void AddSprite(Sprite*); // TODO: implement layers?
     void RemoveSprite(Sprite*);
     void SetCollisionListener(collision_listener);
     int GetWindowWidth();
