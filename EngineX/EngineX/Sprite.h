@@ -24,6 +24,8 @@ public:
     void SetY(int);
     int GetX();
     int GetY();
+    int GetWidth();
+    int GetHeight();
     bool Contains(int, int);
     virtual void SetUpTexture() = 0;
     virtual void Draw() = 0;

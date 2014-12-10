@@ -38,6 +38,14 @@ int Sprite::GetY() {
     return boundary->y;
 }
 
+int Sprite::GetWidth() {
+    return boundary->w;
+}
+
+int Sprite::GetHeight() {
+    return boundary->h;
+}
+
 void Sprite::HandleEvent(SDL_Event event) {
     if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
         HandleActionEvent(event, true);
