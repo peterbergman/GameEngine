@@ -37,9 +37,8 @@ void Window::DrawSprites() {
     SDL_RenderClear(renderer);
     for (int i = 0; i < sprites.size(); i++) {
         Sprite* current_sprite = sprites[i];
-        if (!Contains(current_sprite->GetX(), current_sprite->GetY()) &&
-                      !Contains(current_sprite->GetX()+current_sprite->GetWidth(), current_sprite->GetY()+current_sprite->GetHeight())) {
-            delete current_sprite; // TODO: fix bug where the sprite goes outside up or to the left
+        if (!Contains(current_sprite)) {
+            delete current_sprite;
             sprites.erase(sprites.begin() + i);
         } else {
             current_sprite->Draw();
@@ -100,6 +99,18 @@ void Window::SetUpWindow() { // TODO: throw error to application
 
 bool Window::Contains(int x, int y) {
     return x >= 0 && x <= width && y >= 0 && y <= height;
+}
+
+bool Window::Contains(Sprite* sprite) {
+    SDL_Point sprite_upper_left = {sprite->GetX(), sprite->GetY()};
+    SDL_Point sprite_upper_right = {sprite->GetX() + sprite->GetWidth(), sprite->GetY()};
+    SDL_Point sprite_lower_left = {sprite->GetX(), sprite->GetY() + sprite->GetHeight()};
+    SDL_Point sprite_lower_right = {sprite->GetX() + sprite->GetWidth(), sprite->GetY() + sprite->GetHeight()};
+    return Contains(sprite_upper_left.x, sprite_upper_left.y)
+            || Contains(sprite_upper_right.x, sprite_upper_right.y)
+            || Contains(sprite_lower_left.x, sprite_lower_left.y)
+            || Contains(sprite_lower_right.x, sprite_lower_right.y);
+    
 }
 
 Window::~Window() {

@@ -31,6 +31,7 @@ private:
     void SetUpRenderer();
     void SetUpWindow();
     bool Contains(int, int);
+    bool Contains(Sprite*);
 };
 
 #endif

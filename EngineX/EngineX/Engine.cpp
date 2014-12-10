@@ -53,7 +53,7 @@ void Engine::RegisterTimeEvent() {
     }
 }
 
-void Engine::DetectCollision() { // TODO: improve the collision detection algorithm
+void Engine::DetectCollision() {
     for (Sprite* sprite : window->GetSprites()) {
         for (Sprite* other_sprite : window->GetSprites()) {
             if (sprite != other_sprite && sprite->Contains(other_sprite)) {
