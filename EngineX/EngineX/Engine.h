@@ -10,11 +10,15 @@
 #include "ImageSprite.h"
 #include "Window.h"
 
+typedef void (*collision_listener)(Sprite*,Sprite*);
+
 class Engine {
 public:
     Engine(std::string, int);
     void Run();
     void AddSprite(Sprite*);
+    void RemoveSprite(Sprite*);
+    void SetCollisionListener(collision_listener);
     static Uint32 time_event_type;
     ~Engine();
 private:
@@ -22,7 +26,9 @@ private:
     Window* window;
     int fps;
     int frame_counter;
+    collision_listener current_collision_listener;
     void Quit();
+    void PollEvent();
     void RegisterTimeEvent();
     void DetectCollision();
 };

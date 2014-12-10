@@ -12,6 +12,14 @@ void Engine::AddSprite(Sprite* sprite) {
     window->AddSprite(sprite);
 }
 
+void Engine::RemoveSprite(Sprite* sprite) {
+    window->RemoveSprite(sprite);
+}
+
+void Engine::SetCollisionListener(collision_listener listener) {
+    current_collision_listener = listener;
+}
+
 void Engine::Quit() {
     is_running = false;
 }
@@ -33,8 +41,33 @@ void Engine::DetectCollision() {
     for (Sprite* sprite : window->GetSprites()) {
         for (Sprite* other_sprite : window->GetSprites()) {
             if (sprite != other_sprite && sprite->Contains(other_sprite->GetX(), other_sprite->GetY())) {
-                std::cout << "Collision detected!\n";
+                if (current_collision_listener != nullptr) {
+                    current_collision_listener(sprite, other_sprite);
+                }
             }
+        }
+    }
+}
+
+void Engine::PollEvent() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+            case SDL_KEYDOWN:
+            case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONUP:
+            case SDL_MOUSEMOTION:
+            case SDL_MOUSEWHEEL:
+                window->PropagateEventToSprites(event);
+                break;
+            case SDL_QUIT:
+                Quit();
+                break;
+            default:
+                if (event.type == time_event_type) { // TODO: refactor this messy construct if possible
+                    window->PropagateEventToSprites(event);
+                }
+                break;
         }
     }
 }
@@ -42,26 +75,7 @@ void Engine::DetectCollision() {
 void Engine::Run() {
     is_running = true;
     while (is_running) {
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            switch (event.type) {
-                case SDL_KEYDOWN:
-                case SDL_MOUSEBUTTONDOWN:
-                case SDL_MOUSEBUTTONUP:
-                case SDL_MOUSEMOTION:
-                case SDL_MOUSEWHEEL:
-                    window->PropagateEventToSprites(event);
-                    break;
-                case SDL_QUIT:
-                    Quit();
-                    break;
-                default:
-                    if (event.type == time_event_type) { // TODO: refactor this messy construct if possible
-                        window->PropagateEventToSprites(event);
-                    }
-                    break;
-            }
-        }
+        PollEvent();
         window->DrawSprites();
         frame_counter++;
         RegisterTimeEvent();
