@@ -89,6 +89,17 @@ bool Sprite::Contains(int x, int y) {
     return x >= boundary->x && x <= (boundary->x+boundary->w) && y >= boundary->y && y <= (boundary->y+boundary->h);
 }
 
+bool Sprite::Contains(Sprite* other_sprite) {
+    SDL_Point upper_left = {other_sprite->GetX(), other_sprite->GetY()};
+    SDL_Point upper_right = {other_sprite->GetX() + other_sprite->GetWidth(), other_sprite->GetY()};
+    SDL_Point lower_left = {other_sprite->GetX(), other_sprite->GetY() + other_sprite->GetHeight()};
+    SDL_Point lower_right = {other_sprite->GetX() + other_sprite->GetWidth(), other_sprite->GetY() + other_sprite->GetHeight()};
+    return Contains(upper_left.x, upper_left.y)
+            || Contains(upper_right.x, upper_right.y)
+            || Contains(lower_left.x, lower_left.y)
+            || Contains(lower_right.x, lower_right.y);
+}
+
 Sprite::~Sprite() {
     // Destruction of the sprite is handled in the subclasses
 }
