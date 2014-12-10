@@ -20,6 +20,18 @@ void Engine::SetCollisionListener(collision_listener listener) {
     current_collision_listener = listener;
 }
 
+int Engine::GetWindowWidth() {
+    return window->GetWidth();
+}
+
+int Engine::GetWindowHeight() {
+    return window->GetHeight();
+}
+
+void Engine::AddTimeEventListener(time_event_listener listener, int delay) {
+    time_event_listeners[delay] = listener;
+}
+
 void Engine::Quit() {
     is_running = false;
 }
@@ -37,7 +49,7 @@ void Engine::RegisterTimeEvent() {
     }
 }
 
-void Engine::DetectCollision() {
+void Engine::DetectCollision() { // TODO: improve the collision detection algorithm
     for (Sprite* sprite : window->GetSprites()) {
         for (Sprite* other_sprite : window->GetSprites()) {
             if (sprite != other_sprite && sprite->Contains(other_sprite->GetX(), other_sprite->GetY())) {
@@ -45,6 +57,22 @@ void Engine::DetectCollision() {
                     current_collision_listener(sprite, other_sprite);
                 }
             }
+        }
+    }
+}
+
+void Engine::HandleTimeEvent(SDL_Event event) {
+    for (std::pair<const int, time_event_listener>& entry : time_event_listeners) {
+        int fps = *((int*)event.user.data1);
+        int frame_counter = *((int*)event.user.data2);
+        int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));
+        if (rhs > 0) {
+            int result = frame_counter % rhs;
+            if (result == 0) {
+                entry.second(event);
+            }
+        } else {
+            entry.second(event);
         }
     }
 }
