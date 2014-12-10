@@ -18,6 +18,7 @@ public:
     void PropagateEventToSprites(SDL_Event);
     int GetWidth();
     int GetHeight();
+    void SetBackground(std::string);
     ~Window();
 private:
     int height, width;

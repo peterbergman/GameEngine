@@ -16,7 +16,7 @@ typedef void (*time_event_listener)(SDL_Event);
 
 class Engine {
 public:
-    Engine(std::string, int);
+    Engine(std::string, int, int, int);
     void Run();
     void AddSprite(Sprite*);
     void RemoveSprite(Sprite*);
@@ -24,6 +24,7 @@ public:
     int GetWindowWidth();
     int GetWindowHeight();
     void AddTimeEventListener(time_event_listener, int);
+    void SetScene(std::string);
     static Uint32 time_event_type;
     ~Engine();
 private:

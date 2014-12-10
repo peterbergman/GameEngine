@@ -2,10 +2,10 @@
 
 Uint32 Engine::time_event_type;
 
-Engine::Engine(std::string game_name, int fps) {
+Engine::Engine(std::string game_name, int fps, int window_width, int window_height) {
     this->fps = fps;
     this->frame_counter = 0;
-    window = new Window(game_name, 600, 800);
+    window = new Window(game_name, window_width, window_height);
 }
 
 void Engine::AddSprite(Sprite* sprite) {
@@ -30,6 +30,10 @@ int Engine::GetWindowHeight() {
 
 void Engine::AddTimeEventListener(time_event_listener listener, int delay) {
     time_event_listeners[delay] = listener;
+}
+
+void Engine::SetScene(std::string scene_background) {
+    window->SetBackground(scene_background);
 }
 
 void Engine::Quit() {
@@ -94,6 +98,7 @@ void Engine::PollEvent() {
             default:
                 if (event.type == time_event_type) { // TODO: refactor this messy construct if possible
                     window->PropagateEventToSprites(event);
+                    HandleTimeEvent(event);
                 }
                 break;
         }

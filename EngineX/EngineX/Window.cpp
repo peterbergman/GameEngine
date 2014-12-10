@@ -1,7 +1,8 @@
 #include "Window.h"
 #include "Sprite.h"
+#include "ImageSprite.h"
 
-Window::Window(std::string title, int height, int width):title(title), height(height), width(width){
+Window::Window(std::string title, int width, int height):title(title), width(width), height(height){
     InitSDL();
     InitSDLImage();
     SetUpWindow();
@@ -58,6 +59,11 @@ int Window::GetWidth() {
 
 int Window::GetHeight() {
     return height;
+}
+
+void Window::SetBackground(std::string background_image_path) {
+    Sprite* background_sprite = new ImageSprite(background_image_path, 0, 0, 1280, 1024);
+    AddSprite(background_sprite);
 }
 
 void Window::InitSDL() { // TODO: throw error to application
