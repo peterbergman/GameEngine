@@ -56,7 +56,7 @@ void TimeEventListener(SDL_Event event) {
     // increase the y coordinate of the sprite with 5
     // set the new sprite time event listener to Sprite3TimeListener with random delay
     int x_pos = rand() % game_engine->GetWindowWidth() + 1;
-    int delay = rand() % 100 + 50;
+    int delay = rand() % 50 + 15;
     Sprite* tmpSprite = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowflake.png", x_pos, 0, 30, 30);
     tmpSprite->AddTimeEventListener(SnowflakeTimeListener, delay);
     game_engine->AddSprite(tmpSprite);
@@ -73,7 +73,7 @@ int main(int argc, const char * argv[]) {
     //sprite2->AddTimeEventListener(Sprite2TimeListener, 50);
     //game_engine->AddSprite(sprite2);
     
-    game_engine->AddTimeEventListener(TimeEventListener, 1000);
+    game_engine->AddTimeEventListener(TimeEventListener, 500);
     
     game_engine->SetCollisionListener(CollisionListener);
     
