@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "Engine.h"
 
-Sprite::Sprite(int x_pos, int y_pos, int height, int width) {
+Sprite::Sprite(int x_pos, int y_pos, int width, int height) {
     boundary = new SDL_Rect();
     boundary->x = x_pos;
     boundary->y = y_pos;
