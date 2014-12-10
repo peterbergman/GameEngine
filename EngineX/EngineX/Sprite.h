@@ -9,7 +9,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
-typedef void (*action_listener)(SDL_Event);
+class Sprite;
+
+typedef void (*action_listener)(SDL_Event, Sprite*);
 
 class Sprite {
 public:
