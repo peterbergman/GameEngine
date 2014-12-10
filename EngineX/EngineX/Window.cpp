@@ -19,6 +19,15 @@ void Window::AddSprite(Sprite* sprite) {
     sprites.push_back(sprite);
 }
 
+void Window::RemoveSprite(Sprite* sprite) {
+    delete sprite;
+    for (int i = 0; i < sprites.size(); i++) {
+        if (sprite == sprites[i]) {
+            sprites.erase(sprites.begin() + i);
+        }
+    }
+}
+
 std::vector<Sprite*> Window::GetSprites() {
     return sprites;
 }
@@ -29,7 +38,7 @@ void Window::DrawSprites() {
         Sprite* current_sprite = sprites[i];
         if (!Contains(current_sprite->GetX(), current_sprite->GetY())) {
             delete current_sprite; // TODO: fix bug where the sprite goes outside up or to the left
-            sprites.erase(sprites.begin()+i);
+            sprites.erase(sprites.begin() + i);
         } else {
             current_sprite->Draw();
         }
