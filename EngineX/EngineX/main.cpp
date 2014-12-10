@@ -6,12 +6,14 @@
 using namespace std;
 
 Engine* game_engine = new Engine("My Game", 60, 800, 600);
-Sprite* sprite1 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 30, 200, 256);
-//Sprite* sprite2 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/include.png", 500, 30, 163, 80);
+Sprite* snowman1 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 30, 200, 256);
+Sprite* snowman2 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 30, 200, 256);
 
 
 void CollisionListener(Sprite* sprite1, Sprite* sprite2) {
-    //cout << "Collision detected!\n";
+    if (sprite1 == snowman1 && sprite2 == snowman2) {
+        cout << "Collision detected!\n";
+    }
     //game_engine->RemoveSprite(sprite1);
     //game_engine->RemoveSprite(sprite2);
 }
@@ -66,12 +68,12 @@ int main(int argc, const char * argv[]) {
     srand(time(NULL));
     game_engine->SetScene("/Users/Peter/Documents/DSV/Prog3/images/winter.png");
     
-    sprite1->AddActionListener(SpriteL1istener);
+    snowman1->AddActionListener(SpriteL1istener);
     //sprite1->AddTimeEventListener(Sprite1TimeListener, 50);
-    game_engine->AddSprite(sprite1);
+    game_engine->AddSprite(snowman1);
     
     //sprite2->AddTimeEventListener(Sprite2TimeListener, 50);
-    //game_engine->AddSprite(sprite2);
+    game_engine->AddSprite(snowman2);
     
     game_engine->AddTimeEventListener(TimeEventListener, 500);
     
