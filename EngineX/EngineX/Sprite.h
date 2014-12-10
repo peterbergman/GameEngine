@@ -27,6 +27,7 @@ public:
     int GetWidth();
     int GetHeight();
     bool Contains(int, int);
+    bool Contains(Sprite*);
     virtual void SetUpTexture() = 0;
     virtual void Draw() = 0;
     virtual ~Sprite();

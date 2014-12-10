@@ -56,7 +56,7 @@ void Engine::RegisterTimeEvent() {
 void Engine::DetectCollision() { // TODO: improve the collision detection algorithm
     for (Sprite* sprite : window->GetSprites()) {
         for (Sprite* other_sprite : window->GetSprites()) {
-            if (sprite != other_sprite && sprite->Contains(other_sprite->GetX(), other_sprite->GetY())) {
+            if (sprite != other_sprite && sprite->Contains(other_sprite)) {
                 if (current_collision_listener != nullptr) {
                     current_collision_listener(sprite, other_sprite);
                 }
