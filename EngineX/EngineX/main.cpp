@@ -1,13 +1,20 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include "Engine.h"
 
 using namespace std;
 
 Engine* game_engine = new Engine("My Game", 60, 800, 600);
-Sprite* snowman1 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 30, 200, 256);
+Sprite* snowman1 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 270, 200, 256);
 Sprite* snowman2 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 30, 200, 256);
+Sprite* ground = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/ground.png", 0, 513, 1024, 87);
+
+// Jump stuff
+double vi = -200, t = 0;
+double g = 200;
+bool is_jumping = false;
 
 
 void CollisionListener(Sprite* sprite1, Sprite* sprite2) {
@@ -18,7 +25,19 @@ void CollisionListener(Sprite* sprite1, Sprite* sprite2) {
     //game_engine->RemoveSprite(sprite2);
 }
 
-void SpriteL1istener(SDL_Event event, Sprite* sprite) {
+void Jump(SDL_Event event, Sprite* sprite) {
+    if (is_jumping) {
+        sprite->SetY((vi * t + g * t * t / 2) + 270);
+        t = t + game_engine->GetTimeElapsed() + 0.04;
+        
+        if (sprite->GetY() > 270) {
+            t = 0;
+            is_jumping = false;
+        }
+    }
+}
+
+void Snowman1Listener(SDL_Event event, Sprite* sprite) {
     if (event.type == SDL_MOUSEBUTTONDOWN) {
         cout << "click!\n";
     } else if (event.type == SDL_KEYDOWN) {
@@ -35,19 +54,15 @@ void SpriteL1istener(SDL_Event event, Sprite* sprite) {
             case SDLK_RIGHT:
                 sprite->SetX(sprite->GetX() + 20);
                 break;
+            case SDLK_SPACE:
+                is_jumping = true;
+                sprite->AddTimeEventListener(Jump, 0);
             default:
                 break;
         }
     }
 }
 
-void Sprite1TimeListener(SDL_Event event, Sprite* sprite) {
-    sprite->SetX(sprite->GetX()+1);
-}
-
-void Sprite2TimeListener(SDL_Event event, Sprite* sprite) {
-    sprite->SetX(sprite->GetX()-1);
-}
 
 void SnowflakeTimeListener(SDL_Event event, Sprite* sprite) {
     sprite->SetY(sprite->GetY() + 5);
@@ -67,16 +82,11 @@ void TimeEventListener(SDL_Event event) {
 int main(int argc, const char * argv[]) {
     srand(time(NULL));
     game_engine->SetScene("/Users/Peter/Documents/DSV/Prog3/images/winter.png");
-    
-    snowman1->AddActionListener(SpriteL1istener);
-    //sprite1->AddTimeEventListener(Sprite1TimeListener, 50);
+    snowman1->AddActionListener(Snowman1Listener);
     game_engine->AddSprite(snowman1);
-    
-    //sprite2->AddTimeEventListener(Sprite2TimeListener, 50);
     game_engine->AddSprite(snowman2);
-    
+    game_engine->AddSprite(ground);
     game_engine->AddTimeEventListener(TimeEventListener, 500);
-    
     game_engine->SetCollisionListener(CollisionListener);
     
     game_engine->Run();
