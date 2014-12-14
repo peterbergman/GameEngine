@@ -18,26 +18,30 @@ class Engine {
 public:
     Engine(std::string, int, int, int);
     void Run();
-    void AddSprite(Sprite*); // TODO: implement layers?
+    void AddSprite(Sprite*); // TODO: implement layers? Could maybe be done with a tree set to hold the sprites instead of a vector
     void RemoveSprite(Sprite*);
     void SetCollisionListener(collision_listener);
     int GetWindowWidth();
     int GetWindowHeight();
     void AddTimeEventListener(time_event_listener, int);
     void SetScene(std::string);
+    double GetTimeElapsed();
     static Uint32 time_event_type;
     ~Engine();
 private:
+    void Quit();
+    void PollEvent();
+    void RegisterTimeEvent();
+    void DetectCollision();
+    void HandleTimeEvent(SDL_Event);
+    long GetTimestamp();
+    void SetTimeElapsed(long, long);
     bool is_running;
     Window* window;
     int fps;
     int frame_counter;
     collision_listener current_collision_listener;
     std::map<int, time_event_listener> time_event_listeners;
-    void Quit();
-    void PollEvent();
-    void RegisterTimeEvent();
-    void DetectCollision();
-    void HandleTimeEvent(SDL_Event);
+    double time_elapsed;
 };
 #endif

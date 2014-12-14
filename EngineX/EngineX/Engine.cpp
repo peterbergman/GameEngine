@@ -1,10 +1,9 @@
 #include "Engine.h"
+#include <sys/time.h>
 
 Uint32 Engine::time_event_type;
 
-Engine::Engine(std::string game_name, int fps, int window_width, int window_height) {
-    this->fps = fps;
-    this->frame_counter = 0;
+Engine::Engine(std::string game_name, int fps, int window_width, int window_height):fps(fps), frame_counter(0) {
     window = new Window(game_name, window_width, window_height);
 }
 
@@ -36,12 +35,18 @@ void Engine::SetScene(std::string scene_background) {
     window->SetBackground(scene_background);
 }
 
+double Engine::GetTimeElapsed() {
+    return time_elapsed;
+}
+
 void Engine::Quit() {
     is_running = false;
 }
 
 void Engine::RegisterTimeEvent() {
-    time_event_type = SDL_RegisterEvents(1);
+    if (time_event_type == 0) {
+        time_event_type = SDL_RegisterEvents(1);
+    }
     if (time_event_type != ((Uint32)-1)) {
         SDL_Event time_event;
         SDL_zero(time_event);
@@ -105,15 +110,28 @@ void Engine::PollEvent() {
     }
 }
 
+long Engine::GetTimestamp() {
+    timeval time;
+    gettimeofday(&time, NULL);
+    return (time.tv_sec * 1000) + (time.tv_usec / 1000);
+}
+
+void Engine::SetTimeElapsed(long start_time, long stop_time) {
+    time_elapsed = (double)(stop_time - start_time) / 1000;
+}
+
 void Engine::Run() {
     is_running = true;
     while (is_running) {
+        long start_time = GetTimestamp();
         PollEvent();
         window->DrawSprites();
         frame_counter++;
-        RegisterTimeEvent();
         DetectCollision();
+        RegisterTimeEvent();
         SDL_Delay(1000 / fps);
+        long stop_time = GetTimestamp();
+        SetTimeElapsed(start_time, stop_time);
     }
 }
 
