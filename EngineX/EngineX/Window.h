@@ -11,7 +11,8 @@
 class Window {
 public:
     
-    // Creates a new window object and sets the member variable title and boundary.
+    // Creates a new window object and sets the member variable title based on the string sent as argument
+    // and boundary as well as height and width based on the height and width sent as arguments.
     Window(std::string, int, int);
     
     // Returns the renderer used by the window.
