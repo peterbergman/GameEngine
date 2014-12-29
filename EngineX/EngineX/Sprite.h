@@ -15,7 +15,6 @@ typedef void (*action_listener)(SDL_Event, Sprite*);
 
 class Sprite {
 public:
-    Sprite(int, int, int, int);
     void SetRenderer(SDL_Renderer*);
     void AddActionListener(action_listener);
     void AddTimeEventListener(action_listener, int);
@@ -32,6 +31,7 @@ public:
     virtual void Draw() = 0;
     virtual ~Sprite();
 protected:
+    Sprite(int, int, int, int); // Guard against value semantic
     SDL_Renderer* renderer;
     SDL_Rect* boundary;
 private:
