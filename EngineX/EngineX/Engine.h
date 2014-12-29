@@ -69,7 +69,9 @@ public:
     static Uint32 time_event_type;
     
     ~Engine();
+    
 private:
+    
     // Forces the main event loop to terminate in the next iteration.
     void Quit();
     

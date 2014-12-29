@@ -10,6 +10,7 @@
 
 // The underlaying window used by the game engine.
 class Window {
+    
 public:
     
     // Creates a new window object and sets the member variable title based on the string sent as argument
@@ -46,6 +47,7 @@ public:
     void SetBackground(std::string);
     
     ~Window();
+    
 private:
     
     // Internal helper function to initiate SDL.

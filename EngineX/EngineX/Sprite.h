@@ -14,6 +14,7 @@
 class Sprite {
 
 typedef void (*action_listener)(SDL_Event, Sprite*);
+    
 public:
     
     // Sets the renderer member variable.
@@ -59,6 +60,7 @@ public:
     virtual void Draw(int) = 0;
     
     virtual ~Sprite();
+    
 protected:
     
     // Protected in order to guard against value semantics but still allows for creating subclasses.
@@ -75,7 +77,9 @@ protected:
     
     // The texture for the image shown on screen for the sprite.
     SDL_Texture* texture;
+    
 private:
+    
     // Private in order to guard against value semantics.
     Sprite(const Sprite&);
     
