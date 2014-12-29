@@ -95,7 +95,7 @@ int main(int argc, const char * argv[]) {
     game_engine->AddSprite(snowman2);
     game_engine->AddSprite(ground);
     game_engine->AddTimeEventListener(TimeEventListener, 500);
-    game_engine->SetCollisionListener(CollisionListener);
+    //game_engine->SetCollisionListener(CollisionListener);
     
     game_engine->Run();
     delete game_engine;
