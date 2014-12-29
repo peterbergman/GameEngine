@@ -60,17 +60,38 @@ public:
     
     virtual ~Sprite();
 protected:
-    Sprite(int, int, int, int, std::string); // Guard against value semantic
+    
+    // Protected in order to guard against value semantics but still allows for creating subclasses.
+    Sprite(int, int, int, int, std::string);
+    
+    // The renderer for the window to which the sprite is added.
     SDL_Renderer* renderer;
+    
+    // The boundary for which the sprite is contained within.
     SDL_Rect* boundary;
+    
+    // The file name for the image shown on screen for the sprite.
     std::string file_name;
+    
+    // The texture for the image shown on screen for the sprite.
     SDL_Texture* texture;
 private:
-    Sprite(const Sprite&); // Guard against value semantic
-    const Sprite& operator=(const Sprite&); // Guard against value semantic
+    // Private in order to guard against value semantics.
+    Sprite(const Sprite&);
+    
+    // Private in order to guard against value semantics.
+    const Sprite& operator=(const Sprite&);
+    
+    // Internal helper function to which action events are delegated.
     void HandleActionEvent(SDL_Event, bool);
+    
+    // Internal helper function to which time events are delegated.
     void HandleTimeEvent(SDL_Event);
+    
+    // Vector containng all action event listeners added for the sprite.
     std::vector<action_listener> action_event_listeners;
+    
+    // Map containng all time event listeners added for the sprite and the delay for each listener.
     std::map<int, action_listener> time_event_listeners;
 };
 
