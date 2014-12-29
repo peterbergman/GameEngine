@@ -9,6 +9,7 @@
 #include <SDL2_ttf/SDL_ttf.h>
 #include "Sprite.h"
 #include "ImageSprite.h"
+#include "StaticSprite.h"
 #include "Window.h"
 
 typedef void (*collision_listener)(Sprite*,Sprite*);
