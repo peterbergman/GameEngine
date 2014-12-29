@@ -21,17 +21,17 @@ public:
     void SetBackground(std::string);
     ~Window();
 private:
-    int height, width;
-    std::string title;
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    std::vector<Sprite*> sprites;
     void InitSDL();
     void InitSDLImage();
     void SetUpRenderer();
     void SetUpWindow();
     bool Contains(int, int);
     bool Contains(Sprite*);
+    int height, width;
+    std::string title;
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    std::vector<Sprite*> sprites;
 };
 
 #endif
