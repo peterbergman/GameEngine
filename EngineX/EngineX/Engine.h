@@ -32,12 +32,10 @@ public:
     void Run();
     
     // Adds a new sprite to the game engine by taking in a sprite pointer as argument.
-    // This function will then delegate the call to the underlaying window.
     // The sprite will then be shown in the next iteration of the main event loop.
     void AddSprite(Sprite*); // TODO: implement layers? Could maybe be done with a tree set to hold the sprites instead of a vector
     
     // Removes an existing sprite by taking in a sprite pointer as argument.
-    // This function will then delegate the call to the underlaying window.
     // The sprite will then be removed from the screen in the next iteration of the main event loop.
     void RemoveSprite(Sprite*);
     
@@ -54,7 +52,8 @@ public:
     
     // Adds a new time event listener to the game engine by taking in a fee function pointer as argument (see collision_listener typedef)
     // together with a delay (in milliseconds).
-    // This function will then be called repeatedly each time the delay expires.
+    // This function will then be called repeatedly each time the delay expires. The minimum delay is equal to the fps value. If the delay is set
+    // to a value below the fps, then the time event listener will be called in each iteration of the main event loop.
     void AddTimeEventListener(time_event_listener, int);
     
     // Sets the current background of the underlaying window by taking in a string which is the file name
@@ -64,7 +63,7 @@ public:
     // Returns the actual time that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double GetTimeElapsed();
     
-    // The type ID of events that are emitted as "time events". These events are then handled by the time event listeners.
+    // The type ID of events that are emitted as time events. These events are then handled by the time event listeners.
     static Uint32 time_event_type;
     
     ~Engine();
@@ -77,7 +76,7 @@ private:
     void PollEvent();
     
     // Emits a new time event that is then polled in the next iteration of the main event loop.
-    void RegisterTimeEvent();
+    void EmitTimeEvent();
     
     // Detects collisions between sprites and calls the collision listener (if any).
     void DetectCollision();
