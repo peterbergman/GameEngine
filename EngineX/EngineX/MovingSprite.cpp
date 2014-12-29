@@ -10,7 +10,7 @@ MovingSprite::MovingSprite(std::string file_name, int x_pos, int y_pos, int widt
     
 }
 
-void MovingSprite::Draw() {
+void MovingSprite::Draw(int time_elapsed) {
     boundary->x = boundary->x + dx;
     boundary->y = boundary->y + dy;
     SDL_RenderCopy(renderer, texture, NULL, boundary);

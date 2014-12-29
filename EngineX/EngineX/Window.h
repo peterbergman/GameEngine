@@ -30,7 +30,7 @@ public:
     
     // Renders all sprites that have been added to the window and that are positioned wihtin the window.
     // Deletes any sprite that is positioned outside the window and frees any memory associated with the sprite object.
-    void DrawSprites();
+    void DrawSprites(int);
     
     // Delegates an event to the sprites that have been added to the window.
     void PropagateEventToSprites(SDL_Event);

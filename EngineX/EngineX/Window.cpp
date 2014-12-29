@@ -34,7 +34,7 @@ std::vector<Sprite*> Window::GetSprites() {
     return sprites;
 }
 
-void Window::DrawSprites() {
+void Window::DrawSprites(int time_elapsed) {
     SDL_RenderClear(renderer);
     for (int i = 0; i < sprites.size(); i++) {
         Sprite* current_sprite = sprites[i];
@@ -42,7 +42,7 @@ void Window::DrawSprites() {
             delete current_sprite;
             sprites.erase(sprites.begin() + i);
         } else {
-            current_sprite->Draw();
+            current_sprite->Draw(time_elapsed);
         }
     }
     SDL_RenderPresent(renderer);

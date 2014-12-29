@@ -9,7 +9,7 @@
 class ImageSprite : public Sprite {
 public:
     static ImageSprite* GetInstance(std::string, int, int, int, int);
-    virtual void Draw();
+    virtual void Draw(int);
     virtual ~ImageSprite();
 private:
     ImageSprite(std::string, int, int, int, int); // Guard against value semantic

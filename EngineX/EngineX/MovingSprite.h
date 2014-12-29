@@ -9,7 +9,7 @@
 class MovingSprite : public Sprite {
 public:
     static MovingSprite* GetInstance(std::string, int, int, int, int, int, int);
-    virtual void Draw();
+    virtual void Draw(int);
     virtual ~MovingSprite();
 private:
     MovingSprite(std::string, int, int, int, int, int, int); // Guard against value semantic

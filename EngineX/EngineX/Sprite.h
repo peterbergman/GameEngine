@@ -28,7 +28,7 @@ public:
     bool Contains(int, int);
     bool Contains(Sprite*);
     void SetUpTexture();
-    virtual void Draw() = 0;
+    virtual void Draw(int) = 0;
     virtual ~Sprite();
 protected:
     Sprite(int, int, int, int, std::string); // Guard against value semantic

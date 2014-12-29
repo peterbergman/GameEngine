@@ -10,7 +10,7 @@ StaticSprite::StaticSprite(std::string file_name, int x_pos, int y_pos, int widt
     
 }
 
-void StaticSprite::Draw() {
+void StaticSprite::Draw(int time_elapsed) {
     SDL_RenderCopy(renderer, texture, NULL, boundary);
 }
 

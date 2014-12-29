@@ -10,7 +10,7 @@ ImageSprite::ImageSprite(std::string file_name, int x_pos, int y_pos, int width,
     
 }
 
-void ImageSprite::Draw() {
+void ImageSprite::Draw(int time_elapsed) {
     SDL_RenderCopy(renderer, texture, NULL, boundary);
 }
 
