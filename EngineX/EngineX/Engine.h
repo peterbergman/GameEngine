@@ -10,6 +10,7 @@
 #include "Sprite.h"
 #include "ImageSprite.h"
 #include "StaticSprite.h"
+#include "MovingSprite.h"
 #include "Window.h"
 
 typedef void (*collision_listener)(Sprite*,Sprite*);

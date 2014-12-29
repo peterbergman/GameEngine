@@ -14,6 +14,7 @@ SDL_Renderer* Window::GetRenderer() {
     return renderer;
 }
 
+// Needs to happend in this order due to the fact that the sprite needs access to the renderer...
 void Window::AddSprite(Sprite* sprite) {
     sprite->SetRenderer(renderer);
     sprite->SetUpTexture();

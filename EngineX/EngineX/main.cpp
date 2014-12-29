@@ -82,8 +82,8 @@ void TimeEventListener(SDL_Event event) {
     // set the new sprite time event listener to Sprite3TimeListener with random delay
     int x_pos = rand() % game_engine->GetWindowWidth() + 1;
     int delay = rand() % 50 + 15;
-    Sprite* tmpSprite = ImageSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowflake.png", x_pos, 0, 30, 30);
-    tmpSprite->AddTimeEventListener(SnowflakeTimeListener, delay);
+    Sprite* tmpSprite = MovingSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowflake.png", x_pos, 0, 30, 30, 0, 1);
+    //tmpSprite->AddTimeEventListener(SnowflakeTimeListener, delay);
     game_engine->AddSprite(tmpSprite);
 }
 
