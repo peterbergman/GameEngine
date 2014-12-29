@@ -7,7 +7,7 @@
 using namespace std;
 
 Engine* game_engine = new Engine("My Game", 60, 800, 600);
-Sprite* snowman1 = ImageSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 270, 200, 256);
+Sprite* snowman1 = AnimatedSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 270, 200, 256);
 Sprite* snowman2 = ImageSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 270, 200, 256);
 Sprite* ground = StaticSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/ground.png", 0, 513, 1024, 87);
 

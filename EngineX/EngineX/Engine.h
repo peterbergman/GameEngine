@@ -11,6 +11,7 @@
 #include "ImageSprite.h"
 #include "StaticSprite.h"
 #include "MovingSprite.h"
+#include "AnimatedSprite.h"
 #include "Window.h"
 
 typedef void (*collision_listener)(Sprite*,Sprite*);
