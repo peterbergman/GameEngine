@@ -9,15 +9,12 @@
 class ImageSprite : public Sprite {
 public:
     static ImageSprite* GetInstance(std::string, int, int, int, int);
-    virtual void SetUpTexture();
     virtual void Draw();
     virtual ~ImageSprite();
 private:
     ImageSprite(std::string, int, int, int, int); // Guard against value semantic
     ImageSprite(const ImageSprite&); // Guard against value semantic
     const ImageSprite& operator=(const ImageSprite&); // Guard against value semantic
-    std::string file_name;
-    SDL_Texture* texture;
 };
 
 #endif

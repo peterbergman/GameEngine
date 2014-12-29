@@ -27,13 +27,15 @@ public:
     int GetHeight();
     bool Contains(int, int);
     bool Contains(Sprite*);
-    virtual void SetUpTexture() = 0;
+    void SetUpTexture();
     virtual void Draw() = 0;
     virtual ~Sprite();
 protected:
-    Sprite(int, int, int, int); // Guard against value semantic
+    Sprite(int, int, int, int, std::string); // Guard against value semantic
     SDL_Renderer* renderer;
     SDL_Rect* boundary;
+    std::string file_name;
+    SDL_Texture* texture;
 private:
     Sprite(const Sprite&); // Guard against value semantic
     const Sprite& operator=(const Sprite&); // Guard against value semantic

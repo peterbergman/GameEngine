@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "Engine.h"
 
-Sprite::Sprite(int x_pos, int y_pos, int width, int height) {
+Sprite::Sprite(int x_pos, int y_pos, int width, int height, std::string file_name):file_name(file_name) {
     boundary = new SDL_Rect();
     boundary->x = x_pos;
     boundary->y = y_pos;
@@ -98,6 +98,19 @@ bool Sprite::Contains(Sprite* other_sprite) {
             || Contains(upper_right.x, upper_right.y)
             || Contains(lower_left.x, lower_left.y)
             || Contains(lower_right.x, lower_right.y);
+}
+
+void Sprite::SetUpTexture() {
+    SDL_Surface* surface = IMG_Load(file_name.c_str());
+    if (surface == nullptr) { // TODO: throw exception to application
+        std::cout << "Could not load image... :(" << std::endl;
+    } else {
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+        if (texture == nullptr) { // TODO: throw exception to application
+            std::cout << "Could not create texture... :(" << std::endl;
+        }
+    }
 }
 
 Sprite::~Sprite() {
