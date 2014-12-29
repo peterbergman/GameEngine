@@ -7,7 +7,8 @@
 using namespace std;
 
 Engine* game_engine = new Engine("My Game", 60, 800, 600);
-Sprite* snowman1 = AnimatedSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 270, 200, 256);
+Sprite* snowman1 = AnimatedSprite::GetInstance({"/Users/Peter/Documents/DSV/Prog3/images/snowman.png",
+                                                "/Users/Peter/Documents/DSV/Prog3/images/snowman2.png"}, 500, 30, 270, 200, 256);
 Sprite* snowman2 = StaticSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 270, 200, 256);
 Sprite* ground = StaticSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/ground.png", 0, 513, 1024, 87);
 
@@ -28,7 +29,7 @@ void CollisionListener(Sprite* sprite1, Sprite* sprite2) {
 void Jump(SDL_Event event, Sprite* sprite) {
     if (is_jumping) {
         sprite->SetY((vi * t + g * t * t / 2) + 270);
-        t = t + game_engine->GetTimeElapsed() + 0.04;
+        t = t + (game_engine->GetTimeElapsed() / 1000) + 0.04;
         
         if (sprite->GetY() > 270) {
             t = 0;

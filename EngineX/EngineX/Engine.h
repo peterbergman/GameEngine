@@ -59,8 +59,11 @@ public:
     // of the image to be loaded as background.
     void SetScene(std::string);
     
-    // Returns the actual time that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
+    // Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double GetTimeElapsed();
+    
+    // Returns the current frame count.
+    int GetFrameCounter();
     
     // The type ID of events that are emitted as time events. These events are then handled by the time event listeners.
     static Uint32 time_event_type;

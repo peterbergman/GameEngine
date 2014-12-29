@@ -44,7 +44,7 @@ void Engine::SetScene(std::string scene_background) {
     window->SetBackground(scene_background);
 }
 
-// Returns the actual time that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
+// Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
 double Engine::GetTimeElapsed() {
     return time_elapsed;
 }
@@ -146,7 +146,7 @@ long Engine::GetTimestamp() {
 
 // Sets the time elapsed between two iterations of the main event loop.
 void Engine::SetTimeElapsed(long start_time, long stop_time) {
-    time_elapsed = (double)(stop_time - start_time) / 1000;
+    time_elapsed = (double)(stop_time - start_time);
 }
 
 // The main event loop of the game engine.
@@ -165,7 +165,7 @@ void Engine::Run() {
     while (is_running) {
         long start_time = GetTimestamp();
         PollEvent();
-        window->DrawSprites();
+        window->DrawSprites(time_elapsed);
         frame_counter++;
         DetectCollision();
         EmitTimeEvent();
