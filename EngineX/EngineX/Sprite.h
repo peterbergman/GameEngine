@@ -35,10 +35,10 @@ protected:
     SDL_Renderer* renderer;
     SDL_Rect* boundary;
 private:
-    std::vector<action_listener> action_event_listeners;
-    std::map<int, action_listener> time_event_listeners;
     void HandleActionEvent(SDL_Event, bool);
     void HandleTimeEvent(SDL_Event);
+    std::vector<action_listener> action_event_listeners;
+    std::map<int, action_listener> time_event_listeners;
 };
 
 #endif
