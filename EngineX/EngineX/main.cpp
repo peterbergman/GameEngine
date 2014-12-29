@@ -7,9 +7,9 @@
 using namespace std;
 
 Engine* game_engine = new Engine("My Game", 60, 800, 600);
-Sprite* snowman1 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 270, 200, 256);
-Sprite* snowman2 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 270, 200, 256);
-Sprite* ground = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/ground.png", 0, 513, 1024, 87);
+Sprite* snowman1 = ImageSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 270, 200, 256);
+Sprite* snowman2 = ImageSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 270, 200, 256);
+Sprite* ground = ImageSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/ground.png", 0, 513, 1024, 87);
 
 // Jump stuff
 double vi = -200, t = 0;
@@ -82,7 +82,7 @@ void TimeEventListener(SDL_Event event) {
     // set the new sprite time event listener to Sprite3TimeListener with random delay
     int x_pos = rand() % game_engine->GetWindowWidth() + 1;
     int delay = rand() % 50 + 15;
-    Sprite* tmpSprite = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowflake.png", x_pos, 0, 30, 30);
+    Sprite* tmpSprite = ImageSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowflake.png", x_pos, 0, 30, 30);
     tmpSprite->AddTimeEventListener(SnowflakeTimeListener, delay);
     game_engine->AddSprite(tmpSprite);
 }
