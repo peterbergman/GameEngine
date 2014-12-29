@@ -83,37 +83,37 @@ void Window::SetBackground(std::string background_image_path) {
 }
 
 // Internal helper function to initiate SDL.
-void Window::InitSDL() { // TODO: throw error to application
+void Window::InitSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
-        std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        throw std::runtime_error("Failed to init game engine!");
     }
 }
 
 // Internal helper function to initiate SDL_Image.
-void Window::InitSDLImage() { // TODO: throw error to application
+void Window::InitSDLImage() {
     int img_flags = IMG_INIT_PNG;
     if (!(IMG_Init( img_flags ) & img_flags )) {
-        std::cout << "IMG_Init Error: " << IMG_GetError() << std::endl;
         SDL_Quit();
+        throw std::runtime_error("Failed to init game engine!");
     }
 }
 
 // Internal helper function to set up a renderer for the window.
-void Window::SetUpRenderer() { // TODO: throw error to application
+void Window::SetUpRenderer() {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == nullptr){
-        std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
         SDL_DestroyWindow(window);
         SDL_Quit();
+        throw std::runtime_error("Failed to init game engine!");
     }
 }
 
 // Internal helper function to set up the actual window.
-void Window::SetUpWindow() { // TODO: throw error to application
+void Window::SetUpWindow() {
     window = SDL_CreateWindow(title.c_str(), 0, 0, width, height, SDL_WINDOW_SHOWN);
     if (window == nullptr){
-        std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
+        throw std::runtime_error("Failed to init game engine!");
     }
 }
 
