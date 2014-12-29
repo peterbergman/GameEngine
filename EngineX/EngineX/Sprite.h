@@ -35,6 +35,8 @@ protected:
     SDL_Renderer* renderer;
     SDL_Rect* boundary;
 private:
+    Sprite(const Sprite&); // Guard against value semantic
+    const Sprite& operator=(const Sprite&); // Guard against value semantic
     void HandleActionEvent(SDL_Event, bool);
     void HandleTimeEvent(SDL_Event);
     std::vector<action_listener> action_event_listeners;
