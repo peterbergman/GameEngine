@@ -8,7 +8,7 @@ using namespace std;
 
 Engine* game_engine = new Engine("My Game", 60, 800, 600);
 Sprite* snowman1 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 30, 270, 200, 256);
-Sprite* snowman2 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 30, 200, 256);
+Sprite* snowman2 = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 270, 200, 256);
 Sprite* ground = new ImageSprite("/Users/Peter/Documents/DSV/Prog3/images/ground.png", 0, 513, 1024, 87);
 
 // Jump stuff
@@ -20,9 +20,9 @@ bool is_jumping = false;
 void CollisionListener(Sprite* sprite1, Sprite* sprite2) {
     if (sprite1 == snowman1 && sprite2 == snowman2) {
         cout << "Collision detected!\n";
+        game_engine->RemoveSprite(sprite1);
+        game_engine->RemoveSprite(sprite2);
     }
-    //game_engine->RemoveSprite(sprite1);
-    //game_engine->RemoveSprite(sprite2);
 }
 
 void Jump(SDL_Event event, Sprite* sprite) {
@@ -61,6 +61,14 @@ void Snowman1Listener(SDL_Event event, Sprite* sprite) {
                 break;
         }
     }
+}
+
+void SnowmanRightMove(SDL_Event event, Sprite* sprite) {
+    sprite->SetX(sprite->GetX() + 5);
+}
+
+void SnowmanLeftMove(SDL_Event event, Sprite* sprite) {
+    sprite->SetX(sprite->GetX() - 5);
 }
 
 
