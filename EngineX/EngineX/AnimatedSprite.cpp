@@ -14,7 +14,7 @@ void AnimatedSprite::Draw(int time_elapsed) {
     time_since_last_draw = time_since_last_draw + time_elapsed;
     if (time_since_last_draw >= image_change_delay) {
         file_name = images[image_index];
-        SetUpTexture(); // TODO: this could probably be optimized so that all textures needed are loaded once
+        SetUpTexture(); //TODO: this could probably be optimized so that all textures needed are loaded once
         image_index = (image_index == images.size() - 1 ? 0 : image_index + 1);
         time_since_last_draw = 0;
     }
