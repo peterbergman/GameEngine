@@ -8,7 +8,6 @@
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include "Sprite.h"
-#include "ImageSprite.h"
 #include "StaticSprite.h"
 #include "MovingSprite.h"
 #include "AnimatedSprite.h"
