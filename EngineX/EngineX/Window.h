@@ -6,6 +6,7 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include "Sprite.h"
+#include "StaticSprite.h"
 
 // The underlaying window used by the game engine.
 class Window {
