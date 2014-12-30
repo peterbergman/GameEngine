@@ -58,9 +58,6 @@ public:
     
     // Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double GetTimeElapsed();
-    
-    // Returns the current frame count.
-    int GetFrameCounter();
    
     // Returns the width of the underlaying window.
     int GetWindowWidth();

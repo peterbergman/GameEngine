@@ -7,6 +7,32 @@ Engine::Engine(std::string game_name, int fps, int window_width, int window_heig
     window = new Window(game_name, window_width, window_height);
 }
 
+// The main event loop of the game engine.
+// Executes the following steps:
+// 1. Get a timestamp at the start of the iteration.
+// 2. Poll all events that has been emitted since the last iteration (and delegate them).
+// 3. Delegate re-drawing of sprites by calling Window::DrawSprites.
+// 4. Increment the frame counter.
+// 5. Check for collisions.
+// 6. Emit a new time event.
+// 7. Timeout for 1000 / fps milliseconds.
+// 8. Get a timestamp at the end of the iteration.
+// 9. Set the total time that the iteration took.
+void Engine::Run() {
+    is_running = true;
+    while (is_running) {
+        long start_time = GetTimestamp();
+        PollEvent();
+        window->DrawSprites(time_elapsed);
+        frame_counter++;
+        DetectCollision();
+        EmitTimeEvent();
+        SDL_Delay(1000 / fps);
+        long stop_time = GetTimestamp();
+        SetTimeElapsed(start_time, stop_time);
+    }
+}
+
 // Directly delegates the call to the underlaying window object by calling Window::AddSprite.
 void Engine::AddSprite(Sprite* sprite) {
     window->AddSprite(sprite);
@@ -161,32 +187,6 @@ long Engine::GetTimestamp() {
 // Sets the time elapsed between two iterations of the main event loop.
 void Engine::SetTimeElapsed(long start_time, long stop_time) {
     time_elapsed = (double)(stop_time - start_time);
-}
-
-// The main event loop of the game engine.
-// Executes the following steps:
-// 1. Get a timestamp at the start of the iteration.
-// 2. Poll all events that has been emitted since the last iteration (and delegate them).
-// 3. Delegate re-drawing of sprites by calling Window::DrawSprites.
-// 4. Increment the frame counter.
-// 5. Check for collisions.
-// 6. Emit a new time event.
-// 7. Timeout for 1000 / fps milliseconds.
-// 8. Get a timestamp at the end of the iteration.
-// 9. Set the total time that the iteration took.
-void Engine::Run() {
-    is_running = true;
-    while (is_running) {
-        long start_time = GetTimestamp();
-        PollEvent();
-        window->DrawSprites(time_elapsed);
-        frame_counter++;
-        DetectCollision();
-        EmitTimeEvent();
-        SDL_Delay(1000 / fps);
-        long stop_time = GetTimestamp();
-        SetTimeElapsed(start_time, stop_time);
-    }
 }
 
 Engine::~Engine() {
