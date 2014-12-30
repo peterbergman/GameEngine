@@ -80,8 +80,6 @@ int main(int argc, const char * argv[]) {
     snowman1->AddActionListener(SnowmanJump, SDLK_SPACE);
     snowman1->AddActionListener(SnowmanClick, SDL_MOUSEBUTTONDOWN);
     
-
-    
     game_engine->AddSprite(snowman1);
     game_engine->AddSprite(snowman2);
     game_engine->AddSprite(ground);

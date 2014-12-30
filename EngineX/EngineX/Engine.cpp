@@ -22,21 +22,18 @@ void Engine::SetCollisionListener(collision_listener listener) {
     current_collision_listener = listener;
 }
 
-// Returns the width of the underlaying window.
-int Engine::GetWindowWidth() {
-    return window->GetWidth();
-}
-
-// Returns the height of the underlaying window.
-int Engine::GetWindowHeight() {
-    return window->GetHeight();
-}
-
 // Adds a new time event listener to the internal map that contains all time event listeners.
 // The delay is used as key, meaning that two time event listeners with the same delay cannot be
 // registered at the same time.
-void Engine::AddTimeEventListener(time_event_listener listener, int delay) {
+void Engine::AddTimeEventListener(event_listener listener, int delay) {
     time_event_listeners[delay] = listener;
+}
+
+// Adds a new action event listener to the interal map that contains all action event listeners.
+// The keycode is used as key, meaning that two action event listeners with the same keycode cannot be
+// registered at the same time.
+void Engine::AddActionListener(event_listener listener, int key_code) {
+    action_event_listeners[key_code] = listener;
 }
 
 // Directly delegates the call to the underlaying window object by calling Window::SetBackground.
@@ -47,6 +44,16 @@ void Engine::SetScene(std::string scene_background) {
 // Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
 double Engine::GetTimeElapsed() {
     return time_elapsed;
+}
+
+// Returns the width of the underlaying window.
+int Engine::GetWindowWidth() {
+    return window->GetWidth();
+}
+
+// Returns the height of the underlaying window.
+int Engine::GetWindowHeight() {
+    return window->GetHeight();
 }
 
 // Sets the flag that is controlling the main event loop to false.
@@ -95,7 +102,7 @@ void Engine::DetectCollision() {
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
 void Engine::HandleTimeEvent(SDL_Event event) {
-    for (std::pair<const int, time_event_listener>& entry : time_event_listeners) {
+    for (std::pair<const int, event_listener>& entry : time_event_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);
         int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));

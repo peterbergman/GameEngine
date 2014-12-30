@@ -14,7 +14,7 @@
 #include "Window.h"
 
 typedef void (*collision_listener)(Sprite*,Sprite*);
-typedef void (*time_event_listener)();
+typedef void (*event_listener)();
 
 // The interface part of the game engine. This is the class that the application program
 // is interfacing with and all operations on the framework goes through this class.
@@ -43,17 +43,14 @@ public:
     // Collisions are evaluated for all sprites on each iteration of the main event loop.
     void SetCollisionListener(collision_listener);
     
-    // Returns the width of the underlaying window.
-    int GetWindowWidth();
-    
-    // Returns the height of the underlaying window.
-    int GetWindowHeight();
-    
     // Adds a new time event listener to the game engine by taking in a fee function pointer as argument (see collision_listener typedef)
     // together with a delay (in milliseconds).
     // This function will then be called repeatedly each time the delay expires. The minimum delay is equal to the fps value. If the delay is set
     // to a value below the fps, then the time event listener will be called in each iteration of the main event loop.
-    void AddTimeEventListener(time_event_listener, int);
+    void AddTimeEventListener(event_listener, int);
+    
+    // Adds an action listener that is not connected to any specific sprite.
+    void AddActionListener(event_listener, int);
     
     // Sets the current background of the underlaying window by taking in a string which is the file name
     // of the image to be loaded as background.
@@ -64,6 +61,12 @@ public:
     
     // Returns the current frame count.
     int GetFrameCounter();
+   
+    // Returns the width of the underlaying window.
+    int GetWindowWidth();
+    
+    // Returns the height of the underlaying window.
+    int GetWindowHeight();
     
     // The type ID of events that are emitted as time events. These events are then handled by the time event listeners.
     static Uint32 time_event_type;
@@ -110,7 +113,10 @@ private:
     collision_listener current_collision_listener;
     
     // A data structure to hold all time event listeners registererd (if any) together with the delay for each listener.
-    std::map<int, time_event_listener> time_event_listeners;
+    std::map<int, event_listener> time_event_listeners;
+    
+    // A data structure to hold all action event listeners registererd (if any) together with the keycode for each listener.
+    std::map<int, event_listener> action_event_listeners;
     
     // The actual time that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double time_elapsed;
