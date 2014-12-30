@@ -62,7 +62,7 @@ void Sprite::HandleEvent(SDL_Event event, bool mouse_event) {
             if (Contains(event.button.x, event.button.y)) {
                 entry.second(this);
             }
-        } else if (entry.first == event.key.keysym.sym) {
+        } else if (!mouse_event && entry.first == event.key.keysym.sym) {
             entry.second(this);
         }
     }

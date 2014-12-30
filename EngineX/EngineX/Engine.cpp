@@ -142,7 +142,7 @@ void Engine::HandleEvent(SDL_Event event, bool mouse_event) {
     for (std::pair<const int, event_listener>& entry : event_listeners) {
         if (mouse_event && entry.first == event.type) {
             entry.second();
-        } else if (entry.first == event.key.keysym.sym) {
+        } else if (!mouse_event && entry.first == event.key.keysym.sym) {
             entry.second();
         }
     }
