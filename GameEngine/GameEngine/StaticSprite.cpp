@@ -15,6 +15,4 @@ void StaticSprite::Draw(int time_elapsed) {
 }
 
 StaticSprite::~StaticSprite() {
-    delete boundary;
-    SDL_DestroyTexture(texture);
 }

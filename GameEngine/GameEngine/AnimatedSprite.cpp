@@ -22,6 +22,4 @@ void AnimatedSprite::Draw(int time_elapsed) {
 }
 
 AnimatedSprite::~AnimatedSprite() {
-    delete boundary;
-    SDL_DestroyTexture(texture);
 }

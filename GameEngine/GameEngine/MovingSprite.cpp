@@ -17,6 +17,4 @@ void MovingSprite::Draw(int time_elapsed) {
 }
 
 MovingSprite::~MovingSprite() {
-    delete boundary;
-    SDL_DestroyTexture(texture);
 }

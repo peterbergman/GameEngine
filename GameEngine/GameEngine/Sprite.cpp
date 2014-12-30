@@ -145,8 +145,7 @@ void Sprite::SetUpTexture() {
     }
 }
 
-// Destruction of the sprite is handled in the subclasses so this destructor
-// is intentionally leaved empty.
 Sprite::~Sprite() {
-    
+    delete boundary;
+    SDL_DestroyTexture(texture);
 }
