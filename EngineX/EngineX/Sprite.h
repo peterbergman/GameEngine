@@ -13,7 +13,7 @@
 // Instead subclasses are used for different types of sprites.
 class Sprite {
 
-typedef void (*action_listener)(SDL_Event, Sprite*);
+typedef void (*action_listener)(Sprite*);
     
 public:
     

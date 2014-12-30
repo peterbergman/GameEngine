@@ -60,10 +60,10 @@ void Sprite::HandleActionEvent(SDL_Event event, bool mouse_event) {
     for (std::pair<const int, action_listener>& entry : action_event_listeners) {
         if (mouse_event && entry.first == event.type) {
             if (Contains(event.button.x, event.button.y)) {
-                entry.second(event, this);
+                entry.second(this);
             }
         } else if (entry.first == event.key.keysym.sym) {
-            entry.second(event, this);
+            entry.second(this);
         }
     }
 }
@@ -76,10 +76,10 @@ void Sprite::HandleTimeEvent(SDL_Event event) {
         if (rhs > 0) {
             int result = frame_counter % rhs;
             if (result == 0) {
-                entry.second(event, this);
+                entry.second(this);
             }
         } else {
-            entry.second(event, this);
+            entry.second(this);
         }
     }
 }

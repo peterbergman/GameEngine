@@ -27,7 +27,7 @@ void CollisionListener(Sprite* sprite1, Sprite* sprite2) {
     }
 }
 
-void Jump(SDL_Event event, Sprite* sprite) {
+void Jump(Sprite* sprite) {
     if (is_jumping) {
         sprite->SetY((vi * t + g * t * t / 2) + 270);
         t = t + (game_engine->GetTimeElapsed() / 1000) + 0.04;
@@ -39,24 +39,24 @@ void Jump(SDL_Event event, Sprite* sprite) {
     }
 }
 
-void SnowmanRightMove(SDL_Event event, Sprite* sprite) {
+void SnowmanRightMove(Sprite* sprite) {
     sprite->SetX(sprite->GetX() + 20);
 }
 
-void SnowmanLeftMove(SDL_Event event, Sprite* sprite) {
+void SnowmanLeftMove(Sprite* sprite) {
     sprite->SetX(sprite->GetX() - 20);
 }
 
-void SnowmanJump(SDL_Event event, Sprite* sprite) {
+void SnowmanJump(Sprite* sprite) {
     is_jumping = true;
     sprite->AddTimeEventListener(Jump, 0);
 }
 
-void SnowmanClick(SDL_Event event, Sprite* sprite) {
+void SnowmanClick(Sprite* sprite) {
     cout << "Click!" << endl;
 }
 
-void SnowflakeTimeListener(SDL_Event event, Sprite* sprite) {
+void SnowflakeTimeListener(Sprite* sprite) {
     sprite->SetY(sprite->GetY() + 5);
 }
 
