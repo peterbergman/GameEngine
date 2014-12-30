@@ -13,18 +13,18 @@
 // Instead subclasses are used for different types of sprites.
 class Sprite {
 
-typedef void (*action_listener)(Sprite*);
+typedef void (*event_listener)(Sprite*);
     
 public:
     
     // Sets the renderer member variable.
     void SetRenderer(SDL_Renderer*);
     
-    // Adds an action listener to the sprite.
-    void AddActionListener(action_listener, int);
+    // Adds an event listener to the sprite.
+    void AddEventListener(event_listener, int);
     
-    // Adds a time event listener to the sprite with a delay specified in milliseconds.
-    void AddTimeEventListener(action_listener, int);
+    // Adds a time listener to the sprite with a delay specified in milliseconds.
+    void AddTimeListener(event_listener, int);
     
     // Handles an event sent to the sprite.
     void HandleEvent(SDL_Event);
@@ -93,10 +93,10 @@ private:
     void HandleTimeEvent(SDL_Event);
     
     // Map containng all action event listeners added for the sprite and the keycode for each listener.
-    std::map<int, action_listener> action_event_listeners;
+    std::map<int, event_listener> event_listeners;
     
     // Map containng all time event listeners added for the sprite and the delay for each listener.
-    std::map<int, action_listener> time_event_listeners;
+    std::map<int, event_listener> time_listeners;
 };
 
 #endif

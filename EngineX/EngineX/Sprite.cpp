@@ -14,12 +14,12 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
     this->renderer = renderer;
 }
 
-void Sprite::AddActionListener(action_listener listener, int key_code) {
-    action_event_listeners[key_code] = listener;
+void Sprite::AddEventListener(event_listener listener, int key_code) {
+    event_listeners[key_code] = listener;
 }
 
-void Sprite::AddTimeEventListener(action_listener listener, int delay) {
-    time_event_listeners[delay] = listener;
+void Sprite::AddTimeListener(event_listener listener, int delay) {
+    time_listeners[delay] = listener;
 }
 
 void Sprite::SetX(int x) {
@@ -57,7 +57,7 @@ void Sprite::HandleEvent(SDL_Event event) {
 }
 
 void Sprite::HandleActionEvent(SDL_Event event, bool mouse_event) {
-    for (std::pair<const int, action_listener>& entry : action_event_listeners) {
+    for (std::pair<const int, event_listener>& entry : event_listeners) {
         if (mouse_event && entry.first == event.type) {
             if (Contains(event.button.x, event.button.y)) {
                 entry.second(this);
@@ -69,7 +69,7 @@ void Sprite::HandleActionEvent(SDL_Event event, bool mouse_event) {
 }
 
 void Sprite::HandleTimeEvent(SDL_Event event) {
-    for (std::pair<const int, action_listener>& entry : time_event_listeners) {
+    for (std::pair<const int, event_listener>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);
         int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));

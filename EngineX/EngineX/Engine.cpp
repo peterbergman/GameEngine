@@ -22,18 +22,18 @@ void Engine::SetCollisionListener(collision_listener listener) {
     current_collision_listener = listener;
 }
 
-// Adds a new time event listener to the internal map that contains all time event listeners.
-// The delay is used as key, meaning that two time event listeners with the same delay cannot be
+// Adds a new time listener to the internal map that contains all time listeners.
+// The delay is used as key, meaning that two time listeners with the same delay cannot be
 // registered at the same time.
-void Engine::AddTimeEventListener(event_listener listener, int delay) {
-    time_event_listeners[delay] = listener;
+void Engine::AddTimeListener(event_listener listener, int delay) {
+    time_listeners[delay] = listener;
 }
 
-// Adds a new action event listener to the interal map that contains all action event listeners.
-// The keycode is used as key, meaning that two action event listeners with the same keycode cannot be
+// Adds a new event listener to the interal map that contains all event listeners.
+// The keycode is used as key, meaning that two event listeners with the same keycode cannot be
 // registered at the same time.
-void Engine::AddActionListener(event_listener listener, int key_code) {
-    action_event_listeners[key_code] = listener;
+void Engine::AddEventListener(event_listener listener, int key_code) {
+    event_listeners[key_code] = listener;
 }
 
 // Directly delegates the call to the underlaying window object by calling Window::SetBackground.
@@ -96,13 +96,13 @@ void Engine::DetectCollision() {
     }
 }
 
-// Called in each iteration of the main event looop. Iterates through each time event listener and evaluates
-// if the time event listener should be called. This is done by calculating the number of main event loop iterations
+// Called in each iteration of the main event looop. Iterates through each time listener and evaluates
+// if the time listener should be called. This is done by calculating the number of main event loop iterations
 // that should elapse before the time event listener is called. Example:
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
 void Engine::HandleTimeEvent(SDL_Event event) {
-    for (std::pair<const int, event_listener>& entry : time_event_listeners) {
+    for (std::pair<const int, event_listener>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);
         int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));

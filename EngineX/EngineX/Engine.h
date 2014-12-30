@@ -47,10 +47,10 @@ public:
     // together with a delay (in milliseconds).
     // This function will then be called repeatedly each time the delay expires. The minimum delay is equal to the fps value. If the delay is set
     // to a value below the fps, then the time event listener will be called in each iteration of the main event loop.
-    void AddTimeEventListener(event_listener, int);
+    void AddTimeListener(event_listener, int);
     
     // Adds an action listener that is not connected to any specific sprite.
-    void AddActionListener(event_listener, int);
+    void AddEventListener(event_listener, int);
     
     // Sets the current background of the underlaying window by taking in a string which is the file name
     // of the image to be loaded as background.
@@ -113,10 +113,10 @@ private:
     collision_listener current_collision_listener;
     
     // A data structure to hold all time event listeners registererd (if any) together with the delay for each listener.
-    std::map<int, event_listener> time_event_listeners;
+    std::map<int, event_listener> time_listeners;
     
     // A data structure to hold all action event listeners registererd (if any) together with the keycode for each listener.
-    std::map<int, event_listener> action_event_listeners;
+    std::map<int, event_listener> event_listeners;
     
     // The actual time that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double time_elapsed;

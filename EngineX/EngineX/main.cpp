@@ -49,7 +49,7 @@ void SnowmanLeftMove(Sprite* sprite) {
 
 void SnowmanJump(Sprite* sprite) {
     is_jumping = true;
-    sprite->AddTimeEventListener(Jump, 0);
+    sprite->AddTimeListener(Jump, 0);
 }
 
 void SnowmanClick(Sprite* sprite) {
@@ -75,15 +75,15 @@ int main(int argc, const char * argv[]) {
     srand(time(NULL));
     game_engine->SetScene("/Users/Peter/Documents/DSV/Prog3/images/winter.png");
     
-    snowman1->AddActionListener(SnowmanRightMove, SDLK_RIGHT);
-    snowman1->AddActionListener(SnowmanLeftMove, SDLK_LEFT);
-    snowman1->AddActionListener(SnowmanJump, SDLK_SPACE);
-    snowman1->AddActionListener(SnowmanClick, SDL_MOUSEBUTTONDOWN);
+    snowman1->AddEventListener(SnowmanRightMove, SDLK_RIGHT);
+    snowman1->AddEventListener(SnowmanLeftMove, SDLK_LEFT);
+    snowman1->AddEventListener(SnowmanJump, SDLK_SPACE);
+    snowman1->AddEventListener(SnowmanClick, SDL_MOUSEBUTTONDOWN);
     
     game_engine->AddSprite(snowman1);
     game_engine->AddSprite(snowman2);
     game_engine->AddSprite(ground);
-    game_engine->AddTimeEventListener(TimeEventListener, 500);
+    game_engine->AddTimeListener(TimeEventListener, 500);
     game_engine->SetCollisionListener(CollisionListener);
     
     game_engine->Run();
