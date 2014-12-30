@@ -137,6 +137,10 @@ void Sprite::SetUpTexture() {
     if (surface == nullptr) {
         throw std::runtime_error("Failed to create sprite!");
     } else {
+        if (boundary->w == 0 && boundary->h == 0) {
+            boundary->w = surface->w;
+            boundary->h = surface->h;
+        }
         texture = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);
         if (texture == nullptr) {

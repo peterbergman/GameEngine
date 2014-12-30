@@ -1,4 +1,6 @@
 #include "Window.h"
+#include "Level.h"
+
 
 Window::Window(std::string title, int width, int height):title(title), width(width), height(height){
     InitSDL();
@@ -13,55 +15,37 @@ SDL_Renderer* Window::GetRenderer() {
     return renderer;
 }
 
-// Adds a new sprite to the internal window by taking in a sprite pointer as argument.
-// First sends the renderer for the window to the sprite since the sprite needs it in order to draw itself.
-// When the sprite has access to the render, it can create its texture. This is done here by calling Sprite::SetUpTexture.
-// After these steps, the sprite can be added to the vector of sprites which will be rendererd during the next iteration of the main event loop.
-void Window::AddSprite(Sprite* sprite) {
+// Iterates through all sprites in the specified level and loads them.
+void Window::LoadLevel(Level* level) {
+    for (Sprite* sprite : level->GetSprites()) {
+        LoadSprite(sprite);
+    }
+    level->SetLoaded(true);
+    level->SetWindow(this);
+    current_level = level;
+}
+
+// Sends the renderer to a sprite and sets up the texture for the sprite.
+void Window::LoadSprite(Sprite* sprite) {
     sprite->SetRenderer(renderer);
     sprite->SetUpTexture();
-    sprites.push_back(sprite);
 }
 
-// Removes an existing sprite from the window by taking in a sprite pointer as argument.
-// Both frees the memory allocated by the sprite object and removes it from the vector of sprites.
-void Window::RemoveSprite(Sprite* sprite) {
-    delete sprite;
-    for (int i = 0; i < sprites.size(); i++) {
-        if (sprite == sprites[i]) {
-            sprites.erase(sprites.begin() + i);
-        }
-    }
-}
-
-// Returns a vector of all sprites that have been added to the window.
-std::vector<Sprite*> Window::GetSprites() {
-    return sprites;
-}
-
-// Renders all sprites that have been added to the window and that are positioned wihtin the window.
+// Renders all sprites that have been added to the level that is currently loaded and that are positioned wihtin the window.
 // This is done by iterating through all sprites and calling Sprite::Draw. If a sprite is found that is not within the boundaries of the window,
 // then that specific sprite is removed. This includes both freeing the memory allocated by the sprite object
 // and removing it from the vector of sprites.
 void Window::DrawSprites(int time_elapsed) {
     SDL_RenderClear(renderer);
-    for (int i = 0; i < sprites.size(); i++) {
-        Sprite* current_sprite = sprites[i];
+    for (int i = 0; i < current_level->GetSprites().size(); i++) {
+        Sprite* current_sprite = current_level->GetSprites()[i];
         if (!Contains(current_sprite)) {
-            delete current_sprite;
-            sprites.erase(sprites.begin() + i);
+            current_level->RemoveSprite(current_sprite); // TODO: add remove(index) to avoid duplicate iteration
         } else {
             current_sprite->Draw(time_elapsed);
         }
     }
     SDL_RenderPresent(renderer);
-}
-
-// Delegates an event to the sprites that have been added to the window.
-void Window::PropagateEventToSprites(SDL_Event event) {
-    for (Sprite* sprite : sprites) {
-        sprite->DelegateEvent(event);
-    }
 }
 
 // Returns the width of the window.
@@ -72,14 +56,6 @@ int Window::GetWidth() {
 // Returns the height of the window.
 int Window::GetHeight() {
     return height;
-}
-
-// Sets the background of the window by loading the image located at the the path specified as argument.
-// The background is added to the window as a new StaticSprite which is then by calling Window::AddSprite.
-// The background is then shown on the screen at the next iteration of the main event loop.
-void Window::SetBackground(std::string background_image_path) {
-    Sprite* background_sprite = StaticSprite::GetInstance(background_image_path, 0, 0, width , height);
-    AddSprite(background_sprite);
 }
 
 // Internal helper function to initiate SDL.
@@ -105,6 +81,8 @@ void Window::SetUpRenderer() {
         SDL_DestroyWindow(window);
         SDL_Quit();
         throw std::runtime_error("Failed to init game engine!");
+    } else {
+        SDL_RenderClear(renderer);
     }
 }
 
@@ -137,12 +115,8 @@ bool Window::Contains(Sprite* sprite) {
     
 }
 
-// Iterates through all sprites and deletes them.
 // Destroys SDL resources and quits the SDL framework.
 Window::~Window() {
-    for (Sprite* sprite : sprites) {
-        delete sprite;
-    }
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();

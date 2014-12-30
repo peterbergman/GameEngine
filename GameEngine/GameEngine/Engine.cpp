@@ -33,14 +33,15 @@ void Engine::Run() {
     }
 }
 
-// Directly delegates the call to the underlaying window object by calling Window::AddSprite.
-void Engine::AddSprite(Sprite* sprite) {
-    window->AddSprite(sprite);
+// Adds a new level to this game engine.
+void Engine::AddLevel(Level* level) {
+    levels.push_back(level);
 }
 
-// Directly delegates the call to the underlaying window object by calling Window::RemoveSprite.
-void Engine::RemoveSprite(Sprite* sprite) {
-    window->RemoveSprite(sprite);
+// Sets the current level of this engine by directly calling Window::LoadLevel.
+void Engine::SetCurrentLevel(Level* level) {
+    current_level = level;
+    window->LoadLevel(level);
 }
 
 // Sets the collision listener that is called each time a collision occurs.
@@ -60,11 +61,6 @@ void Engine::AddTimeListener(event_listener listener, int delay) {
 // registered at the same time.
 void Engine::AddEventListener(event_listener listener, int key_code) {
     event_listeners[key_code] = listener;
-}
-
-// Directly delegates the call to the underlaying window object by calling Window::SetBackground.
-void Engine::SetScene(std::string scene_background) {
-    window->SetBackground(scene_background);
 }
 
 // Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
@@ -111,8 +107,8 @@ void Engine::EmitTimeEvent() {
 // This collision detection is only considering overlaping sprite boundaries and does not check for collisions on pixel level.
 // The time complexity for this function is O(N^2) where N is the number of sprites added to the game engine.
 void Engine::DetectCollision() {
-    for (Sprite* sprite : window->GetSprites()) {
-        for (Sprite* other_sprite : window->GetSprites()) {
+    for (Sprite* sprite : current_level->GetSprites()) {
+        for (Sprite* other_sprite : current_level->GetSprites()) {
             if (sprite != other_sprite && sprite->Contains(other_sprite)) { // TODO: transparent pixels
                 if (current_collision_listener != nullptr) {
                     current_collision_listener(sprite, other_sprite);
@@ -133,7 +129,7 @@ void Engine::DelegateEvent(SDL_Event event) {
     } else if (event.type == SDL_QUIT) {
         Quit();
     }
-    window->PropagateEventToSprites(event);
+    current_level->PropagateEventToSprites(event);
 }
 
 // Iterates through each event listener and evaluates if the event listener should be called.
@@ -191,4 +187,7 @@ void Engine::SetTimeElapsed(long start_time, long stop_time) {
 
 Engine::~Engine() {
     delete window;
+    for (Level* level : levels) {
+        delete level;
+    }
 }

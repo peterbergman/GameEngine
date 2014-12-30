@@ -8,6 +8,8 @@
 #include "Sprite.h"
 #include "StaticSprite.h"
 
+class Level;
+
 // The underlaying window used by the game engine.
 class Window {
     
@@ -19,32 +21,22 @@ public:
     
     // Returns the renderer used by the window.
     SDL_Renderer* GetRenderer();
+
+    // Loads all the sprites included in the specified level.
+    void LoadLevel(Level*);
     
-    // Adds a new sprite to the internal window by taking in a sprite pointer as argument.
-    void AddSprite(Sprite*);
-    
-    // Removes an existing sprite from the window by taking in a sprite pointer as argument.
-    // Frees any memory associated with the sprite object.
-    void RemoveSprite(Sprite*);
-    
-    // Returns a vector of all sprites that have been added to the window.
-    std::vector<Sprite*> GetSprites();
+    // Loads a spcecific sprite.
+    void LoadSprite(Sprite*);
     
     // Renders all sprites that have been added to the window and that are positioned wihtin the window.
     // Deletes any sprite that is positioned outside the window and frees any memory associated with the sprite object.
     void DrawSprites(int);
-    
-    // Delegates an event to the sprites that have been added to the window.
-    void PropagateEventToSprites(SDL_Event);
     
     // Returns the width of the window.
     int GetWidth();
     
     // Returns the height of the window.
     int GetHeight();
-    
-    // Sets the background of the window by loading the image located at the the path specified as argument.
-    void SetBackground(std::string);
     
     ~Window();
     
@@ -80,8 +72,8 @@ private:
     // The renderer.
     SDL_Renderer* renderer;
     
-    // A vector that contains all sprites that have been added to the window.
-    std::vector<Sprite*> sprites;
+    // The current level loaded for this window.
+    Level* current_level;
 };
 
 #endif

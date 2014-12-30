@@ -11,6 +11,7 @@
 #include "StaticSprite.h"
 #include "MovingSprite.h"
 #include "AnimatedSprite.h"
+#include "Level.h"
 #include "Window.h"
 
 typedef void (*collision_listener)(Sprite*,Sprite*);
@@ -30,13 +31,11 @@ public:
     // After being called, the engine will be running until the program terminates
     void Run();
     
-    // Adds a new sprite to the game engine by taking in a sprite pointer as argument.
-    // The sprite will then be shown in the next iteration of the main event loop.
-    void AddSprite(Sprite*); // TODO: implement layers? Could maybe be done with a tree set to hold the sprites instead of a vector
+    // Adds a level to this game engine.
+    void AddLevel(Level*);
     
-    // Removes an existing sprite by taking in a sprite pointer as argument.
-    // The sprite will then be removed from the screen in the next iteration of the main event loop.
-    void RemoveSprite(Sprite*);
+    // Sets the current level of this game engine.
+    void SetCurrentLevel(Level*);
     
     // Sets the collision listener for the game engine by taking in a free function pointer as argument (see collision_listener typedef).
     // The function sent to this function will be called each time a collision is detected.
@@ -51,10 +50,6 @@ public:
     
     // Adds an action listener that is not connected to any specific sprite.
     void AddEventListener(event_listener, int);
-    
-    // Sets the current background of the underlaying window by taking in a string which is the file name
-    // of the image to be loaded as background.
-    void SetScene(std::string);
     
     // Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double GetTimeElapsed();
@@ -121,7 +116,13 @@ private:
     // A data structure to hold all action event listeners registererd (if any) together with the keycode for each listener.
     std::map<int, event_listener> event_listeners;
     
+    // A data structure to hold all levels added (if any) to this game engine.
+    std::vector<Level*> levels;
+    
     // The actual time that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double time_elapsed;
+    
+    // The current level.
+    Level* current_level;
 };
 #endif
