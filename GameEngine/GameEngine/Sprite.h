@@ -26,9 +26,6 @@ public:
     // Adds a time listener to the sprite with a delay specified in milliseconds.
     void AddTimeListener(event_listener, int);
     
-    // Delegates an event to the correct handler.
-    void DelegateEvent(SDL_Event);
-    
     // Sets the X value of the upper right coordinate for the sprite.
     void SetX(int);
     
@@ -46,6 +43,9 @@ public:
 
     // Returns the height of the sprite.
     int GetHeight();
+    
+    // Delegates an event to the correct handler.
+    void DelegateEvent(SDL_Event);
     
     // Checks if the sprite contain the specified x and y value.
     bool Contains(int, int);
