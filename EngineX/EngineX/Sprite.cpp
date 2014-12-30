@@ -14,8 +14,8 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
     this->renderer = renderer;
 }
 
-void Sprite::AddActionListener(action_listener listener) {
-    action_event_listeners.push_back(listener);
+void Sprite::AddActionListener(action_listener listener, int key_code) {
+    action_event_listeners[key_code] = listener;
 }
 
 void Sprite::AddTimeEventListener(action_listener listener, int delay) {
@@ -57,13 +57,13 @@ void Sprite::HandleEvent(SDL_Event event) {
 }
 
 void Sprite::HandleActionEvent(SDL_Event event, bool mouse_event) {
-    for (action_listener listener : action_event_listeners) {
-        if (mouse_event) {
+    for (std::pair<const int, action_listener>& entry : action_event_listeners) {
+        if (mouse_event && entry.first == event.type) {
             if (Contains(event.button.x, event.button.y)) {
-                listener(event, this);
+                entry.second(event, this);
             }
-        } else {
-            listener(event, this);
+        } else if (entry.first == event.key.keysym.sym) {
+            entry.second(event, this);
         }
     }
 }

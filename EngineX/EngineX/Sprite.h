@@ -21,7 +21,7 @@ public:
     void SetRenderer(SDL_Renderer*);
     
     // Adds an action listener to the sprite.
-    void AddActionListener(action_listener);
+    void AddActionListener(action_listener, int);
     
     // Adds a time event listener to the sprite with a delay specified in milliseconds.
     void AddTimeEventListener(action_listener, int);
@@ -92,8 +92,8 @@ private:
     // Internal helper function to which time events are delegated.
     void HandleTimeEvent(SDL_Event);
     
-    // Vector containng all action event listeners added for the sprite.
-    std::vector<action_listener> action_event_listeners;
+    // Map containng all action event listeners added for the sprite and the keycode for each listener.
+    std::map<int, action_listener> action_event_listeners;
     
     // Map containng all time event listeners added for the sprite and the delay for each listener.
     std::map<int, action_listener> time_event_listeners;
