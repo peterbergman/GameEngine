@@ -26,8 +26,8 @@ public:
     // Adds a time listener to the sprite with a delay specified in milliseconds.
     void AddTimeListener(event_listener, int);
     
-    // Handles an event sent to the sprite.
-    void HandleEvent(SDL_Event);
+    // Delegates an event to the correct handler.
+    void DelegateEvent(SDL_Event);
     
     // Sets the X value of the upper right coordinate for the sprite.
     void SetX(int);
@@ -86,16 +86,16 @@ private:
     // Private in order to guard against value semantics.
     const Sprite& operator=(const Sprite&);
     
-    // Internal helper function to which action events are delegated.
-    void HandleActionEvent(SDL_Event, bool);
+    // Internal helper function to which events are delegated.
+    void HandleEvent(SDL_Event, bool);
     
     // Internal helper function to which time events are delegated.
-    void HandleTimeEvent(SDL_Event);
+    void HandleTime(SDL_Event);
     
-    // Map containng all action event listeners added for the sprite and the keycode for each listener.
+    // Map containng all event listeners added for the sprite and the keycode for each listener.
     std::map<int, event_listener> event_listeners;
     
-    // Map containng all time event listeners added for the sprite and the delay for each listener.
+    // Map containng all time listeners added for the sprite and the delay for each listener.
     std::map<int, event_listener> time_listeners;
 };
 

@@ -88,8 +88,14 @@ private:
     // Detects collisions between sprites and calls the collision listener (if any).
     void DetectCollision();
     
-    // Handles the time events emitted by the game engine. Calls the registererd time event listeners (if any).
-    void HandleTimeEvent(SDL_Event);
+    // Delegates an event to the correct handler.
+    void DelegateEvent(SDL_Event);
+    
+    // Handles the events (keybord and mouse) emitted by the game engine. Calls the registererd event listeners (if any).
+    void HandleEvent(SDL_Event, bool);
+    
+    // Handles the time events emitted by the game engine. Calls the registererd time listeners (if any).
+    void HandleTime(SDL_Event);
     
     // Internal helper function used to calculate the time elapsed between two main loop iterations.
     long GetTimestamp();

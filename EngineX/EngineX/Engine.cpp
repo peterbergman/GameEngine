@@ -96,12 +96,38 @@ void Engine::DetectCollision() {
     }
 }
 
-// Called in each iteration of the main event looop. Iterates through each time listener and evaluates
-// if the time listener should be called. This is done by calculating the number of main event loop iterations
-// that should elapse before the time event listener is called. Example:
+// Delegates an event to the correct handler function and propagates the event to the sprites.
+void Engine::DelegateEvent(SDL_Event event) {
+    if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
+        HandleEvent(event, true);
+    } else if (event.type == SDL_KEYDOWN) {
+        HandleEvent(event, false);
+    } else if (event.type == Engine::time_event_type) {
+        HandleTime(event);
+    } else if (event.type == SDL_QUIT) {
+        Quit();
+    }
+    window->PropagateEventToSprites(event);
+}
+
+// Iterates through each event listener and evaluates if the event listener should be called.
+// This is done by checking that the event source corresponds to the key or button registererd for the listner.
+void Engine::HandleEvent(SDL_Event event, bool mouse_event) {
+    for (std::pair<const int, event_listener>& entry : event_listeners) {
+        if (mouse_event && entry.first == event.type) {
+            entry.second();
+        } else if (entry.first == event.key.keysym.sym) {
+            entry.second();
+        }
+    }
+}
+
+// Iterates through each time listener and evaluates if the time listener should be called.
+// This is done by calculating the number of main event loop iterations that should elapse before the time event listener is called.
+// Example:
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
-void Engine::HandleTimeEvent(SDL_Event event) {
+void Engine::HandleTime(SDL_Event event) {
     for (std::pair<const int, event_listener>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);
@@ -117,30 +143,11 @@ void Engine::HandleTimeEvent(SDL_Event event) {
     }
 }
 
-// Polls all events that have been registered since the last iteration of the main event loop.
-// Events such as keydowns and mouse button events are directly delegated to the sprites by calling Window::PropagateEventToSprites.
-// Time events are both delegated to the sprites by calling Window:PropagateEventToSprites and handled by the HandleTimeEvent function.
+// Polls all events that have been registered since the last iteration of the main event loop and delegates them.
 void Engine::PollEvent() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-            case SDL_KEYDOWN:
-            case SDL_MOUSEBUTTONDOWN:
-            case SDL_MOUSEBUTTONUP:
-            case SDL_MOUSEMOTION:
-            case SDL_MOUSEWHEEL:
-                window->PropagateEventToSprites(event);
-                break;
-            case SDL_QUIT:
-                Quit();
-                break;
-            default:
-                if (event.type == time_event_type) { // TODO: refactor this messy construct if possible
-                    window->PropagateEventToSprites(event);
-                    HandleTimeEvent(event);
-                }
-                break;
-        }
+        DelegateEvent(event);
     }
 }
 
@@ -159,9 +166,9 @@ void Engine::SetTimeElapsed(long start_time, long stop_time) {
 // The main event loop of the game engine.
 // Executes the following steps:
 // 1. Get a timestamp at the start of the iteration.
-// 2. Poll all events that has been emitted since the last iteration (and handle/delegate them).
+// 2. Poll all events that has been emitted since the last iteration (and delegate them).
 // 3. Delegate re-drawing of sprites by calling Window::DrawSprites.
-// 4. Increament the frame counter.
+// 4. Increment the frame counter.
 // 5. Check for collisions.
 // 6. Emit a new time event.
 // 7. Timeout for 1000 / fps milliseconds.

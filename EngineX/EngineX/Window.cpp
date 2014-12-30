@@ -60,7 +60,7 @@ void Window::DrawSprites(int time_elapsed) {
 // Delegates an event to the sprites that have been added to the window.
 void Window::PropagateEventToSprites(SDL_Event event) {
     for (Sprite* sprite : sprites) {
-        sprite->HandleEvent(event);
+        sprite->DelegateEvent(event);
     }
 }
 

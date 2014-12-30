@@ -46,17 +46,17 @@ int Sprite::GetHeight() {
     return boundary->h;
 }
 
-void Sprite::HandleEvent(SDL_Event event) {
+void Sprite::DelegateEvent(SDL_Event event) {
     if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
-        HandleActionEvent(event, true);
+        HandleEvent(event, true);
     } else if (event.type == Engine::time_event_type) {
-        HandleTimeEvent(event);
+        HandleTime(event);
     } else {
-        HandleActionEvent(event, false);
+        HandleEvent(event, false);
     }
 }
 
-void Sprite::HandleActionEvent(SDL_Event event, bool mouse_event) {
+void Sprite::HandleEvent(SDL_Event event, bool mouse_event) {
     for (std::pair<const int, event_listener>& entry : event_listeners) {
         if (mouse_event && entry.first == event.type) {
             if (Contains(event.button.x, event.button.y)) {
@@ -68,7 +68,7 @@ void Sprite::HandleActionEvent(SDL_Event event, bool mouse_event) {
     }
 }
 
-void Sprite::HandleTimeEvent(SDL_Event event) {
+void Sprite::HandleTime(SDL_Event event) {
     for (std::pair<const int, event_listener>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);

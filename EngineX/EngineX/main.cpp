@@ -60,6 +60,10 @@ void SnowflakeTimeListener(Sprite* sprite) {
     sprite->SetY(sprite->GetY() + 5);
 }
 
+void GameEventListener() {
+    cout << "Game listener!" << endl;
+}
+
 void TimeEventListener() {
     // create a new sprite with y = 0 and x = random between 0 and the width of the window
     // increase the y coordinate of the sprite with 5
@@ -73,6 +77,7 @@ void TimeEventListener() {
 
 int main(int argc, const char * argv[]) {
     srand(time(NULL));
+    game_engine->AddEventListener(GameEventListener, SDLK_RETURN);
     game_engine->SetScene("/Users/Peter/Documents/DSV/Prog3/images/winter.png");
     
     snowman1->AddEventListener(SnowmanRightMove, SDLK_RIGHT);
