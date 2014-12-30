@@ -14,7 +14,7 @@
 #include "Window.h"
 
 typedef void (*collision_listener)(Sprite*,Sprite*);
-typedef void (*time_event_listener)(SDL_Event);
+typedef void (*time_event_listener)();
 
 // The interface part of the game engine. This is the class that the application program
 // is interfacing with and all operations on the framework goes through this class.

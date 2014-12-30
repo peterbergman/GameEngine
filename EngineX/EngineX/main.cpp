@@ -39,46 +39,28 @@ void Jump(SDL_Event event, Sprite* sprite) {
     }
 }
 
-void Snowman1Listener(SDL_Event event, Sprite* sprite) {
-    if (event.type == SDL_MOUSEBUTTONDOWN) {
-        cout << "click!\n";
-    } else if (event.type == SDL_KEYDOWN) {
-        switch (event.key.keysym.sym) {
-            case SDLK_UP:
-                sprite->SetY(sprite->GetY() - 20);
-                break;
-            case SDLK_DOWN:
-                sprite->SetY(sprite->GetY() + 20);
-                break;
-            case SDLK_LEFT:
-                sprite->SetX(sprite->GetX() - 20);
-                break;
-            case SDLK_RIGHT:
-                sprite->SetX(sprite->GetX() + 20);
-                break;
-            case SDLK_SPACE:
-                is_jumping = true;
-                sprite->AddTimeEventListener(Jump, 0);
-            default:
-                break;
-        }
-    }
-}
-
 void SnowmanRightMove(SDL_Event event, Sprite* sprite) {
-    sprite->SetX(sprite->GetX() + 5);
+    sprite->SetX(sprite->GetX() + 20);
 }
 
 void SnowmanLeftMove(SDL_Event event, Sprite* sprite) {
-    sprite->SetX(sprite->GetX() - 5);
+    sprite->SetX(sprite->GetX() - 20);
 }
 
+void SnowmanJump(SDL_Event event, Sprite* sprite) {
+    is_jumping = true;
+    sprite->AddTimeEventListener(Jump, 0);
+}
+
+void SnowmanClick(SDL_Event event, Sprite* sprite) {
+    cout << "Click!" << endl;
+}
 
 void SnowflakeTimeListener(SDL_Event event, Sprite* sprite) {
     sprite->SetY(sprite->GetY() + 5);
 }
 
-void TimeEventListener(SDL_Event event) {
+void TimeEventListener() {
     // create a new sprite with y = 0 and x = random between 0 and the width of the window
     // increase the y coordinate of the sprite with 5
     // set the new sprite time event listener to Sprite3TimeListener with random delay
@@ -92,7 +74,14 @@ void TimeEventListener(SDL_Event event) {
 int main(int argc, const char * argv[]) {
     srand(time(NULL));
     game_engine->SetScene("/Users/Peter/Documents/DSV/Prog3/images/winter.png");
-    snowman1->AddActionListener(Snowman1Listener);
+    
+    snowman1->AddActionListener(SnowmanRightMove, SDLK_RIGHT);
+    snowman1->AddActionListener(SnowmanLeftMove, SDLK_LEFT);
+    snowman1->AddActionListener(SnowmanJump, SDLK_SPACE);
+    snowman1->AddActionListener(SnowmanClick, SDL_MOUSEBUTTONDOWN);
+    
+
+    
     game_engine->AddSprite(snowman1);
     game_engine->AddSprite(snowman2);
     game_engine->AddSprite(ground);

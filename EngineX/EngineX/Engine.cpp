@@ -102,10 +102,10 @@ void Engine::HandleTimeEvent(SDL_Event event) {
         if (rhs > 0) {
             int result = frame_counter % rhs;
             if (result == 0) {
-                entry.second(event);
+                entry.second();
             }
         } else {
-            entry.second(event);
+            entry.second();
         }
     }
 }
