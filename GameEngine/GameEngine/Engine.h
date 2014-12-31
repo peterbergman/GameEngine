@@ -17,8 +17,7 @@
 typedef void (*collision_listener)(Sprite*,Sprite*);
 typedef void (*event_listener)();
 
-// The interface part of the game engine. This is the class that the application program
-// is interfacing with and all operations on the framework goes through this class.
+// The core class of the GameEngine framework. Handles the main event loop.
 class Engine {
     
 public:
