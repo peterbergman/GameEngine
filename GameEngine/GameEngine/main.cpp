@@ -8,6 +8,7 @@ using namespace std;
 
 Engine* game_engine = new Engine("My Game", 60, 800, 640);
 Level* level1 = new Level();
+Level* level2 = new Level();
 Sprite* snowman1 = AnimatedSprite::GetInstance({"/Users/Peter/Documents/DSV/Prog3/images/snowman.png",
                                                 "/Users/Peter/Documents/DSV/Prog3/images/snowman2.png"},
                                                500, 30, 310, 200, 256);
@@ -65,6 +66,14 @@ void GameEventListener() {
     cout << "Game listener!" << endl;
 }
 
+void SetLevel1() {
+    game_engine->SetCurrentLevel(level1);
+}
+
+void SetLevel2() {
+    game_engine->SetCurrentLevel(level2);
+}
+
 void TimeEventListener() {
     // create a new sprite with y = 0 and x = random between 0 and the width of the window
     // increase the y coordinate of the sprite with 5
@@ -83,15 +92,21 @@ int main(int argc, const char * argv[]) {
     snowman1->AddEventListener(SnowmanLeftMove, SDLK_LEFT);
     snowman1->AddEventListener(SnowmanJump, SDLK_SPACE);
     snowman1->AddEventListener(SnowmanClick, SDL_MOUSEBUTTONDOWN);
-    game_engine->AddTimeListener(TimeEventListener, 500);
+    
+    level1->AddTimeListener(TimeEventListener, 500);
     game_engine->SetCollisionListener(CollisionListener);
     game_engine->AddEventListener(GameEventListener, SDLK_RETURN);
-    
+    game_engine->AddEventListener(SetLevel1, SDLK_1);
+    game_engine->AddEventListener(SetLevel2, SDLK_2);
+
     level1->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/winter.png");
     level1->AddSprite(snowman1);
     level1->AddSprite(snowman2);
     level1->AddSprite(ground);
     game_engine->AddLevel(level1);
+    
+    level2->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/winter2.png");
+    game_engine->AddLevel(level2);
     
     game_engine->SetCurrentLevel(level1);
     game_engine->Run();

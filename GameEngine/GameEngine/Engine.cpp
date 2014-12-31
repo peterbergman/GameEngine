@@ -129,7 +129,7 @@ void Engine::DelegateEvent(SDL_Event event) {
     } else if (event.type == SDL_QUIT) {
         Quit();
     }
-    current_level->PropagateEventToSprites(event);
+    current_level->DelegateEvent(event);
 }
 
 // Iterates through each event listener and evaluates if the event listener should be called.
