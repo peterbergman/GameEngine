@@ -8,7 +8,7 @@
 #include "Sprite.h"
 #include "StaticSprite.h"
 
-class Level;
+class Level; // Forward declaration neeeded to avoid cyclic dependency.
 
 // The underlaying window used by the game engine.
 class Window {

@@ -4,7 +4,7 @@
 #include "Sprite.h"
 #include "StaticSprite.h"
 
-class Window;
+class Window; // Forward declaration neeeded to avoid cyclic dependency.
 
 class Level {
 public:
@@ -30,7 +30,7 @@ public:
     // Sets the window pointer needed to load more sprites is new ones are added after the level is loaded.
     void SetWindow(Window*);
     
-    // Returns the goal set for this level
+    // Returns the goal set for this level.
     int GetGoal();
     
     // Adds a new time event listener to the level by taking in a fee function pointer as argument (see collision_listener typedef)
