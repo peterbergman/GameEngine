@@ -11,7 +11,7 @@ class Window;
 class Level {
 public:
     
-    Level();
+    Level(int goal);
     
     // Adds a new sprite to this level by taking in a sprite pointer as argument.
     void AddSprite(Sprite*); // TODO: implement layers? Could maybe be done with a tree set to hold the sprites instead of a vector
@@ -31,6 +31,9 @@ public:
     
     // Sets the window pointer needed to load more sprites is new ones are added after the level is loaded.
     void SetWindow(Window*);
+    
+    // Returns the goal set for this level
+    int GetGoal();
     
     // Adds a new time event listener to the level by taking in a fee function pointer as argument (see collision_listener typedef)
     // together with a delay (in milliseconds).
@@ -59,6 +62,9 @@ private:
     
     // A data structure to hold all time event listeners registererd (if any) together with the delay for each listener.
     std::map<int, event_listener> time_listeners;
+    
+    // The goal for this level, specified with an integer.
+    int goal;
 };
 
 #endif

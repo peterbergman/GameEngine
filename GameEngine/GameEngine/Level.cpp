@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "Engine.h"
 
-Level::Level():is_loaded(false) {
+Level::Level(int goal):goal(goal), is_loaded(false) {
     
 }
 
@@ -43,6 +43,11 @@ void Level::SetBackground(std::string background_image_path) {
 // Sets the loaded flag of this level.
 void Level::SetLoaded(bool is_loaded) {
     this->is_loaded = is_loaded;
+}
+
+// Returns the goal for this level.
+int Level::GetGoal() {
+    return goal;
 }
 
 // Sets the window pointer needed to load more sprites is new ones are added after the level is loaded.

@@ -7,8 +7,8 @@
 using namespace std;
 
 Engine* game_engine = new Engine("My Game", 60, 800, 640);
-Level* level1 = new Level();
-Level* level2 = new Level();
+Level* level1 = new Level(5);
+Level* level2 = new Level(10);
 Sprite* snowman1 = AnimatedSprite::GetInstance({"/Users/Peter/Documents/DSV/Prog3/images/snowman.png",
                                                 "/Users/Peter/Documents/DSV/Prog3/images/snowman2.png"},
                                                500, 30, 310, 200, 256);
