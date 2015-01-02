@@ -15,8 +15,6 @@
 #include "Level.h"
 #include "Window.h"
 
-typedef void (*collision_listener)(Sprite*,Sprite*);
-
 // The core class of the GameEngine framework. Handles the main event loop.
 class Engine {
     

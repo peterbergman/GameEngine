@@ -58,7 +58,7 @@ void Level::SetWindow(Window* window) {
 // Adds a new time listener to the internal map that contains all time listeners.
 // The delay is used as key, meaning that two time listeners with the same delay cannot be
 // registered at the same time.
-void Level::AddTimeListener(event_listener listener, int delay) {
+void Level::AddTimeListener(std::function<void(void)> listener, int delay) {
     time_listeners[delay] = listener;
 }
 
@@ -78,7 +78,7 @@ void Level::DelegateEvent(SDL_Event event) {
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
 void Level::HandleTime(SDL_Event event) {
-    for (std::pair<const int, event_listener>& entry : time_listeners) {
+    for (std::pair<const int, std::function<void(void)>>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);
         int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));

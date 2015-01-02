@@ -24,5 +24,9 @@ void AnimatedSprite::Draw(int time_elapsed) {
     SDL_RenderCopy(renderer, texture, NULL, boundary);
 }
 
+void AnimatedSprite::MoveRight(Sprite* sprite) {
+    boundary->x = boundary->x + 20;
+}
+
 AnimatedSprite::~AnimatedSprite() {
 }

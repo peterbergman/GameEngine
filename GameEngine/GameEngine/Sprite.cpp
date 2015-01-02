@@ -18,14 +18,14 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
 // Adds a new event listener to the interal map that contains all event listeners.
 // The keycode is used as key, meaning that two event listeners with the same keycode cannot be
 // registered at the same time.
-void Sprite::AddEventListener(event_listener listener, int key_code) {
+void Sprite::AddEventListener(std::function<void(Sprite*)> listener, int key_code) {
     event_listeners[key_code] = listener;
 }
 
 // Adds a new time listener to the internal map that contains all time listeners.
 // The delay is used as key, meaning that two time listeners with the same delay cannot be
 // registered at the same time.
-void Sprite::AddTimeListener(event_listener listener, int delay) {
+void Sprite::AddTimeListener(std::function<void(Sprite*)> listener, int delay) {
     time_listeners[delay] = listener;
 }
 
@@ -75,7 +75,7 @@ void Sprite::DelegateEvent(SDL_Event event) {
 // For mouse events, the position of the mouse coursor is checked if inside the sprite boundary as well before
 // calling the event listener.
 void Sprite::HandleEvent(SDL_Event event, bool mouse_event) {
-    for (std::pair<const int, event_listener>& entry : event_listeners) {
+    for (std::pair<const int, std::function<void(Sprite*)>>& entry : event_listeners) {
         if (mouse_event && entry.first == event.type) {
             if (Contains(event.button.x, event.button.y)) {
                 entry.second(this);
@@ -92,7 +92,7 @@ void Sprite::HandleEvent(SDL_Event event, bool mouse_event) {
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
 void Sprite::HandleTime(SDL_Event event) {
-    for (std::pair<const int, event_listener>& entry : time_listeners) {
+    for (std::pair<const int, std::function<void(Sprite*)>>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);
         int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));

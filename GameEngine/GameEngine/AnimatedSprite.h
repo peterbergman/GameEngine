@@ -18,6 +18,8 @@ public:
     // Draws the sprite changing between each image in the image vector with a given delay.
     virtual void Draw(int);
     
+    void MoveRight(Sprite* sprite);
+    
     virtual ~AnimatedSprite();
 private:
     AnimatedSprite(std::vector<std::string> images, int image_change_delay, int x_pos, int y_pos, int width, int height); // Guard against value semantic
