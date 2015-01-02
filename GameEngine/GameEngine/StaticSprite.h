@@ -6,15 +6,22 @@
 #include <SDL2_image/SDL_image.h>
 #include "Sprite.h"
 
+// Class to represent static sprites.
 class StaticSprite : public Sprite {
+    
 public:
-    static StaticSprite* GetInstance(std::string, int, int, int, int);
+    
+    // Factory function to control object creation.
+    static StaticSprite* GetInstance(std::string file_name, int x_pos, int y_pos, int width, int height);
+    
+    // Draws a static image representing the sprite.
     virtual void Draw(int time_elapsed);
+    
     virtual ~StaticSprite();
 private:
-    StaticSprite(std::string, int, int, int, int); // Guard against value semantic
-    StaticSprite(const StaticSprite&); // Guard against value semantic
-    const StaticSprite& operator=(const StaticSprite&); // Guard against value semantic
+    StaticSprite(std::string file_name, int x_pos, int y_pos, int width, int height); // Guard against value semantic
+    StaticSprite(const StaticSprite& other_sprite); // Guard against value semantic
+    const StaticSprite& operator=(const StaticSprite& other_sprite); // Guard against value semantic
 };
 
 #endif

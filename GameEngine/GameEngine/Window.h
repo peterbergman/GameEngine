@@ -17,20 +17,20 @@ public:
     
     // Creates a new window object and sets the member variable title based on the string sent as argument
     // and boundary as well as height and width based on the height and width sent as arguments.
-    Window(std::string, int, int);
+    Window(std::string title, int width, int height);
     
     // Returns the renderer used by the window.
     SDL_Renderer* GetRenderer();
 
     // Loads all the sprites included in the specified level.
-    void LoadLevel(Level*);
+    void LoadLevel(Level* level);
     
     // Loads a spcecific sprite.
-    void LoadSprite(Sprite*);
+    void LoadSprite(Sprite* sprite);
     
     // Renders all sprites that have been added to the window and that are positioned wihtin the window.
     // Deletes any sprite that is positioned outside the window and frees any memory associated with the sprite object.
-    void DrawSprites(int);
+    void DrawSprites(int time_elapsed);
     
     // Returns the width of the window.
     int GetWidth();
@@ -55,10 +55,10 @@ private:
     void SetUpWindow();
     
     // Internal helper function to check if the window contain the specified x and y value.
-    bool Contains(int, int);
+    bool Contains(int x, int y);
     
     // Internal helper function to check if the window contain the specified sprite.
-    bool Contains(Sprite*);
+    bool Contains(Sprite* sprite);
     
     // The height and width of the window.
     int height, width;

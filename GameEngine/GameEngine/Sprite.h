@@ -18,19 +18,19 @@ typedef void (*event_listener)(Sprite*);
 public:
     
     // Sets the renderer member variable.
-    void SetRenderer(SDL_Renderer*);
+    void SetRenderer(SDL_Renderer* renderer);
     
     // Adds an event listener to the sprite.
-    void AddEventListener(event_listener, int);
+    void AddEventListener(event_listener listener, int key_code);
     
     // Adds a time listener to the sprite with a delay specified in milliseconds.
-    void AddTimeListener(event_listener, int);
+    void AddTimeListener(event_listener, int delay);
     
     // Sets the X value of the upper right coordinate for the sprite.
-    void SetX(int);
+    void SetX(int x);
     
     // Sets the Y value of the upper right coordinate for the sprite.
-    void SetY(int);
+    void SetY(int y);
     
     // Returns the X value of the upper right coordinate for the sprite.
     int GetX();
@@ -45,26 +45,26 @@ public:
     int GetHeight();
     
     // Delegates an event to the correct handler.
-    void DelegateEvent(SDL_Event);
+    void DelegateEvent(SDL_Event event);
     
     // Checks if the sprite contain the specified x and y value.
-    bool Contains(int, int);
+    bool Contains(int x, int y);
     
     // Checks if the sprite contain the specified sprite.
-    bool Contains(Sprite*);
+    bool Contains(Sprite* sprite);
     
     // Sets up the texture used by the sprite.
     void SetUpTexture();
     
     // Draws the sprite according to the behavior specified in the subclass.
-    virtual void Draw(int) = 0;
+    virtual void Draw(int time_elapsed) = 0;
     
     virtual ~Sprite();
     
 protected:
     
     // Protected in order to guard against value semantics but still allows for creating subclasses.
-    Sprite(int, int, int, int, std::string);
+    Sprite(int x_pos, int y_pos, int width, int height, std::string file_name);
     
     // The renderer for the window to which the sprite is added.
     SDL_Renderer* renderer;
@@ -81,16 +81,16 @@ protected:
 private:
     
     // Private in order to guard against value semantics.
-    Sprite(const Sprite&);
+    Sprite(const Sprite& other_sprite);
     
     // Private in order to guard against value semantics.
-    const Sprite& operator=(const Sprite&);
+    const Sprite& operator=(const Sprite& other_sprite);
     
     // Internal helper function to which events are delegated.
-    void HandleEvent(SDL_Event, bool);
+    void HandleEvent(SDL_Event event, bool mouse_event);
     
     // Internal helper function to which time events are delegated.
-    void HandleTime(SDL_Event);
+    void HandleTime(SDL_Event event);
     
     // Map containng all event listeners added for the sprite and the keycode for each listener.
     std::map<int, event_listener> event_listeners;

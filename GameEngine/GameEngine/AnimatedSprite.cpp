@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+// Factory function to control object creation.
 AnimatedSprite* AnimatedSprite::GetInstance(std::vector<std::string> images, int image_change_delay, int x_pos, int y_pos, int width, int height) {
     return new AnimatedSprite(images, image_change_delay, x_pos, y_pos, width, height);
 }
@@ -10,6 +11,8 @@ AnimatedSprite::AnimatedSprite(std::vector<std::string> images, int image_change
     
 }
 
+// Draws the sprite changing between each image in the image vector with a given delay.
+// Wraps around at the end of the vector.
 void AnimatedSprite::Draw(int time_elapsed) {
     time_since_last_draw = time_since_last_draw + time_elapsed;
     if (time_since_last_draw >= image_change_delay) {
