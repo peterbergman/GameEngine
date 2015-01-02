@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <functional>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
@@ -15,7 +16,6 @@
 #include "Window.h"
 
 typedef void (*collision_listener)(Sprite*,Sprite*);
-typedef void (*event_listener)();
 
 // The core class of the GameEngine framework. Handles the main event loop.
 class Engine {
@@ -24,31 +24,31 @@ public:
     
     // Creates a new Engine object and sets the member variable fps.
     // Also creates a new Window object by passing on the width, height and title arguments.
-    Engine(std::string, int, int, int);
+    Engine(std::string game_name, int fps, int window_width, int window_height);
     
     // Starts the main event loop in the game engine.
     // After being called, the engine will be running until the program terminates
     void Run();
     
     // Adds a level to this game engine.
-    void AddLevel(Level*);
+    void AddLevel(Level* level);
     
     // Sets the current level of this game engine.
-    void SetCurrentLevel(Level*);
+    void SetCurrentLevel(Level* level);
     
-    // Sets the collision listener for the game engine by taking in a free function pointer as argument (see collision_listener typedef).
+    // Sets the collision listener for the game engine by taking in a function pointer as argument (see collision_listener typedef).
     // The function sent to this function will be called each time a collision is detected.
     // Collisions are evaluated for all sprites on each iteration of the main event loop.
-    void SetCollisionListener(collision_listener);
+    void SetCollisionListener(std::function<void(Sprite*, Sprite*)> listener);
     
-    // Adds a new time event listener to the game engine by taking in a fee function pointer as argument (see collision_listener typedef)
+    // Adds a new time event listener to the game engine by taking in a function pointer as argument
     // together with a delay (in milliseconds).
     // This function will then be called repeatedly each time the delay expires. The minimum delay is equal to the fps value. If the delay is set
     // to a value below the fps, then the time event listener will be called in each iteration of the main event loop.
-    void AddTimeListener(event_listener, int);
+    void AddTimeListener(std::function<void(void)> listener, int delay);
     
     // Adds an action listener that is not connected to any specific sprite.
-    void AddEventListener(event_listener, int);
+    void AddEventListener(std::function<void(void)> listener, int key_code);
     
     // Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double GetTimeElapsed();
@@ -107,13 +107,13 @@ private:
     int frame_counter;
     
     // The collision listener function registered (if any).
-    collision_listener current_collision_listener;
+    std::function<void(Sprite*, Sprite*)> current_collision_listener;
     
     // A data structure to hold all time event listeners registererd (if any) together with the delay for each listener.
-    std::map<int, event_listener> time_listeners;
+    std::map<int, std::function<void(void)>> time_listeners;
     
     // A data structure to hold all action event listeners registererd (if any) together with the keycode for each listener.
-    std::map<int, event_listener> event_listeners;
+    std::map<int, std::function<void(void)>> event_listeners;
     
     // A data structure to hold all levels added (if any) to this game engine.
     std::vector<Level*> levels;
