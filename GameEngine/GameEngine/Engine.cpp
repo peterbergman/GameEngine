@@ -3,6 +3,10 @@
 
 Uint32 Engine::time_event_type;
 
+Uint32 Engine::GetTimeEventType() {
+    return time_event_type;
+}
+
 Engine::Engine(std::string game_name, int fps, int window_width, int window_height):fps(fps), frame_counter(0) {
     window = new Window(game_name, window_width, window_height);
 }

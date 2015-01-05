@@ -57,8 +57,7 @@ public:
     // Returns the height of the underlaying window.
     int GetWindowHeight();
     
-    // The type ID of events that are emitted as time events. These events are then handled by the time event listeners.
-    static Uint32 time_event_type;
+    static Uint32 GetTimeEventType();
     
     ~Engine();
     
@@ -121,5 +120,8 @@ private:
     
     // The current level.
     Level* current_level;
+    
+    // The type ID of events that are emitted as time events. These events are then handled by the time event listeners.
+    static Uint32 time_event_type;
 };
 #endif

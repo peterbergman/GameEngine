@@ -64,7 +64,7 @@ void Level::AddTimeListener(std::function<void(void)> listener, int delay) {
 
 // Delegates an event to the sprites that have been added to the level and the time listeners added to the level.
 void Level::DelegateEvent(SDL_Event event) {
-    if (event.type == Engine::time_event_type) {
+    if (event.type == Engine::GetTimeEventType()) {
         HandleTime(event);
     }
     for (Sprite* sprite : sprites) {

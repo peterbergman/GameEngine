@@ -63,7 +63,7 @@ int Sprite::GetHeight() {
 void Sprite::DelegateEvent(SDL_Event event) {
     if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
         HandleEvent(event, true);
-    } else if (event.type == Engine::time_event_type) {
+    } else if (event.type == Engine::GetTimeEventType()) {
         HandleTime(event);
     } else {
         HandleEvent(event, false);
