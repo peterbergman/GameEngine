@@ -77,19 +77,19 @@ private:
     void DetectCollision();
     
     // Delegates an event to the correct handler.
-    void DelegateEvent(SDL_Event);
+    void DelegateEvent(SDL_Event event);
     
     // Handles the events (keybord and mouse) emitted by the game engine. Calls the registererd event listeners (if any).
-    void HandleEvent(SDL_Event, bool);
+    void HandleEvent(SDL_Event event, bool mouse_event);
     
     // Handles the time events emitted by the game engine. Calls the registererd time listeners (if any).
-    void HandleTime(SDL_Event);
+    void HandleTime(SDL_Event event);
     
     // Internal helper function used to calculate the time elapsed between two main loop iterations.
     long GetTimestamp();
     
     // Sets the actual time that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
-    void SetTimeElapsed(long, long);
+    void SetTimeElapsed(long start_time, long stop_time);
     
     // Flag that control the main event loop. The loop will be running as long as this flag is set to true.
     bool is_running;
