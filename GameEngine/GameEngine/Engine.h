@@ -13,6 +13,7 @@
 #include "MovingSprite.h"
 #include "AnimatedSprite.h"
 #include "TextInputSprite.h"
+#include "LabelSprite.h"
 #include "Level.h"
 #include "Window.h"
 
