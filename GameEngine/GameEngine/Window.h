@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <SDL2/SDL.h>
 #include "Sprite.h"
 #include "StaticSprite.h"
 
@@ -47,6 +46,9 @@ private:
     
     // Internal helper function to initiate SDL_Image.
     void InitSDLImage();
+    
+    // Internal helper function to initiate SDL_ttf.
+    void InitSDLttf();
     
     // Internal helper function to set up a renderer for the window.
     void SetUpRenderer();

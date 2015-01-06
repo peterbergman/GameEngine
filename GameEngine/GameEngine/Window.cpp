@@ -1,10 +1,12 @@
+#include <SDL2/SDL.h>
+#include <SDL2_ttf/SDL_ttf.h>
 #include "Window.h"
 #include "Level.h"
-
 
 Window::Window(std::string title, int width, int height):title(title), width(width), height(height){
     InitSDL();
     InitSDLImage();
+    InitSDLttf();
     SetUpWindow();
     SetUpRenderer();
     SDL_RenderPresent(renderer);
@@ -74,6 +76,14 @@ void Window::InitSDLImage() {
     }
 }
 
+// Internal helper function to initiate SDL_ttf.
+void Window::InitSDLttf() {
+    if (TTF_Init() == -1) {
+        SDL_Quit();
+        throw std::runtime_error("Failed to init game engine!");
+    }
+}
+
 // Internal helper function to set up a renderer for the window.
 void Window::SetUpRenderer() {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -120,4 +130,5 @@ Window::~Window() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
+    //TTF_Quit();
 }
