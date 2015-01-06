@@ -145,21 +145,19 @@ bool Sprite::Contains(Sprite* other_sprite) {
 // If a texture is already present when this function is called, then that texture is first destroyed.
 // This is to enable change of texture after the sprite is created without leaking memory.
 void Sprite::SetUpTexture() {
-    if (texture != nullptr) {
-        SDL_DestroyTexture(texture);
-    }
-    SDL_Surface* surface = IMG_Load(file_name.c_str());
-    if (surface == nullptr) {
-        throw std::runtime_error("Failed to create sprite!");
-    } else {
-        if (boundary->w == 0 && boundary->h == 0) {
-            boundary->w = surface->w;
-            boundary->h = surface->h;
+    if (file_name != "") {
+        if (texture != nullptr) {
+            SDL_DestroyTexture(texture);
         }
-        texture = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if (texture == nullptr) {
+        SDL_Surface* surface = IMG_Load(file_name.c_str());
+        if (surface == nullptr) {
             throw std::runtime_error("Failed to create sprite!");
+        } else {
+            texture = SDL_CreateTextureFromSurface(renderer, surface);
+            SDL_FreeSurface(surface);
+            if (texture == nullptr) {
+                throw std::runtime_error("Failed to create sprite!");
+            }
         }
     }
 }
