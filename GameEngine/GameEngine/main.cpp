@@ -6,57 +6,29 @@
 
 using namespace std;
 
-Engine* game_engine = new Engine("My Game", 60, 800, 640);
+Engine* game_engine = new Engine("SpaceShooter", 60, 800, 640);
 Level* level1 = new Level(5);
 Level* level2 = new Level(10);
-Sprite* snowman1 = AnimatedSprite::GetInstance({"/Users/Peter/Documents/DSV/Prog3/images/snowman.png",
-                                                "/Users/Peter/Documents/DSV/Prog3/images/snowman2.png"},
-                                               500, 30, 310, 200, 256);
-Sprite* snowman2 = StaticSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowman.png", 500, 310, 200, 256);
-Sprite* ground = StaticSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/ground.png", 0, 553, 1024, 87);
-
-// Jump stuff
-double vi = -200, t = 0;
-double g = 200;
-bool is_jumping = false;
+Sprite* player = AnimatedSprite::GetInstance("player", {"/Users/Peter/Documents/DSV/Prog3/images/space/player_space_ship1.png"},
+                                               0, 300, 520, 128, 128);
 
 
 void CollisionListener(Sprite* sprite1, Sprite* sprite2) {
-    if (sprite1 == snowman1 && sprite2 == snowman2) {
+    if ((sprite1->GetTag() == "bullet" && sprite2->GetTag() == "enemy") || (sprite2->GetTag() == "bullet" && sprite1->GetTag() == "enemy")) {
         cout << "Collision detected!\n";
         level1->RemoveSprite(sprite1);
         level1->RemoveSprite(sprite2);
     }
 }
 
-void Jump(Sprite* sprite) {
-    if (is_jumping) {
-        sprite->SetY((vi * t + g * t * t / 2) + 310);
-        t = t + (game_engine->GetTimeElapsed() / 1000) + 0.04;
-        
-        if (sprite->GetY() > 310) {
-            t = 0;
-            is_jumping = false;
-        }
-    }
-}
-
-void SnowmanRightMove(Sprite* sprite) {
+void PlayerRightMove(Sprite* sprite) {
     sprite->SetX(sprite->GetX() + 20);
 }
 
-void SnowmanLeftMove(Sprite* sprite) {
+void PlayerLeftMove(Sprite* sprite) {
     sprite->SetX(sprite->GetX() - 20);
 }
 
-void SnowmanJump(Sprite* sprite) {
-    is_jumping = true;
-    sprite->AddTimeListener(Jump, 0);
-}
-
-void SnowmanClick(Sprite* sprite) {
-    cout << "Click!" << endl;
-}
 
 void SnowflakeTimeListener(Sprite* sprite) {
     sprite->SetY(sprite->GetY() + 5);
@@ -74,38 +46,46 @@ void SetLevel2() {
     game_engine->SetCurrentLevel(level2);
 }
 
-void TimeEventListener() {
+void EnemyListenerLevel1() {
     // create a new sprite with y = 0 and x = random between 0 and the width of the window
     // increase the y coordinate of the sprite with 5
     // set the new sprite time event listener to Sprite3TimeListener with random delay
-    int x_pos = rand() % game_engine->GetWindowWidth() + 1;
-    int delay = rand() % 50 + 15;
-    Sprite* tmpSprite = MovingSprite::GetInstance("/Users/Peter/Documents/DSV/Prog3/images/snowflake.png", x_pos, 0, 30, 30, 0, 1);
-    //tmpSprite->AddTimeEventListener(SnowflakeTimeListener, delay);
+    int x_pos = rand() % game_engine->GetWindowWidth() + 100;
+    if (x_pos < (game_engine->GetWindowWidth() - 100)) {
+        int delay = rand() % 50 + 15;
+        Sprite* tmpSprite = MovingSprite::GetInstance("enemy" ,"/Users/Peter/Documents/DSV/Prog3/images/space/level1_enemy.png", x_pos, 0, 100, 100, 0, 1);
+        //tmpSprite->AddTimeEventListener(SnowflakeTimeListener, delay);
+        level1->AddSprite(tmpSprite);
+    }
+}
+
+void ShootListenerLevel1() {
+    // create a new sprite with y = 0 and x = random between 0 and the width of the window
+    // increase the y coordinate of the sprite with 5
+    // set the new sprite time event listener to Sprite3TimeListener with random delay
+    int x_pos = player->GetX();
+    Sprite* tmpSprite = MovingSprite::GetInstance("bullet", "/Users/Peter/Documents/DSV/Prog3/images/space/level1_bullet.png", x_pos, 520, 19, 43, 0, -10);
     level1->AddSprite(tmpSprite);
 }
 
 int main(int argc, const char * argv[]) {
     srand(time(NULL));
     
-    snowman1->AddEventListener(SnowmanRightMove, SDLK_RIGHT);
-    snowman1->AddEventListener(SnowmanLeftMove, SDLK_LEFT);
-    snowman1->AddEventListener(SnowmanJump, SDLK_SPACE);
-    snowman1->AddEventListener(SnowmanClick, SDL_MOUSEBUTTONDOWN);
+    player->AddEventListener(PlayerRightMove, SDLK_RIGHT);
+    player->AddEventListener(PlayerLeftMove, SDLK_LEFT);
     
-    level1->AddTimeListener(TimeEventListener, 500);
+    level1->AddTimeListener(EnemyListenerLevel1, 2000);
     game_engine->SetCollisionListener(CollisionListener);
     game_engine->AddEventListener(GameEventListener, SDLK_RETURN);
     game_engine->AddEventListener(SetLevel1, SDLK_1);
     game_engine->AddEventListener(SetLevel2, SDLK_2);
+    game_engine->AddEventListener(ShootListenerLevel1, SDLK_SPACE);
 
-    level1->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/winter.png");
-    level1->AddSprite(snowman1);
-    level1->AddSprite(snowman2);
-    level1->AddSprite(ground);
+    level1->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/space/level1_background.png");
+    level1->AddSprite(player);
     game_engine->AddLevel(level1);
     
-    level2->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/winter2.png");
+    level2->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/winter.png");
     game_engine->AddLevel(level2);
     
     game_engine->SetCurrentLevel(level1);

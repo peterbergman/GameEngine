@@ -12,14 +12,14 @@ class StaticSprite : public Sprite {
 public:
     
     // Factory function to control object creation.
-    static StaticSprite* GetInstance(std::string file_name, int x_pos, int y_pos, int width, int height);
+    static StaticSprite* GetInstance(std::string tag, std::string file_name, int x_pos, int y_pos, int width, int height);
     
     // Draws a static image representing the sprite.
     virtual void Draw(int time_elapsed);
     
     virtual ~StaticSprite();
 private:
-    StaticSprite(std::string file_name, int x_pos, int y_pos, int width, int height); // Guard against value semantic
+    StaticSprite(std::string tag, std::string file_name, int x_pos, int y_pos, int width, int height); // Guard against value semantic
     StaticSprite(const StaticSprite& other_sprite); // Guard against value semantic
     const StaticSprite& operator=(const StaticSprite& other_sprite); // Guard against value semantic
 };

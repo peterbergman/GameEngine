@@ -3,11 +3,11 @@
 #include <string>
 
 // Factory function to control object creation.
-AnimatedSprite* AnimatedSprite::GetInstance(std::vector<std::string> images, int image_change_delay, int x_pos, int y_pos, int width, int height) {
-    return new AnimatedSprite(images, image_change_delay, x_pos, y_pos, width, height);
+AnimatedSprite* AnimatedSprite::GetInstance(std::string tag, std::vector<std::string> images, int image_change_delay, int x_pos, int y_pos, int width, int height) {
+    return new AnimatedSprite(tag, images, image_change_delay, x_pos, y_pos, width, height);
 }
 
-AnimatedSprite::AnimatedSprite(std::vector<std::string> images, int image_change_delay, int x_pos, int y_pos, int width, int height):images(images), image_change_delay(image_change_delay), time_since_last_draw(0), image_index(0), Sprite(x_pos, y_pos, width, height, images[0]) {
+AnimatedSprite::AnimatedSprite(std::string tag, std::vector<std::string> images, int image_change_delay, int x_pos, int y_pos, int width, int height):images(images), image_change_delay(image_change_delay), time_since_last_draw(0), image_index(0), Sprite(tag, x_pos, y_pos, width, height, images[0]) {
     
 }
 
@@ -29,4 +29,6 @@ void AnimatedSprite::MoveRight(Sprite* sprite) {
 }
 
 AnimatedSprite::~AnimatedSprite() {
+    delete boundary;
+    SDL_DestroyTexture(texture);
 }

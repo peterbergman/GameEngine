@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "Engine.h"
 
-Sprite::Sprite(int x_pos, int y_pos, int width, int height, std::string file_name):file_name(file_name), texture(NULL) {
+Sprite::Sprite(std::string tag, int x_pos, int y_pos, int width, int height, std::string file_name):tag(tag), file_name(file_name), texture(NULL), is_removed(false) {
     boundary = new SDL_Rect();
     boundary->x = x_pos;
     boundary->y = y_pos;
@@ -57,6 +57,19 @@ int Sprite::GetWidth() {
 // Returns the height of the sprite.
 int Sprite::GetHeight() {
     return boundary->h;
+}
+
+// Returns the tag of the sprite.
+std::string Sprite::GetTag() {
+    return tag;
+}
+
+void Sprite::SetIsRemoved(bool is_removed) {
+    this->is_removed = true;
+}
+
+bool Sprite::GetIsRemoved() {
+    return is_removed;
 }
 
 // Delegates an event to the correct handler.
@@ -150,6 +163,4 @@ void Sprite::SetUpTexture() {
 }
 
 Sprite::~Sprite() {
-    delete boundary;
-    SDL_DestroyTexture(texture);
 }

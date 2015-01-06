@@ -20,9 +20,13 @@ void Level::AddSprite(Sprite* sprite) {
 // Removes an existing sprite from the window by taking in a sprite pointer as argument.
 // Both frees the memory allocated by the sprite object and removes it from the vector of sprites.
 void Level::RemoveSprite(Sprite* sprite) {
-    delete sprite;
+    sprite->SetIsRemoved(true);
+}
+
+void Level::CleanUpSprites() {
     for (int i = 0; i < sprites.size(); i++) {
-        if (sprite == sprites[i]) {
+        if (sprites[i]->GetIsRemoved()) {
+            delete sprites[i];
             sprites.erase(sprites.begin() + i);
         }
     }
@@ -36,7 +40,7 @@ std::vector<Sprite*> Level::GetSprites() {
 // Sets the background of the level by loading the image located at the the path specified as argument.
 // The background is added to the level as a new StaticSprite which is then by calling Window::AddSprite.
 void Level::SetBackground(std::string background_image_path) {
-    Sprite* background_sprite = StaticSprite::GetInstance(background_image_path, 0, 0, 0, 0);
+    Sprite* background_sprite = StaticSprite::GetInstance("background", background_image_path, 0, 0, 0, 0);
     AddSprite(background_sprite);
 }
 

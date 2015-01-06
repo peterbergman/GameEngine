@@ -18,6 +18,8 @@ public:
     // Frees any memory associated with the sprite object.
     void RemoveSprite(Sprite* sprite);
     
+    void CleanUpSprites();
+    
     // Returns a vector of all sprites that have been added to the level.
     std::vector<Sprite*> GetSprites();
     

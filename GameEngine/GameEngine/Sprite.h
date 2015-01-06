@@ -42,6 +42,13 @@ public:
     // Returns the height of the sprite.
     int GetHeight();
     
+    // Returns the tag of the sprite.
+    std::string GetTag();
+    
+    void SetIsRemoved(bool is_removed);
+    
+    bool GetIsRemoved();
+    
     // Delegates an event to the correct handler.
     void DelegateEvent(SDL_Event event);
     
@@ -62,7 +69,7 @@ public:
 protected:
     
     // Protected in order to guard against value semantics but still allows for creating subclasses.
-    Sprite(int x_pos, int y_pos, int width, int height, std::string file_name);
+    Sprite(std::string tag, int x_pos, int y_pos, int width, int height, std::string file_name);
     
     // The renderer for the window to which the sprite is added.
     SDL_Renderer* renderer;
@@ -95,6 +102,11 @@ private:
     
     // Map containng all time listeners added for the sprite and the delay for each listener.
     std::map<int, std::function<void(Sprite*)>> time_listeners;
+    
+    // A tag added to the sprite which can be used when evaluating collisions.
+    std::string tag;
+    
+    bool is_removed;
 };
 
 #endif

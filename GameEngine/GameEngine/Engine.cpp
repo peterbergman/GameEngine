@@ -31,6 +31,7 @@ void Engine::Run() {
         frame_counter++;
         DetectCollision();
         EmitTimeEvent();
+        current_level->CleanUpSprites();
         SDL_Delay(1000 / fps);
         long stop_time = GetTimestamp();
         SetTimeElapsed(start_time, stop_time);
