@@ -13,7 +13,12 @@ StaticSprite::StaticSprite(std::string tag, std::string file_name, int x_pos, in
 
 // Draws a static image representing the sprite.
 void StaticSprite::Draw(int time_elapsed) {
-    SDL_RenderCopy(renderer, texture, NULL, boundary);
+    if (boundary->w != 0 && boundary->h != 0) {
+        SDL_RenderCopy(renderer, texture, NULL, boundary);
+
+    } else {
+        SDL_RenderCopy(renderer, texture, NULL, NULL);
+    }
 }
 
 StaticSprite::~StaticSprite() {
