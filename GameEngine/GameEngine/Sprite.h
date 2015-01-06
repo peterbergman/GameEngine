@@ -19,7 +19,7 @@ public:
     void SetRenderer(SDL_Renderer* renderer);
     
     // Adds an event listener to the sprite.
-    void AddEventListener(std::function<void(Sprite*)> listener, int key_code);
+    void AddEventListener(std::function<void(SDL_Event, Sprite*)> listener, int key_code);
     
     // Adds a time listener to the sprite with a delay specified in milliseconds.
     void AddTimeListener(std::function<void(Sprite*)> listener, int delay);
@@ -98,7 +98,7 @@ private:
     void HandleTime(SDL_Event event);
     
     // Map containng all event listeners added for the sprite and the keycode for each listener.
-    std::map<int, std::function<void(Sprite*)>> event_listeners;
+    std::map<int, std::function<void(SDL_Event, Sprite*)>> event_listeners;
     
     // Map containng all time listeners added for the sprite and the delay for each listener.
     std::map<int, std::function<void(Sprite*)>> time_listeners;

@@ -18,7 +18,7 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
 // Adds a new event listener to the interal map that contains all event listeners.
 // The keycode is used as key, meaning that two event listeners with the same keycode cannot be
 // registered at the same time.
-void Sprite::AddEventListener(std::function<void(Sprite*)> listener, int key_code) {
+void Sprite::AddEventListener(std::function<void(SDL_Event, Sprite*)> listener, int key_code) {
     event_listeners[key_code] = listener;
 }
 
@@ -88,13 +88,15 @@ void Sprite::DelegateEvent(SDL_Event event) {
 // For mouse events, the position of the mouse coursor is checked if inside the sprite boundary as well before
 // calling the event listener.
 void Sprite::HandleEvent(SDL_Event event, bool mouse_event) {
-    for (std::pair<const int, std::function<void(Sprite*)>>& entry : event_listeners) {
+    for (std::pair<const int, std::function<void(SDL_Event, Sprite*)>>& entry : event_listeners) {
         if (mouse_event && entry.first == event.type) {
             if (Contains(event.button.x, event.button.y)) {
-                entry.second(this);
+                entry.second(event, this);
             }
         } else if (!mouse_event && entry.first == event.key.keysym.sym) {
-            entry.second(this);
+            entry.second(event, this);
+        } else if (entry.first == event.type) { // Other types of events (text input...)
+            entry.second(event, this);
         }
     }
 }
