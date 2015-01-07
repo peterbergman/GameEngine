@@ -12,12 +12,10 @@ MovingSprite::MovingSprite(std::string tag, std::string file_name, int x_pos, in
 
 // Draws the sprite with the specified change in x and y each iteration of the main event loop.
 void MovingSprite::Draw(int time_elapsed) {
-    boundary->x = boundary->x + dx;
-    boundary->y = boundary->y + dy;
-    SDL_RenderCopy(renderer, texture, NULL, boundary);
+    boundary.x = boundary.x + dx;
+    boundary.y = boundary.y + dy;
+    SDL_RenderCopy(renderer, texture, NULL, &boundary);
 }
 
 MovingSprite::~MovingSprite() {
-    delete boundary;
-    SDL_DestroyTexture(texture);
 }

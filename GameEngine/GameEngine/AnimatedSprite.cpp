@@ -21,14 +21,12 @@ void AnimatedSprite::Draw(int time_elapsed) {
         image_index = (image_index == images.size() - 1 ? 0 : image_index + 1);
         time_since_last_draw = 0;
     }
-    SDL_RenderCopy(renderer, texture, NULL, boundary);
+    SDL_RenderCopy(renderer, texture, NULL, &boundary);
 }
 
 void AnimatedSprite::MoveRight(Sprite* sprite) {
-    boundary->x = boundary->x + 20;
+    boundary.x = boundary.x + 20;
 }
 
 AnimatedSprite::~AnimatedSprite() {
-    delete boundary;
-    SDL_DestroyTexture(texture);
 }

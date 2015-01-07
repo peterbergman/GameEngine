@@ -13,12 +13,12 @@ TextInputSprite::TextInputSprite(std::string tag, int x_pos, int y_pos):Sprite(t
 }
 
 void TextInputSprite::Draw(int time_elapsed) {
-    SDL_RenderCopy(renderer, texture, NULL, boundary);
+    SDL_RenderCopy(renderer, texture, NULL, &boundary);
 }
 
 void TextInputSprite::HandleTextInput(SDL_Event& event) {
-    boundary->w = boundary->w  + 25;
-    boundary->x = boundary->x - 12;
+    boundary.w = boundary.w  + 25;
+    boundary.x = boundary.x - 12;
     
     text += event.text.text;
     
@@ -33,7 +33,5 @@ void TextInputSprite::HandleTextInput(SDL_Event& event) {
 }
 
 TextInputSprite::~TextInputSprite() {
-    delete boundary;
     TTF_CloseFont(font);
-    SDL_DestroyTexture(texture);
 }

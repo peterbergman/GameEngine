@@ -3,11 +3,10 @@
 #include "Engine.h"
 
 Sprite::Sprite(std::string tag, int x_pos, int y_pos, int width, int height, std::string file_name):tag(tag), file_name(file_name), texture(NULL), is_removed(false), is_visible(true) {
-    boundary = new SDL_Rect();
-    boundary->x = x_pos;
-    boundary->y = y_pos;
-    boundary->h = height;
-    boundary->w = width;
+    boundary.x = x_pos;
+    boundary.y = y_pos;
+    boundary.h = height;
+    boundary.w = width;
 }
 
 // Sets the renderer member variable.
@@ -31,32 +30,32 @@ void Sprite::AddTimeListener(std::function<void(Sprite*)> listener, int delay) {
 
 // Sets the X value of the upper right coordinate for the sprite.
 void Sprite::SetX(int x) {
-    this->boundary->x = x;
+    boundary.x = x;
 }
 
 // Sets the Y value of the upper right coordinate for the sprite.
 void Sprite::SetY(int y) {
-    this->boundary->y = y;
+    boundary.y = y;
 }
 
 // Returns the X value of the upper right coordinate for the sprite.
 int Sprite::GetX() {
-    return boundary->x;
+    return boundary.x;
 }
 
 // Returns the Y value of the upper right coordinate for the sprite.
 int Sprite::GetY() {
-    return boundary->y;
+    return boundary.y;
 }
 
 // Returns the width of the sprite.
 int Sprite::GetWidth() {
-    return boundary->w;
+    return boundary.w;
 }
 
 // Returns the height of the sprite.
 int Sprite::GetHeight() {
-    return boundary->h;
+    return boundary.h;
 }
 
 // Returns the tag of the sprite.
@@ -136,7 +135,7 @@ void Sprite::HandleTime(SDL_Event& event) {
 
 // Checks if any given x and y value are within the bounds of the sprite.
 bool Sprite::Contains(int x, int y) {
-    return x >= boundary->x && x <= (boundary->x+boundary->w) && y >= boundary->y && y <= (boundary->y+boundary->h);
+    return x >= boundary.x && x <= (boundary.x + boundary.w) && y >= boundary.y && y <= (boundary.y + boundary.h);
 }
 
 // Checks if any given sprite is within the bounds of this sprite.
@@ -175,4 +174,5 @@ void Sprite::SetUpTexture() {
 }
 
 Sprite::~Sprite() {
+    SDL_DestroyTexture(texture);
 }

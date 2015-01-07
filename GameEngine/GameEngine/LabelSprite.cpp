@@ -15,12 +15,10 @@ void LabelSprite::Draw(int elapsed_time) {
     SDL_Surface* message_surface = TTF_RenderText_Solid(font, message.c_str(), white);
     texture = SDL_CreateTextureFromSurface(renderer, message_surface);
     SDL_FreeSurface(message_surface);
-    SDL_RenderCopy(renderer, texture, NULL, boundary);
+    SDL_RenderCopy(renderer, texture, NULL, &boundary);
 }
 
 LabelSprite::~LabelSprite() {
-    delete boundary;
     TTF_CloseFont(font);
-    SDL_DestroyTexture(texture);
 }
 

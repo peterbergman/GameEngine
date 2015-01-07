@@ -83,7 +83,7 @@ protected:
     SDL_Renderer* renderer;
     
     // The boundary for which the sprite is contained within.
-    SDL_Rect* boundary;
+    SDL_Rect boundary;
     
     // The file name for the image shown on screen for the sprite.
     std::string file_name;
