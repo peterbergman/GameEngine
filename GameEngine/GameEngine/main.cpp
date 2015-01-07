@@ -50,7 +50,7 @@ void EnemyListenerLevel1() {
     }
 }
 
-void ShootListenerLevel1() {
+void ShootListenerLevel1(SDL_Event& event, Sprite* sprite) {
     int x_pos = player->GetX()+54;
     Sprite* tmpSprite = MovingSprite::GetInstance("bullet", "/Users/Peter/Documents/DSV/Prog3/images/space/level1_bullet.png", x_pos, 505, 19, 43, 0, -10);
     level1->AddSprite(tmpSprite);
@@ -65,7 +65,7 @@ void PlayerNameEnteredListener() {
     
     level1->AddTimeListener(EnemyListenerLevel1, 2000);
     game_engine->SetCollisionListener(CollisionListener);
-    game_engine->AddEventListener(ShootListenerLevel1, SDLK_SPACE);
+    player->AddEventListener(ShootListenerLevel1, SDLK_SPACE);
     
     level1->AddSprite(player);
 }

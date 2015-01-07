@@ -132,14 +132,16 @@ void Engine::DetectCollision() {
 void Engine::DelegateEvent(SDL_Event& event) {
     if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
         HandleEvent(event, true);
+        current_level->DelegateEvent(event);
     } else if (event.type == SDL_KEYDOWN) {
         HandleEvent(event, false);
+        current_level->DelegateEvent(event);
     } else if (event.type == Engine::time_event_type) {
         HandleTime(event);
+        current_level->DelegateEvent(event);
     } else if (event.type == SDL_QUIT) {
         Quit();
     }
-    current_level->DelegateEvent(event);
 }
 
 // Iterates through each event listener and evaluates if the event listener should be called.
