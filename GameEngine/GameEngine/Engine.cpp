@@ -117,11 +117,11 @@ void Engine::EmitTimeEvent() {
 // This collision detection is only considering overlaping sprite boundaries and does not check for collisions on pixel level.
 // The time complexity for this function is O(N^2) where N is the number of sprites added to the game engine.
 void Engine::DetectCollision() {
-    for (Sprite* sprite : current_level->GetSprites()) {
-        for (Sprite* other_sprite : current_level->GetSprites()) {
-            if (sprite != other_sprite && sprite->Contains(other_sprite)) { // TODO: transparent pixels
+    for (int i = 0; i < current_level->GetSprites().size(); i++) {
+        for (int j = 0; j < current_level->GetSprites().size(); j++) {
+            if (current_level->GetSprites()[i] != current_level->GetSprites()[j] && current_level->GetSprites()[i]->Contains(current_level->GetSprites()[j])) { // TODO: transparent pixels
                 if (current_collision_listener != nullptr) {
-                    current_collision_listener(sprite, other_sprite);
+                    current_collision_listener(current_level->GetSprites()[i], current_level->GetSprites()[j]);
                 }
             }
         }
@@ -138,6 +138,8 @@ void Engine::DelegateEvent(SDL_Event& event) {
         current_level->DelegateEvent(event);
     } else if (event.type == Engine::time_event_type) {
         HandleTime(event);
+        current_level->DelegateEvent(event);
+    } else if (event.type == SDL_TEXTINPUT) {
         current_level->DelegateEvent(event);
     } else if (event.type == SDL_QUIT) {
         Quit();
@@ -199,7 +201,7 @@ void Engine::SetTimeElapsed(long start_time, long stop_time) {
 
 Engine::~Engine() {
     delete window;
-    for (Level* level : levels) {
-        delete level;
+    for (int i = 0; i < levels.size(); i++) {
+        delete levels[i];
     }
 }

@@ -71,8 +71,8 @@ void Level::DelegateEvent(SDL_Event& event) {
     if (event.type == Engine::GetTimeEventType()) {
         HandleTime(event);
     }
-    for (Sprite* sprite : sprites) {
-        sprite->DelegateEvent(event);
+    for (int i = 0; i < sprites.size(); i++) {
+        sprites[i]->DelegateEvent(event);
     }
 }
 
@@ -98,7 +98,7 @@ void Level::HandleTime(SDL_Event& event) {
 }
 
 Level::~Level() {
-    for (Sprite* sprite : sprites) {
-        delete sprite;
+    for (int i = 0; i < sprites.size(); i++) {
+        delete sprites[i];
     }
 }

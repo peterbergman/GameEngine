@@ -19,8 +19,8 @@ SDL_Renderer* Window::GetRenderer() {
 
 // Iterates through all sprites in the specified level and loads them.
 void Window::LoadLevel(Level* level) {
-    for (Sprite* sprite : level->GetSprites()) {
-        LoadSprite(sprite);
+    for (int i = 0; i < level->GetSprites().size(); i++) {
+        LoadSprite(level->GetSprites()[i]);
     }
     level->SetLoaded(true);
     level->SetWindow(this);
