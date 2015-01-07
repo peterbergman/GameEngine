@@ -44,7 +44,9 @@ void Window::DrawSprites(int time_elapsed) {
         if (!Contains(current_sprite)) {
             current_level->RemoveSprite(current_sprite); // TODO: add remove(index) to avoid duplicate iteration
         } else {
-            current_sprite->Draw(time_elapsed);
+            if (current_sprite->GetIsVisible()) {
+                current_sprite->Draw(time_elapsed);
+            }
         }
     }
     SDL_RenderPresent(renderer);

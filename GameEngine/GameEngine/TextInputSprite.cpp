@@ -5,9 +5,8 @@ TextInputSprite* TextInputSprite::GetInstance(std::string tag, int x_pos, int y_
 }
 
 TextInputSprite::TextInputSprite(std::string tag, int x_pos, int y_pos):Sprite(tag, x_pos, y_pos, 12, 50, "") {
-    
-    std::function<void(SDL_Event, Sprite*)> func = std::bind(&TextInputSprite::HandleTextInput, this, std::placeholders::_1);
-    AddEventListener(func, SDL_TEXTINPUT);
+    std::function<void(SDL_Event&, Sprite*)> text_input_handler_function = std::bind(&TextInputSprite::HandleTextInput, this, std::placeholders::_1);
+    AddEventListener(text_input_handler_function, SDL_TEXTINPUT);
     
     font = TTF_OpenFont("/Users/Peter/Documents/DSV/Prog3/images/gameengine/font.ttf", 48);
     TTF_SetFontOutline(font, 1);
@@ -17,7 +16,7 @@ void TextInputSprite::Draw(int time_elapsed) {
     SDL_RenderCopy(renderer, texture, NULL, boundary);
 }
 
-void TextInputSprite::HandleTextInput(SDL_Event event) {
+void TextInputSprite::HandleTextInput(SDL_Event& event) {
     boundary->w = boundary->w  + 25;
     boundary->x = boundary->x - 12;
     

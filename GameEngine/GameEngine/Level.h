@@ -42,14 +42,14 @@ public:
     void AddTimeListener(std::function<void(void)> listener, int delay);
     
     // Receives an event and delegates it.
-    void DelegateEvent(SDL_Event event);
+    void DelegateEvent(SDL_Event& event);
     
     ~Level();
     
 private:
     
     // Handles the time events emitted by the game engine. Calls the registererd time listeners (if any).
-    void HandleTime(SDL_Event event);
+    void HandleTime(SDL_Event& event);
     
     // A vector that contains all sprites that have been added to this level.
     std::vector<Sprite*> sprites;

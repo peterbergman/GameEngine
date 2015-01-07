@@ -36,6 +36,9 @@ public:
     // Sets the current level of this game engine.
     void SetCurrentLevel(Level* level);
     
+    // Returns the current level of this game engine.
+    Level* GetCurrentLevel();
+    
     // Sets the collision listener for the game engine by taking in a function pointer as argument (see collision_listener typedef).
     // The function sent to this function will be called each time a collision is detected.
     // Collisions are evaluated for all sprites on each iteration of the main event loop.
@@ -79,13 +82,13 @@ private:
     void DetectCollision();
     
     // Delegates an event to the correct handler.
-    void DelegateEvent(SDL_Event event);
+    void DelegateEvent(SDL_Event& event);
     
     // Handles the events (keybord and mouse) emitted by the game engine. Calls the registererd event listeners (if any).
-    void HandleEvent(SDL_Event event, bool mouse_event);
+    void HandleEvent(SDL_Event& event, bool mouse_event);
     
     // Handles the time events emitted by the game engine. Calls the registererd time listeners (if any).
-    void HandleTime(SDL_Event event);
+    void HandleTime(SDL_Event& event);
     
     // Internal helper function used to calculate the time elapsed between two main loop iterations.
     long GetTimestamp();

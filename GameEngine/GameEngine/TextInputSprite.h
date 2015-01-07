@@ -27,7 +27,7 @@ private:
     const TextInputSprite& operator=(const TextInputSprite& other_sprite); // Guard against value semantic
     
     // Internal handler for text input events.
-    void HandleTextInput(SDL_Event event);
+    void HandleTextInput(SDL_Event& event);
     
     // The font.
     TTF_Font* font;

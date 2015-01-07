@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "Engine.h"
 
-Sprite::Sprite(std::string tag, int x_pos, int y_pos, int width, int height, std::string file_name):tag(tag), file_name(file_name), texture(NULL), is_removed(false) {
+Sprite::Sprite(std::string tag, int x_pos, int y_pos, int width, int height, std::string file_name):tag(tag), file_name(file_name), texture(NULL), is_removed(false), is_visible(true) {
     boundary = new SDL_Rect();
     boundary->x = x_pos;
     boundary->y = y_pos;
@@ -18,7 +18,7 @@ void Sprite::SetRenderer(SDL_Renderer* renderer) {
 // Adds a new event listener to the interal map that contains all event listeners.
 // The keycode is used as key, meaning that two event listeners with the same keycode cannot be
 // registered at the same time.
-void Sprite::AddEventListener(std::function<void(SDL_Event, Sprite*)> listener, int key_code) {
+void Sprite::AddEventListener(std::function<void(SDL_Event&, Sprite*)> listener, int key_code) {
     event_listeners[key_code] = listener;
 }
 
@@ -64,16 +64,28 @@ std::string Sprite::GetTag() {
     return tag;
 }
 
+// Sets a flag that indicates that the sprite will be removed.
 void Sprite::SetIsRemoved(bool is_removed) {
     this->is_removed = true;
 }
 
+// Returns the flag that indicate if the sprite is marked for removal or not.
 bool Sprite::GetIsRemoved() {
     return is_removed;
 }
 
+// Sets the flag that indicates that the sprite is visible.
+void Sprite::SetIsVisible(bool is_visible) {
+    this->is_visible = is_visible;
+}
+
+// Returns the flag that indicates if the sprite is visible or not.
+bool Sprite::GetIsVisible() {
+    return is_visible;
+}
+
 // Delegates an event to the correct handler.
-void Sprite::DelegateEvent(SDL_Event event) {
+void Sprite::DelegateEvent(SDL_Event& event) {
     if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
         HandleEvent(event, true);
     } else if (event.type == Engine::GetTimeEventType()) {
@@ -87,8 +99,8 @@ void Sprite::DelegateEvent(SDL_Event event) {
 // This is done by checking that the event source corresponds to the key or button registererd for the listner.
 // For mouse events, the position of the mouse coursor is checked if inside the sprite boundary as well before
 // calling the event listener.
-void Sprite::HandleEvent(SDL_Event event, bool mouse_event) {
-    for (std::pair<const int, std::function<void(SDL_Event, Sprite*)>>& entry : event_listeners) {
+void Sprite::HandleEvent(SDL_Event& event, bool mouse_event) {
+    for (std::pair<const int, std::function<void(SDL_Event&, Sprite*)>>& entry : event_listeners) {
         if (mouse_event && entry.first == event.type) {
             if (Contains(event.button.x, event.button.y)) {
                 entry.second(event, this);
@@ -106,7 +118,7 @@ void Sprite::HandleEvent(SDL_Event event, bool mouse_event) {
 // Example:
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
-void Sprite::HandleTime(SDL_Event event) {
+void Sprite::HandleTime(SDL_Event& event) {
     for (std::pair<const int, std::function<void(Sprite*)>>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);

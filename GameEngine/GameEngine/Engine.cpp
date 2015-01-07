@@ -49,6 +49,11 @@ void Engine::SetCurrentLevel(Level* level) {
     window->LoadLevel(level);
 }
 
+// Returns the current level of this game engine.
+Level* Engine::GetCurrentLevel() {
+    return current_level;
+}
+
 // Sets the collision listener that is called each time a collision occurs.
 void Engine::SetCollisionListener(std::function<void(Sprite*, Sprite*)> listener) {
     current_collision_listener = listener;
@@ -124,7 +129,7 @@ void Engine::DetectCollision() {
 }
 
 // Delegates an event to the correct handler function and propagates the event to the sprites.
-void Engine::DelegateEvent(SDL_Event event) {
+void Engine::DelegateEvent(SDL_Event& event) {
     if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEWHEEL) {
         HandleEvent(event, true);
     } else if (event.type == SDL_KEYDOWN) {
@@ -139,7 +144,7 @@ void Engine::DelegateEvent(SDL_Event event) {
 
 // Iterates through each event listener and evaluates if the event listener should be called.
 // This is done by checking that the event source corresponds to the key or button registererd for the listner.
-void Engine::HandleEvent(SDL_Event event, bool mouse_event) {
+void Engine::HandleEvent(SDL_Event& event, bool mouse_event) {
     for (std::pair<const int, std::function<void(void)>>& entry : event_listeners) {
         if (mouse_event && entry.first == event.type) {
             entry.second();
@@ -154,7 +159,7 @@ void Engine::HandleEvent(SDL_Event event, bool mouse_event) {
 // Example:
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
-void Engine::HandleTime(SDL_Event event) {
+void Engine::HandleTime(SDL_Event& event) {
     for (std::pair<const int, std::function<void(void)>>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);

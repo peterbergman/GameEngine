@@ -67,7 +67,7 @@ void Level::AddTimeListener(std::function<void(void)> listener, int delay) {
 }
 
 // Delegates an event to the sprites that have been added to the level and the time listeners added to the level.
-void Level::DelegateEvent(SDL_Event event) {
+void Level::DelegateEvent(SDL_Event& event) {
     if (event.type == Engine::GetTimeEventType()) {
         HandleTime(event);
     }
@@ -81,7 +81,7 @@ void Level::DelegateEvent(SDL_Event event) {
 // Example:
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
-void Level::HandleTime(SDL_Event event) {
+void Level::HandleTime(SDL_Event& event) {
     for (std::pair<const int, std::function<void(void)>>& entry : time_listeners) {
         int fps = *((int*)event.user.data1);
         int frame_counter = *((int*)event.user.data2);

@@ -19,7 +19,7 @@ public:
     void SetRenderer(SDL_Renderer* renderer);
     
     // Adds an event listener to the sprite.
-    void AddEventListener(std::function<void(SDL_Event, Sprite*)> listener, int key_code);
+    void AddEventListener(std::function<void(SDL_Event&, Sprite*)> listener, int key_code);
     
     // Adds a time listener to the sprite with a delay specified in milliseconds.
     void AddTimeListener(std::function<void(Sprite*)> listener, int delay);
@@ -45,12 +45,20 @@ public:
     // Returns the tag of the sprite.
     std::string GetTag();
     
+    // Sets a flag that indicates that the sprite will be removed.
     void SetIsRemoved(bool is_removed);
     
+    // Returns the flag that indicate if the sprite is marked for removal or not.
     bool GetIsRemoved();
     
+    // Sets the flag that indicates that the sprite is visible.
+    void SetIsVisible(bool is_visible);
+    
+    // Returns the flag that indicates if the sprite is visible or not.
+    bool GetIsVisible();
+    
     // Delegates an event to the correct handler.
-    void DelegateEvent(SDL_Event event);
+    void DelegateEvent(SDL_Event& event);
     
     // Checks if the sprite contain the specified x and y value.
     bool Contains(int x, int y);
@@ -92,13 +100,13 @@ private:
     const Sprite& operator=(const Sprite& other_sprite);
     
     // Internal helper function to which events are delegated.
-    void HandleEvent(SDL_Event event, bool mouse_event);
+    void HandleEvent(SDL_Event& event, bool mouse_event);
     
     // Internal helper function to which time events are delegated.
-    void HandleTime(SDL_Event event);
+    void HandleTime(SDL_Event& event);
     
     // Map containng all event listeners added for the sprite and the keycode for each listener.
-    std::map<int, std::function<void(SDL_Event, Sprite*)>> event_listeners;
+    std::map<int, std::function<void(SDL_Event&, Sprite*)>> event_listeners;
     
     // Map containng all time listeners added for the sprite and the delay for each listener.
     std::map<int, std::function<void(Sprite*)>> time_listeners;
@@ -106,7 +114,13 @@ private:
     // A tag added to the sprite which can be used when evaluating collisions.
     std::string tag;
     
+    // A flag to indicate if the sprite is marked for removal or not.
     bool is_removed;
+    
+    // A flag to indicate if the sprite is visible or not.
+    bool is_visible;
+    
+    
 };
 
 #endif

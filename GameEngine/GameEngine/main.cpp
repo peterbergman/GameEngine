@@ -14,26 +14,31 @@ Sprite* text_input = TextInputSprite::GetInstance("text_input", 400, 325);
 Sprite* name_input_message = LabelSprite::GetInstance("name_message", "enter your name:", 208, 290);
 Sprite* overlay = StaticSprite::GetInstance("overlay", "/Users/Peter/Documents/DSV/Prog3/images/gameengine/transparent.png", 0, 0, 0, 0);
 
+void GameOver(Sprite* sprite1, Sprite* sprite2) {
+    overlay->SetIsVisible(true);
+    Sprite* game_over_message = LabelSprite::GetInstance("game_over_message", "Game Over!", 280, 290);
+    game_engine->GetCurrentLevel()->AddSprite(game_over_message);
+}
+
+void DestroySprites(Sprite* sprite1, Sprite* sprite2) {
+    game_engine->GetCurrentLevel()->RemoveSprite(sprite1);
+    game_engine->GetCurrentLevel()->RemoveSprite(sprite2);
+}
+
 void CollisionListener(Sprite* sprite1, Sprite* sprite2) {
     if ((sprite1->GetTag() == "bullet" && sprite2->GetTag() == "enemy") || (sprite2->GetTag() == "bullet" && sprite1->GetTag() == "enemy")) {
-        cout << "Collision detected!\n";
-        level1->RemoveSprite(sprite1);
-        level1->RemoveSprite(sprite2);
+        DestroySprites(sprite1, sprite2);
     } else if ((sprite1->GetTag() == "player" && sprite2->GetTag() == "enemy") || (sprite2->GetTag() == "player" && sprite1->GetTag() == "enemy")) {
-        level1->RemoveSprite(sprite1);
-        level1->RemoveSprite(sprite2);
-        Sprite* overlay = StaticSprite::GetInstance("overlay", "/Users/Peter/Documents/DSV/Prog3/images/gameengine/transparent.png", 0, 0, 0, 0);
-        Sprite* game_over_message = LabelSprite::GetInstance("game_over_message", "Game Over!", 280, 290);
-        level1->AddSprite(overlay);
-        level1->AddSprite(game_over_message);
+        DestroySprites(sprite1, sprite2);
+        GameOver(sprite1, sprite2);
     }
 }
 
-void PlayerRightMove(SDL_Event event, Sprite* sprite) {
+void PlayerRightMove(SDL_Event& event, Sprite* sprite) {
     sprite->SetX(sprite->GetX() + 20);
 }
 
-void PlayerLeftMove(SDL_Event event, Sprite* sprite) {
+void PlayerLeftMove(SDL_Event& event, Sprite* sprite) {
     sprite->SetX(sprite->GetX() - 20);
 }
 
@@ -52,7 +57,7 @@ void ShootListenerLevel1() {
 }
 
 void PlayerNameEnteredListener() {
-    level1->RemoveSprite(overlay);
+    overlay->SetIsVisible(false);
     level1->RemoveSprite(name_input_message);
     level1->RemoveSprite(text_input);
     player->AddEventListener(PlayerRightMove, SDLK_RIGHT);
