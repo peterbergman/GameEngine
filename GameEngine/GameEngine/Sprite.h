@@ -17,7 +17,7 @@ public:
     
     // Sets the renderer member variable.
     void SetRenderer(SDL_Renderer* renderer);
-    
+
     // Adds an event listener to the sprite.
     void AddEventListener(std::function<void(SDL_Event&, Sprite*)> listener, int key_code);
     

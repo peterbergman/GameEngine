@@ -41,6 +41,9 @@ public:
     // to a value below the fps, then the time event listener will be called in each iteration of the main event loop.
     void AddTimeListener(std::function<void(void)> listener, int delay);
     
+    // Pauses all time listeners that have been added to this level
+    void SetTimeListenersPaused(bool is_timelisteners_paused);
+    
     // Receives an event and delegates it.
     void DelegateEvent(SDL_Event& event);
     
@@ -56,6 +59,9 @@ private:
     
     // A flag to indiciate if this level is currently loaded or not
     bool is_loaded;
+    
+    // A flag to indicate if the time listeners is paused or not.
+    bool is_timelisteners_paused;
     
     // A pointer to the window that this level is loaded in.
     Window* window;

@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "Engine.h"
 
-Level::Level(int goal):goal(goal), is_loaded(false) {
+Level::Level(int goal):goal(goal), is_loaded(false), is_timelisteners_paused(false) {
     
 }
 
@@ -66,6 +66,11 @@ void Level::AddTimeListener(std::function<void(void)> listener, int delay) {
     time_listeners[delay] = listener;
 }
 
+// Pauses all time listeners that have been added to this level by setting the flag time_listeners_paused.
+void Level::SetTimeListenersPaused(bool is_timelisteners_paused) {
+    this->is_timelisteners_paused = is_timelisteners_paused;
+}
+
 // Delegates an event to the sprites that have been added to the level and the time listeners added to the level.
 void Level::DelegateEvent(SDL_Event& event) {
     if (event.type == Engine::GetTimeEventType()) {
@@ -76,23 +81,26 @@ void Level::DelegateEvent(SDL_Event& event) {
     }
 }
 
-// Iterates through each time listener and evaluates if the time listener should be called.
+// Iterates through each time listener and evaluates if the time listener should be called if the time listeners for this
+// level haven't been paused.
 // This is done by calculating the number of main event loop iterations that should elapse before the time event listener is called.
 // Example:
 // if the current fps is set to 30 and the delay for a time event listener is set to 60. Then that specific time event listener
 // should be called every second main event loop iteration.
 void Level::HandleTime(SDL_Event& event) {
-    for (std::pair<const int, std::function<void(void)>>& entry : time_listeners) {
-        int fps = *((int*)event.user.data1);
-        int frame_counter = *((int*)event.user.data2);
-        int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));
-        if (rhs > 0) {
-            int result = frame_counter % rhs;
-            if (result == 0) {
+    if (!is_timelisteners_paused) {
+        for (std::pair<const int, std::function<void(void)>>& entry : time_listeners) {
+            int fps = *((int*)event.user.data1);
+            int frame_counter = *((int*)event.user.data2);
+            int rhs = (int)(round(((fps / 1000.0 ) * entry.first)));
+            if (rhs > 0) {
+                int result = frame_counter % rhs;
+                if (result == 0) {
+                    entry.second();
+                }
+            } else {
                 entry.second();
             }
-        } else {
-            entry.second();
         }
     }
 }

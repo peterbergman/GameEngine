@@ -53,6 +53,9 @@ public:
     // Adds an action listener that is not connected to any specific sprite.
     void AddEventListener(std::function<void(void)> listener, int key_code);
     
+    // Pauses all time listeners that have been added to the game engine.
+    void SetTimeListenersPaused(bool is_timelisteners_paused);
+    
     // Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
     double GetTimeElapsed();
    
@@ -98,6 +101,9 @@ private:
     
     // Flag that control the main event loop. The loop will be running as long as this flag is set to true.
     bool is_running;
+    
+    // A flag to indicate if the time listeners is paused or not.
+    bool is_timelisteners_paused;
     
     // A pointer to the underlaying window object, used to delegate calls such as adding new sprites etc.
     Window* window;

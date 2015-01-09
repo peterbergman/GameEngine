@@ -132,5 +132,4 @@ Window::~Window() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
-    //TTF_Quit();
 }

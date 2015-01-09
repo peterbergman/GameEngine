@@ -18,6 +18,12 @@ void GameOver(Sprite* sprite1, Sprite* sprite2) {
     overlay->SetIsVisible(true);
     Sprite* game_over_message = LabelSprite::GetInstance("game_over_message", "Game Over!", 280, 290);
     game_engine->GetCurrentLevel()->AddSprite(game_over_message);
+    game_engine->GetCurrentLevel()->SetTimeListenersPaused(true);
+    for (int i = 0; i < game_engine->GetCurrentLevel()->GetSprites().size(); i++) {
+        if (game_engine->GetCurrentLevel()->GetSprites()[i]->GetTag() == "enemy") {
+            game_engine->GetCurrentLevel()->RemoveSprite(game_engine->GetCurrentLevel()->GetSprites()[i]);
+        }
+    }
 }
 
 void DestroySprites(Sprite* sprite1, Sprite* sprite2) {
@@ -70,6 +76,9 @@ void PlayerNameEnteredListener() {
 }
 
 int main(int argc, const char * argv[]) {
+    
+    int intArr[5];
+    
     srand(time(NULL));
     
     level1->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/space/level1_background.png");

@@ -73,6 +73,11 @@ void Engine::AddEventListener(std::function<void(void)> listener, int key_code) 
     event_listeners[key_code] = listener;
 }
 
+// Pauses all time listeners that have been added to the game engine by setting the flag time_listeners_paused.
+void Engine::SetTimeListenersPaused(bool is_timelisteners_paused) {
+    this->is_timelisteners_paused = is_timelisteners_paused;
+}
+
 // Returns the actual time (in milliseconds) that has elapsed since the last iteration of the main event loop (ie. the actual time between two frames).
 double Engine::GetTimeElapsed() {
     return time_elapsed;
