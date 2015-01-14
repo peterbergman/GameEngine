@@ -8,7 +8,7 @@ TextInputSprite::TextInputSprite(std::string tag, int x_pos, int y_pos):Sprite(t
     std::function<void(SDL_Event&, Sprite*)> text_input_handler_function = std::bind(&TextInputSprite::HandleTextInput, this, std::placeholders::_1);
     AddEventListener(text_input_handler_function, SDL_TEXTINPUT);
     
-    font = TTF_OpenFont("/Users/Peter/Documents/DSV/Prog3/images/gameengine/font.ttf", 48);
+    font = TTF_OpenFont("resources/framework/font.ttf", 48);
     TTF_SetFontOutline(font, 1);
 }
 

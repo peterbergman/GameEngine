@@ -7,10 +7,10 @@ using namespace std;
 
 Engine* game_engine = new Engine("SpaceShooter", 60, 800, 640);
 Level* level1 = new Level(5);
-Sprite* player = AnimatedSprite::GetInstance("player", {"/Users/Peter/Documents/DSV/Prog3/images/space/player_space_ship1.png", "/Users/Peter/Documents/DSV/Prog3/images/space/player_space_ship2.png", "/Users/Peter/Documents/DSV/Prog3/images/space/player_space_ship3.png"}, 300, 300, 515, 128, 128);
+Sprite* player = AnimatedSprite::GetInstance("player", {"resources/game/player_space_ship1.png", "resources/game/player_space_ship2.png", "resources/game/player_space_ship3.png"}, 300, 300, 515, 128, 128);
 Sprite* text_input = TextInputSprite::GetInstance("text_input", 400, 325);
 Sprite* name_input_message = LabelSprite::GetInstance("name_message", "enter your name:", 208, 290);
-Sprite* overlay = StaticSprite::GetInstance("overlay", "/Users/Peter/Documents/DSV/Prog3/images/gameengine/transparent.png", 0, 0, 0, 0);
+Sprite* overlay = StaticSprite::GetInstance("overlay", "resources/game/transparent.png", 0, 0, 0, 0);
 
 void GameOver(Sprite* sprite1, Sprite* sprite2) {
     overlay->SetIsVisible(true);
@@ -49,14 +49,14 @@ void PlayerLeftMove(SDL_Event& event, Sprite* sprite) {
 void EnemyCreationListenerLevel1() {
     int x_pos = rand() % game_engine->GetWindowWidth() + 100;
     if (x_pos < (game_engine->GetWindowWidth() - 100)) {
-        Sprite* tmpSprite = MovingSprite::GetInstance("enemy" ,"/Users/Peter/Documents/DSV/Prog3/images/space/level1_enemy.png", x_pos, 0, 100, 100, 0, 2);
+        Sprite* tmpSprite = MovingSprite::GetInstance("enemy" ,"resources/game/level1_enemy.png", x_pos, 0, 100, 100, 0, 2);
         level1->AddSprite(tmpSprite);
     }
 }
 
 void BulletCreationListenerLevel1(SDL_Event& event, Sprite* sprite) {
     int x_pos = player->GetX()+54;
-    Sprite* tmpSprite = MovingSprite::GetInstance("bullet", "/Users/Peter/Documents/DSV/Prog3/images/space/level1_bullet.png", x_pos, 505, 19, 43, 0, -10);
+    Sprite* tmpSprite = MovingSprite::GetInstance("bullet", "resources/game/level1_bullet.png", x_pos, 505, 19, 43, 0, -10);
     level1->AddSprite(tmpSprite);
 }
 
@@ -72,7 +72,7 @@ void PlayerNameEnteredListener() {
 }
 
 void SetUpLevel1() {
-    level1->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/space/level1_background.png");
+    level1->SetBackground("resources/game/level1_background.png");
     level1->AddSprite(overlay);
     level1->AddSprite(text_input);
     level1->AddSprite(name_input_message);
