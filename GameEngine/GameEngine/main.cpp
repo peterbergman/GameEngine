@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stdlib.h>
 #include <time.h>
 #include <math.h>
 #include "Engine.h"
@@ -8,7 +7,6 @@ using namespace std;
 
 Engine* game_engine = new Engine("SpaceShooter", 60, 800, 640);
 Level* level1 = new Level(5);
-Level* level2 = new Level(10);
 Sprite* player = AnimatedSprite::GetInstance("player", {"/Users/Peter/Documents/DSV/Prog3/images/space/player_space_ship1.png", "/Users/Peter/Documents/DSV/Prog3/images/space/player_space_ship2.png", "/Users/Peter/Documents/DSV/Prog3/images/space/player_space_ship3.png"}, 300, 300, 515, 128, 128);
 Sprite* text_input = TextInputSprite::GetInstance("text_input", 400, 325);
 Sprite* name_input_message = LabelSprite::GetInstance("name_message", "enter your name:", 208, 290);
@@ -51,7 +49,7 @@ void PlayerLeftMove(SDL_Event& event, Sprite* sprite) {
 void EnemyCreationListenerLevel1() {
     int x_pos = rand() % game_engine->GetWindowWidth() + 100;
     if (x_pos < (game_engine->GetWindowWidth() - 100)) {
-        Sprite* tmpSprite = MovingSprite::GetInstance("enemy" ,"/Users/Peter/Documents/DSV/Prog3/images/space/level1_enemy.png", x_pos, 0, 100, 100, 0, 1);
+        Sprite* tmpSprite = MovingSprite::GetInstance("enemy" ,"/Users/Peter/Documents/DSV/Prog3/images/space/level1_enemy.png", x_pos, 0, 100, 100, 0, 2);
         level1->AddSprite(tmpSprite);
     }
 }
@@ -68,29 +66,26 @@ void PlayerNameEnteredListener() {
     level1->RemoveSprite(text_input);
     player->AddEventListener(PlayerRightMove, SDLK_RIGHT);
     player->AddEventListener(PlayerLeftMove, SDLK_LEFT);
-    
-    level1->AddTimeListener(EnemyCreationListenerLevel1, 2000);
+    level1->AddTimeListener(EnemyCreationListenerLevel1, 1000);
     player->AddEventListener(BulletCreationListenerLevel1, SDLK_SPACE);
-    
     level1->AddSprite(player);
 }
 
-int main(int argc, const char * argv[]) {
-    
-    int intArr[5];
-    
-    srand(time(NULL));
-    
+void SetUpLevel1() {
     level1->SetBackground("/Users/Peter/Documents/DSV/Prog3/images/space/level1_background.png");
     level1->AddSprite(overlay);
     level1->AddSprite(text_input);
     level1->AddSprite(name_input_message);
+    game_engine->AddLevel(level1);
+    game_engine->SetCurrentLevel(level1);
+}
+
+int main(int argc, const char * argv[]) {
+    srand(time(NULL));
+    SetUpLevel1();
     game_engine->AddEventListener(PlayerNameEnteredListener, SDLK_RETURN);
     game_engine->SetCollisionListener(CollisionListener);
 
-    
-    game_engine->AddLevel(level1);
-    game_engine->SetCurrentLevel(level1);
     game_engine->Run();
     
     delete game_engine;
