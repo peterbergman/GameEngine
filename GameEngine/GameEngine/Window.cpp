@@ -17,6 +17,11 @@ SDL_Renderer* Window::GetRenderer() {
     return renderer;
 }
 
+// Return the font used by sprites that need to display text.
+TTF_Font* Window::GetFont() {
+    return font;
+}
+
 // Iterates through all sprites in the specified level and loads them.
 void Window::LoadLevel(Level* level) {
     for (int i = 0; i < level->GetSprites().size(); i++) {
@@ -27,9 +32,9 @@ void Window::LoadLevel(Level* level) {
     current_level = level;
 }
 
-// Sends the renderer to a sprite and sets up the texture for the sprite.
+// Sends the window to a sprite and sets up the texture for the sprite.
 void Window::LoadSprite(Sprite* sprite) {
-    sprite->SetRenderer(renderer);
+    sprite->SetWindow(this);
     sprite->SetUpTexture();
 }
 
@@ -84,6 +89,13 @@ void Window::InitSDLttf() {
         SDL_Quit();
         throw std::runtime_error("Failed to init game engine!");
     }
+    font = TTF_OpenFont("resources/framework/font.ttf", 48);
+    if (font == nullptr) {
+        SDL_Quit();
+        throw std::runtime_error("Failed to load the specified font!");
+    } else {
+        TTF_SetFontOutline(font, 1);
+    }
 }
 
 // Internal helper function to set up a renderer for the window.
@@ -129,6 +141,8 @@ bool Window::Contains(Sprite* sprite) {
 
 // Destroys SDL resources and quits the SDL framework.
 Window::~Window() {
+    TTF_CloseFont(font);
+    TTF_Quit();
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();

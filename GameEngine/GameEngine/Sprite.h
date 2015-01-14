@@ -9,14 +9,16 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
+class Window;
+
 // Root class for sprite class hierarchy. This class is not supposed to be instantiated directly.
 // Instead subclasses are used for different types of sprites.
 class Sprite {
     
 public:
     
-    // Sets the renderer member variable.
-    void SetRenderer(SDL_Renderer* renderer);
+    // Sets the window member variable.
+    void SetWindow(Window* window);
 
     // Adds an event listener to the sprite.
     void AddEventListener(std::function<void(SDL_Event&, Sprite*)> listener, int key_code);
@@ -79,8 +81,8 @@ protected:
     // Protected in order to guard against value semantics but still allows for creating subclasses.
     Sprite(std::string tag, int x_pos, int y_pos, int width, int height, std::string file_name);
     
-    // The renderer for the window to which the sprite is added.
-    SDL_Renderer* renderer;
+    // The window to which the sprite is added.
+    Window* window;
     
     // The boundary for which the sprite is contained within.
     SDL_Rect boundary;

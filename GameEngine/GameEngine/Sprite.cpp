@@ -1,6 +1,7 @@
 #include <math.h>
 #include "Sprite.h"
 #include "Engine.h"
+#include "Window.h"
 
 Sprite::Sprite(std::string tag, int x_pos, int y_pos, int width, int height, std::string file_name):tag(tag), file_name(file_name), texture(NULL), is_removed(false), is_visible(true) {
     boundary.x = x_pos;
@@ -9,9 +10,9 @@ Sprite::Sprite(std::string tag, int x_pos, int y_pos, int width, int height, std
     boundary.w = width;
 }
 
-// Sets the renderer member variable.
-void Sprite::SetRenderer(SDL_Renderer* renderer) {
-    this->renderer = renderer;
+// Sets the window member variable.
+void Sprite::SetWindow(Window* window) {
+    this->window = window;
 }
 
 // Adds a new event listener to the interal map that contains all event listeners.
@@ -164,7 +165,7 @@ void Sprite::SetUpTexture() {
         if (surface == nullptr) {
             throw std::runtime_error("Failed to create sprite!");
         } else {
-            texture = SDL_CreateTextureFromSurface(renderer, surface);
+            texture = SDL_CreateTextureFromSurface(window->GetRenderer(), surface);
             SDL_FreeSurface(surface);
             if (texture == nullptr) {
                 throw std::runtime_error("Failed to create sprite!");

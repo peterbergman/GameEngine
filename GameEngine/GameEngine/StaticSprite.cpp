@@ -1,6 +1,7 @@
 #include "StaticSprite.h"
 #include <iostream>
 #include <string>
+#include "Window.h"
 
 // Factory function to control object creation.
 StaticSprite* StaticSprite::GetInstance(std::string tag, std::string file_name, int x_pos, int y_pos, int width, int height) {
@@ -14,10 +15,10 @@ StaticSprite::StaticSprite(std::string tag, std::string file_name, int x_pos, in
 // Draws a static image representing the sprite.
 void StaticSprite::Draw(int time_elapsed) {
     if (boundary.w != 0 && boundary.h != 0) {
-        SDL_RenderCopy(renderer, texture, NULL, &boundary);
+        SDL_RenderCopy(window->GetRenderer(), texture, NULL, &boundary);
 
     } else {
-        SDL_RenderCopy(renderer, texture, NULL, NULL);
+        SDL_RenderCopy(window->GetRenderer(), texture, NULL, NULL);
     }
 }
 

@@ -29,9 +29,6 @@ private:
     // Internal handler for text input events.
     void HandleTextInput(SDL_Event& event);
     
-    // The font.
-    TTF_Font* font;
-    
     // The current text of the input field.
     std::string text;
     

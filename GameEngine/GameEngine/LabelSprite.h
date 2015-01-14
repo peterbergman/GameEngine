@@ -27,9 +27,6 @@ class LabelSprite : public Sprite {
     
     const LabelSprite& operator=(const LabelSprite& other_sprite); // Guard against value semantic
     
-    // The font.
-    TTF_Font* font;
-    
     // The message to show.
     std::string message;
     

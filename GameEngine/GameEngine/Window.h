@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <SDL2_ttf/SDL_ttf.h>
 #include "Sprite.h"
 #include "StaticSprite.h"
 
@@ -20,6 +21,9 @@ public:
     
     // Returns the renderer used by the window.
     SDL_Renderer* GetRenderer();
+    
+    // Return the font used by sprites that need to display text.
+    TTF_Font* GetFont();
 
     // Loads all the sprites included in the specified level.
     void LoadLevel(Level* level);
@@ -76,6 +80,9 @@ private:
     
     // The current level loaded for this window.
     Level* current_level;
+    
+    // The font used by sprites that need to display text.
+    TTF_Font* font;
 };
 
 #endif

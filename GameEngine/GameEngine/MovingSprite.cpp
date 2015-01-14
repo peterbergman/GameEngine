@@ -1,6 +1,7 @@
-#include "MovingSprite.h"
 #include <iostream>
 #include <string>
+#include "MovingSprite.h"
+#include "Window.h"
 
 // Factory function to control object creation.
 MovingSprite* MovingSprite::GetInstance(std::string tag, std::string file_name, int x_pos, int y_pos, int width, int height, int dx, int dy) {
@@ -14,7 +15,7 @@ MovingSprite::MovingSprite(std::string tag, std::string file_name, int x_pos, in
 void MovingSprite::Draw(int time_elapsed) {
     boundary.x = boundary.x + dx;
     boundary.y = boundary.y + dy;
-    SDL_RenderCopy(renderer, texture, NULL, &boundary);
+    SDL_RenderCopy(window->GetRenderer(), texture, NULL, &boundary);
 }
 
 MovingSprite::~MovingSprite() {
