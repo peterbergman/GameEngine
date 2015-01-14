@@ -19,9 +19,10 @@ Engine::Engine(std::string game_name, int fps, int window_width, int window_heig
 // 4. Increment the frame counter.
 // 5. Check for collisions.
 // 6. Emit a new time event.
-// 7. Timeout for 1000 / fps milliseconds.
-// 8. Get a timestamp at the end of the iteration.
-// 9. Set the total time that the iteration took.
+// 7. Ask the current level to clean up all the sprites that have been marked as deleted.
+// 8. Timeout for 1000 / fps milliseconds.
+// 9. Get a timestamp at the end of the iteration.
+// 10. Set the total time that the iteration took.
 void Engine::Run() {
     is_running = true;
     while (is_running) {
