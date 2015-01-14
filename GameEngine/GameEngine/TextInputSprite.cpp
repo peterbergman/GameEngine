@@ -10,6 +10,11 @@ TextInputSprite::TextInputSprite(std::string tag, int x_pos, int y_pos):Sprite(t
     AddEventListener(text_input_handler_function, SDL_TEXTINPUT);
 }
 
+// Returns the current text entered.
+std::string TextInputSprite::GetText() {
+    return text;
+}
+
 void TextInputSprite::Draw(int time_elapsed) {
     SDL_RenderCopy(window->GetRenderer(), texture, NULL, &boundary);
 }

@@ -15,6 +15,9 @@ public:
     // Factory function to control object creation.
     static TextInputSprite* GetInstance(std::string tag, int x_pos, int y_pos);
     
+    // Returns the current text entered.
+    std::string GetText();
+    
     // Draws a static image representing the sprite.
     virtual void Draw(int);
     
